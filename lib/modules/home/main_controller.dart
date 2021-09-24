@@ -7,7 +7,7 @@ class MainController extends GetxController {
   late HomeTab homeTab;
   late RecruitmentTab recruitmentsTab;
   late GroupsTab groupsTab;
-  late MeTab meTab;
+  late MenuTab menuTab;
 
   @override
   void onInit() {
@@ -16,7 +16,7 @@ class MainController extends GetxController {
 
     recruitmentsTab = RecruitmentTab();
     groupsTab = GroupsTab();
-    meTab = MeTab();
+    menuTab = MenuTab();
   }
 
   void switchTab(index) {
@@ -32,7 +32,7 @@ class MainController extends GetxController {
         return 1;
       case MainTabs.Groups:
         return 2;
-      case MainTabs.Me:
+      case MainTabs.Menu:
         return 3;
       default:
         return 0;
@@ -48,7 +48,7 @@ class MainController extends GetxController {
       case 2:
         return MainTabs.Groups;
       case 3:
-        return MainTabs.Me;
+        return MainTabs.Menu;
       default:
         return MainTabs.Home;
     }

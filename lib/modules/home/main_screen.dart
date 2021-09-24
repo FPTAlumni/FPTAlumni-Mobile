@@ -31,8 +31,8 @@ class MainScreen extends GetView<MainController> {
             label: 'Groups',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Me',
+            icon: Icon(Icons.menu),
+            label: 'Menu',
           ),
         ],
         unselectedItemColor: ColorConstants.black,
@@ -56,8 +56,8 @@ class MainScreen extends GetView<MainController> {
         return controller.recruitmentsTab;
       case MainTabs.Groups:
         return controller.groupsTab;
-      case MainTabs.Me:
-        return controller.meTab;
+      case MainTabs.Menu:
+        return controller.menuTab;
       default:
         return controller.homeTab;
     }
