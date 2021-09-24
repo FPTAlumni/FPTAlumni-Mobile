@@ -23,24 +23,16 @@ class MainScreen extends GetView<MainController> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.article),
-            label: 'News',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event),
-            label: 'Events',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.work),
-            label: 'Work',
+            label: 'Jobs',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.group),
             label: 'Groups',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Menu',
+            icon: Icon(Icons.person),
+            label: 'Me',
           ),
         ],
         unselectedItemColor: ColorConstants.black,
@@ -60,16 +52,12 @@ class MainScreen extends GetView<MainController> {
     switch (tab) {
       case MainTabs.Home:
         return controller.homeTab;
-      case MainTabs.News:
-        return controller.newsTab;
-      case MainTabs.Events:
-        return controller.eventsTab;
-      case MainTabs.Recruitments:
+      case MainTabs.Recruitment:
         return controller.recruitmentsTab;
       case MainTabs.Groups:
         return controller.groupsTab;
-      case MainTabs.Menu:
-        return controller.menuTab;
+      case MainTabs.Me:
+        return controller.meTab;
       default:
         return controller.homeTab;
     }

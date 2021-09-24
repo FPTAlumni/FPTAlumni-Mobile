@@ -5,22 +5,18 @@ class MainController extends GetxController {
   var currentTab = MainTabs.Home.obs;
 
   late HomeTab homeTab;
-  late NewsTab newsTab;
-  late EventsTab eventsTab;
   late RecruitmentTab recruitmentsTab;
   late GroupsTab groupsTab;
-  late MenuTab menuTab;
+  late MeTab meTab;
 
   @override
   void onInit() {
     super.onInit();
     homeTab = HomeTab();
 
-    newsTab = NewsTab();
-    eventsTab = EventsTab();
     recruitmentsTab = RecruitmentTab();
     groupsTab = GroupsTab();
-    menuTab = MenuTab();
+    meTab = MeTab();
   }
 
   void switchTab(index) {
@@ -32,16 +28,12 @@ class MainController extends GetxController {
     switch (tab) {
       case MainTabs.Home:
         return 0;
-      case MainTabs.News:
+      case MainTabs.Recruitment:
         return 1;
-      case MainTabs.Events:
-        return 2;
-      case MainTabs.Recruitments:
-        return 3;
       case MainTabs.Groups:
-        return 4;
-      case MainTabs.Menu:
-        return 5;
+        return 2;
+      case MainTabs.Me:
+        return 3;
       default:
         return 0;
     }
@@ -52,15 +44,11 @@ class MainController extends GetxController {
       case 0:
         return MainTabs.Home;
       case 1:
-        return MainTabs.News;
+        return MainTabs.Recruitment;
       case 2:
-        return MainTabs.Events;
-      case 3:
-        return MainTabs.Recruitments;
-      case 4:
         return MainTabs.Groups;
-      case 5:
-        return MainTabs.Menu;
+      case 3:
+        return MainTabs.Me;
       default:
         return MainTabs.Home;
     }

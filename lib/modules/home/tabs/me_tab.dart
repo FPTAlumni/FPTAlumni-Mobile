@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MenuTab extends StatelessWidget {
+class MeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Menu'),
+        child: Text('Me'),
       ),
     );
   }
