@@ -8,12 +8,12 @@ class MainScreen extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      child: Obx(() => _buildWidget()),
+      child: Obx(() => _buildWidget(context)),
       onWillPop: () async => false,
     );
   }
 
-  Widget _buildWidget() {
+  Widget _buildWidget(BuildContext context) {
     return Scaffold(
       body: _buildContent(controller.currentTab.value),
       bottomNavigationBar: BottomNavigationBar(
@@ -45,6 +45,8 @@ class MainScreen extends GetView<MainController> {
         onTap: (index) => controller.switchTab(index),
         type: BottomNavigationBarType.fixed,
       ),
+      floatingActionButton:
+          _buildFloatingButton(controller.currentTab.value, context),
     );
   }
 
@@ -61,5 +63,57 @@ class MainScreen extends GetView<MainController> {
       default:
         return controller.homeTab;
     }
+  }
+
+  Widget? _buildFloatingButton(MainTabs tab, BuildContext context) {
+    switch (tab) {
+      case MainTabs.Home:
+        return FloatingActionButton(
+          onPressed: () => Get.bottomSheet(
+            _homeTabBottomSheet(),
+            backgroundColor: ColorConstants.white,
+          ),
+          child: Icon(Icons.add),
+          backgroundColor: ColorConstants.primaryAppColor,
+        );
+      case MainTabs.Recruitment:
+        return null;
+      case MainTabs.Groups:
+        return null;
+      case MainTabs.Menu:
+        return null;
+    }
+  }
+
+  Widget _homeTabBottomSheet() {
+    return Container(
+      height: 100,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'Create new News',
+                style: TextStyle(color: ColorConstants.primaryAppColor),
+              ),
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'Create new Event',
+                style: TextStyle(color: ColorConstants.primaryAppColor),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
