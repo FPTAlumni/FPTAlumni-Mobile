@@ -22,6 +22,7 @@ class EventCard extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
               width: double.infinity,
