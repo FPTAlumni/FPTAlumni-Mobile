@@ -11,77 +11,121 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
+    return Container(
+      padding: const EdgeInsets.only(
+        top: 5,
+        right: 7,
+        left: 7,
       ),
-      elevation: 5,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 170,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                child: Image.network(
-                  eventUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Start date: 27/09/2021 8AM',
-              style: TextStyle(
-                color: ColorConstants.primaryAppColor,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              child: Text(
-                'This is a very very very very long long long long long long '
-                'long long long long long long event name',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              child: OutlinedButton(
-                onPressed: () {},
-                child: Text(
-                  'Details',
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    ColorConstants.primaryAppColor,
-                  ),
-                  foregroundColor: MaterialStateProperty.all(
-                    ColorConstants.lightScaffoldBackgroundColor,
+      margin: const EdgeInsets.only(
+        top: 5.0,
+        bottom: 5.0,
+        right: 25.0,
+        left: 25.0,
+      ),
+      color: ColorConstants.lightGray,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    image: DecorationImage(
+                      image: NetworkImage(eventUrl),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
+              const SizedBox(width: 4),
+              Expanded(
+                flex: 5,
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Macklemore & Ryan Lewis',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 5.0),
+                      Container(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.access_alarm,
+                              size: 14,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              '30/09/2021 | 10AM',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                // fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 5.0),
+                      Container(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              size: 14,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              'FPT University',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                // fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: Colors.grey)),
             ),
-          ],
-        ),
+            child: Row(
+              children: [
+                Spacer(),
+                TextButton(
+                  child: Text('Register'),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(
+                        ColorConstants.primaryAppColor),
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

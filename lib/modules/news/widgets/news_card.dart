@@ -6,105 +6,126 @@ class NewsCard extends StatelessWidget {
   final String avatar;
 
   const NewsCard({
-    Key? key,
     required this.newsUrl,
     required this.avatar,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(
+        top: 5.0,
+        bottom: 5.0,
       ),
-      elevation: 5,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 170,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                child: Image.network(
-                  newsUrl,
-                  fit: BoxFit.cover,
-                ),
+      color: ColorConstants.lightGray,
+      // decoration: BoxDecoration(
+      //   color: ColorConstants.white,
+      //   border: Border.symmetric(
+      //     horizontal: BorderSide(
+      //       color: ColorConstants.primaryAppColor,
+      //       width: 2,
+      //     ),
+      //   ),
+      // ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10.0,
+              vertical: 7.0,
+            ),
+            child: Text(
+              'This is a very very very very very long long long long long long title',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
             ),
-            const SizedBox(height: 5),
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 25,
+          ),
+          AspectRatio(
+            aspectRatio: 3 / 1,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitHeight,
+                  alignment: FractionalOffset.topCenter,
+                  image: NetworkImage(newsUrl),
+                ),
+              ),
+              child: Image.network(
+                newsUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 15.0,
+                ),
+                child: CircleAvatar(
+                  radius: 22,
                   backgroundImage: NetworkImage(avatar),
                   backgroundColor: Colors.transparent,
                 ),
-                const SizedBox(height: 5),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'This is a long long long long long name',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      Text(
-                        '25/09/2021',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontStyle: FontStyle.italic,
-                          color: ColorConstants.tipColor,
+              ),
+              Column(
+                children: [
+                  Text(
+                    'Username',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    '28/09/2021',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
+              ),
+              Spacer(),
+              Expanded(
+                flex: 2,
+                child: Wrap(
+                  alignment: WrapAlignment.end,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: Chip(
+                        label: Text(
+                          '#K14',
+                          textScaleFactor: 5 / 6,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Text(
-                  'This is a very very very very very long long long long long long title',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              child: OutlinedButton(
-                onPressed: () {},
-                child: Text('Details'),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    ColorConstants.primaryAppColor,
-                  ),
-                  foregroundColor: MaterialStateProperty.all(
-                    ColorConstants.lightScaffoldBackgroundColor,
-                  ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: Chip(
+                        label: Text(
+                          '#K14',
+                          textScaleFactor: 5 / 6,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: Chip(
+                        label: Text(
+                          '#K14',
+                          textScaleFactor: 5 / 6,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          )
+        ],
       ),
     );
   }
