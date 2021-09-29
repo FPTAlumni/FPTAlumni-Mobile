@@ -11,7 +11,7 @@ class HomeTab extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(229, 229, 229, 1),
+        backgroundColor: ColorConstants.lightScaffoldBackgroundColor,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(110),
           child: Container(
@@ -19,22 +19,30 @@ class HomeTab extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 25.0),
-                  child: ListTile(
-                    title: Text(
-                      'ALUMNI',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: ColorConstants.primaryAppColor,
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        letterSpacing: 3,
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top + 10,
+                    left: 15.0,
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 15.0),
+                        child: Image.asset(
+                          AssetConstants.logo,
+                          width: 40,
+                        ),
                       ),
-                    ),
-                    leading: Image.asset(
-                      AssetConstants.logo,
-                      width: 40,
-                    ),
+                      Text(
+                        'ALUMNI',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: ColorConstants.primaryAppColor,
+                          fontSize: 20,
+                          fontFamily: 'Poppins',
+                          letterSpacing: 3,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Align(

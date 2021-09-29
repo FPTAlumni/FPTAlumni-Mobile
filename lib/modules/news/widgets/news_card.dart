@@ -18,7 +18,7 @@ class NewsCard extends StatelessWidget {
         top: 5.0,
         bottom: 5.0,
       ),
-      color: ColorConstants.lightGray,
+      color: ColorConstants.white,
       // decoration: BoxDecoration(
       //   color: ColorConstants.white,
       //   border: Border.symmetric(
@@ -49,13 +49,6 @@ class NewsCard extends StatelessWidget {
           AspectRatio(
             aspectRatio: 3 / 1,
             child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fitHeight,
-                  alignment: FractionalOffset.topCenter,
-                  image: NetworkImage(newsUrl),
-                ),
-              ),
               child: Image.network(
                 newsUrl,
                 fit: BoxFit.cover,
