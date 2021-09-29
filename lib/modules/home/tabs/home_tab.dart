@@ -11,7 +11,7 @@ class HomeTab extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: ColorConstants.darkGray,
+        backgroundColor: Color.fromRGBO(229, 229, 229, 1),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(110),
           child: Container(
