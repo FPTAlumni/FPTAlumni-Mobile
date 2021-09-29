@@ -46,27 +46,85 @@ class NewsCard extends StatelessWidget {
               ),
             ),
           ),
-          Image.network(newsUrl),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 25,
-              backgroundImage: NetworkImage(avatar),
-              backgroundColor: Colors.transparent,
-            ),
-            title: Text(
-              'Username',
-              style: TextStyle(fontSize: 15),
-            ),
-            subtitle: Text('28/09/2021', style: TextStyle(fontSize: 13)),
-            trailing: Container(
-              width: 150,
-              child: Text(
-                'Group name is very very very very long long',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+          AspectRatio(
+            aspectRatio: 3 / 1,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitHeight,
+                  alignment: FractionalOffset.topCenter,
+                  image: NetworkImage(newsUrl),
+                ),
+              ),
+              child: Image.network(
+                newsUrl,
+                fit: BoxFit.cover,
               ),
             ),
           ),
+          Row(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 15.0,
+                ),
+                child: CircleAvatar(
+                  radius: 22,
+                  backgroundImage: NetworkImage(avatar),
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+              Column(
+                children: [
+                  Text(
+                    'Username',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    '28/09/2021',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
+              ),
+              Spacer(),
+              Expanded(
+                flex: 2,
+                child: Wrap(
+                  alignment: WrapAlignment.end,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: Chip(
+                        label: Text(
+                          '#K14',
+                          textScaleFactor: 5 / 6,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: Chip(
+                        label: Text(
+                          '#K14',
+                          textScaleFactor: 5 / 6,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: Chip(
+                        label: Text(
+                          '#K14',
+                          textScaleFactor: 5 / 6,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
