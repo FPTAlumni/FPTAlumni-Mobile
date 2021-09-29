@@ -32,7 +32,7 @@ class MainScreen extends GetView<MainController> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu),
-            label: 'Menu',
+            label: 'More',
           ),
         ],
         unselectedItemColor: ColorConstants.black,
