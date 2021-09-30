@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
+import 'package:uni_alumni/routes/my_keys.dart';
+import 'package:uni_alumni/routes/my_navigator.dart';
 
 class MainController extends GetxController {
   var currentTab = MainTabs.home.obs;
@@ -9,19 +12,55 @@ class MainController extends GetxController {
   late GroupsTab groupsTab;
   late MenuTab menuTab;
 
+  List<Widget> _pages = [
+    MyNavigator(navigatorKey: MyKeys.home, name: 'home', widget: HomeTab()),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+  ];
+
+  List<Widget> get pages {
+    return [..._pages];
+  }
+
   @override
   void onInit() {
     super.onInit();
-    homeTab = HomeTab();
-
-    recruitmentsTab = RecruitmentTab();
-    groupsTab = GroupsTab();
-    menuTab = MenuTab();
   }
 
   void switchTab(index) {
     var tab = _getCurrentTab(index);
+
+    if (_pages[index] is SizedBox) {
+      _createScreen(tab, index);
+    }
+
+    if (currentTab.value == tab) {
+      MyKeys.home.currentState!.popUntil((route) => route.isFirst);
+    }
+
     currentTab.value = tab;
+  }
+
+  void _createScreen(MainTabs tab, index) {
+    switch (tab) {
+      case MainTabs.home:
+        _pages[index] = MyNavigator(
+            navigatorKey: MyKeys.home, name: 'home', widget: HomeTab());
+        break;
+      case MainTabs.recruitment:
+        _pages[index] = MyNavigator(
+            navigatorKey: MyKeys.jobs, name: 'Jobs', widget: RecruitmentTab());
+        break;
+      case MainTabs.groups:
+        _pages[index] = MyNavigator(
+            navigatorKey: MyKeys.groups, name: 'Groups', widget: GroupsTab());
+        break;
+      case MainTabs.menu:
+        _pages[index] = MyNavigator(
+            navigatorKey: MyKeys.menu, name: 'Menu', widget: MenuTab());
+        break;
+    }
   }
 
   int getCurrentIndex(MainTabs tab) {
