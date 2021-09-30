@@ -118,12 +118,12 @@ class HomeTab extends StatelessWidget {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (ctx) =>
-                                                      EventScreen()));
+                                                      NewsScreen()));
                                         } else {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (ctx) =>
-                                                      NewsScreen()));
+                                                      EventScreen()));
                                         }
                                       },
                                       child: Icon(
