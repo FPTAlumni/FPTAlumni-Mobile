@@ -114,11 +114,16 @@ class HomeTab extends StatelessWidget {
                                   child: Container(
                                     child: PopupMenuButton(
                                       onSelected: (index) {
-                                        print(index);
                                         if (index == 0) {
-                                          Get.to(NewsScreen());
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (ctx) =>
+                                                      NewsScreen()));
                                         } else {
-                                          Get.to(EventScreen());
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (ctx) =>
+                                                      EventScreen()));
                                         }
                                       },
                                       child: Icon(

@@ -19,15 +19,6 @@ class NewsCard extends StatelessWidget {
         bottom: 5.0,
       ),
       color: ColorConstants.white,
-      // decoration: BoxDecoration(
-      //   color: ColorConstants.white,
-      //   border: Border.symmetric(
-      //     horizontal: BorderSide(
-      //       color: ColorConstants.primaryAppColor,
-      //       width: 2,
-      //     ),
-      //   ),
-      // ),
       child: Column(
         children: [
           Padding(

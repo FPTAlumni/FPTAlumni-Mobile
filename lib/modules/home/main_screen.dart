@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
+import 'package:uni_alumni/routes/my_keys.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class MainScreen extends GetView<MainController> {
@@ -9,13 +10,23 @@ class MainScreen extends GetView<MainController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Obx(() => _buildWidget(context)),
-      onWillPop: () async => false,
+      onWillPop: () async {
+        return !await Navigator.maybePop(
+          MyKeys.getKeys()[
+                  controller.getCurrentIndex(controller.currentTab.value)]
+              .currentState!
+              .context,
+        );
+      },
     );
   }
 
   Widget _buildWidget(BuildContext context) {
     return Scaffold(
-      body: _buildContent(controller.currentTab.value),
+      body: IndexedStack(
+        index: controller.getCurrentIndex(controller.currentTab.value),
+        children: controller.pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -32,7 +43,7 @@ class MainScreen extends GetView<MainController> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu),
-            label: 'More',
+            label: 'Menu',
           ),
         ],
         unselectedItemColor: ColorConstants.black,
