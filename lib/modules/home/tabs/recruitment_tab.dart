@@ -1,4 +1,4 @@
-import 'package:filter_list/filter_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/recruitment/recruitment_controller.dart';
@@ -6,6 +6,7 @@ import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/filters.dart';
+import 'package:uni_alumni/shared/utils/FilterDialog.dart';
 
 class RecruitmentTab extends StatelessWidget {
   final RecruitmentController controller = Get.put(RecruitmentController());
@@ -49,93 +50,65 @@ class RecruitmentTab extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              RawMaterialButton(
-                constraints: BoxConstraints(
-                  minWidth: 36.0,
-                  maxWidth: 36.0,
+              ClipOval(
+                child: Material(
+                  elevation: 2.0,
+                  color: ColorConstants.lightPrimaryAppColor,
+                  child: InkWell(
+                    splashColor: Color.fromRGBO(128, 128, 128, 0.6),
+                    onTap: () async {
+                      FilterDialog dialog = FilterDialog();
+                      await dialog.showDialog(
+                          context: context,
+                          filtersData: FiltersData.jobsFilters,
+                          selectedFilters: controller.selectedFilterList
+                              .toList()
+                              .cast<String>());
+                      controller.selectedFilterList.value = dialog.filterList;
+                    },
+                    child: SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: Container(
+                        child: Image.asset(
+                          AssetConstants.filter,
+                          color: Colors.white70,
+                        ),
+                        padding: const EdgeInsets.all(5.0),
+                      ),
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  _openFilterDialog(context);
-                },
-                elevation: 2.0,
-                fillColor: ColorConstants.lightPrimaryAppColor,
-                child: Image.asset(
-                  AssetConstants.filter,
-                  width: 25,
-                  color: Colors.white70,
-                ),
-                padding: EdgeInsets.all(5.0),
-                shape: CircleBorder(),
               ),
-              RawMaterialButton(
-                constraints: BoxConstraints(
-                  minWidth: 36.0,
-                  maxWidth: 36.0,
+              const SizedBox(width: 8),
+              ClipOval(
+                child: Material(
+                  elevation: 2.0,
+                  color: ColorConstants.lightPrimaryAppColor,
+                  child: InkWell(
+                    splashColor: Color.fromRGBO(128, 128, 128, 0.6),
+                    onTap: () {},
+                    child: SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: Container(
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white70,
+                          size: 25.0,
+                        ),
+                        padding: const EdgeInsets.all(5.0),
+                      ),
+                    ),
+                  ),
                 ),
-                onPressed: () {},
-                elevation: 2.0,
-                fillColor: ColorConstants.lightPrimaryAppColor,
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white70,
-                  size: 25.0,
-                ),
-                padding: EdgeInsets.all(5.0),
-                shape: CircleBorder(),
               ),
+              const SizedBox(width: 8),
             ],
           ),
         ),
       ),
       body: RecruitmentList(),
-    );
-  }
-
-  void _openFilterDialog(BuildContext context) async {
-    await FilterListDialog.display<String>(
-      context,
-      listData: FiltersData.jobsFilters,
-      selectedListData: controller.selectedFilterList.toList().cast<String>(),
-      height: 480,
-      headlineText: "Select Filters",
-      searchFieldHintText: "Search...",
-      applyButonTextBackgroundColor: ColorConstants.lightPrimaryAppColor,
-      selectedTextBackgroundColor: ColorConstants.lightPrimaryAppColor,
-      controlButtonTextStyle: TextStyle(
-        color: ColorConstants.lightPrimaryAppColor,
-        fontSize: 15,
-      ),
-      applyButtonTextStyle: TextStyle(
-        color: ColorConstants.white,
-        fontSize: 15,
-      ),
-      closeIconColor: Colors.red,
-      choiceChipLabel: (item) {
-        return item;
-      },
-      validateSelectedItem: (list, val) {
-        return list!.contains(val);
-      },
-      onItemSearch: (list, text) {
-        if (list!.any(
-            (element) => element.toLowerCase().contains(text.toLowerCase()))) {
-          return list
-              .where((element) =>
-                  element.toLowerCase().contains(text.toLowerCase()))
-              .toList();
-        } else {
-          return [];
-        }
-      },
-      onApplyButtonClick: (list) {
-        if (list != null) {
-          controller.selectedFilterList.value = List.from(list);
-          controller.selectedFilterList.forEach((element) {
-            print(element);
-          });
-        }
-        Get.back();
-      },
     );
   }
 }
