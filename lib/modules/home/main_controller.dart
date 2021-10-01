@@ -36,10 +36,23 @@ class MainController extends GetxController {
     }
 
     if (currentTab.value == tab) {
-      MyKeys.home.currentState!.popUntil((route) => route.isFirst);
+      _getKey(tab).currentState!.popUntil((route) => route.isFirst);
     }
 
     currentTab.value = tab;
+  }
+
+  GlobalKey<NavigatorState> _getKey(MainTabs tab) {
+    switch (tab) {
+      case MainTabs.home:
+        return MyKeys.home;
+      case MainTabs.recruitment:
+        return MyKeys.jobs;
+      case MainTabs.groups:
+        return MyKeys.groups;
+      case MainTabs.menu:
+        return MyKeys.menu;
+    }
   }
 
   void _createScreen(MainTabs tab, index) {

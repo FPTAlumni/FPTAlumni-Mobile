@@ -17,7 +17,7 @@ class RecruitmentTab extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(110),
         child: Container(
-          height: 110 - MediaQuery.of(context).padding.top + 5,
+          height: 110 - MediaQuery.of(context).padding.top - 5,
           color: ColorConstants.white,
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top + 10,

@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart' show HomeTabs;
 
 class HomeTabController extends GetxController {
-  final GlobalKey<PopupMenuButtonState<int>> key = GlobalKey();
-
   var selectedFilterList = [].obs;
   var currentTab = HomeTabs.news.obs;
 
