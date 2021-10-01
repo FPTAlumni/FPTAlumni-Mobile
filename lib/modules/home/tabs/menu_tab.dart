@@ -1,10 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:uni_alumni/modules/alumni/screens/profile_screen.dart';
-import 'package:uni_alumni/modules/news/widgets/news_card.dart';
+import 'package:uni_alumni/screens/profile_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
-import 'package:uni_alumni/shared/data/fake_data.dart';
 import 'package:uni_alumni/shared/card/alumni_card.dart';
 
 class MenuTab extends StatelessWidget {
