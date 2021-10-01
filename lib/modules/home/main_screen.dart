@@ -13,7 +13,7 @@ class MainScreen extends GetView<MainController> {
       onWillPop: () async {
         return !await Navigator.maybePop(
           MyKeys.getKeys()[
-                  controller.getCurrentIndex(controller.currentTab.value)]
+          controller.getCurrentIndex(controller.currentTab.value)]
               .currentState!
               .context,
         );
@@ -72,37 +72,5 @@ class MainScreen extends GetView<MainController> {
       default:
         return controller.homeTab;
     }
-  }
-
-  Widget _homeTabBottomSheet() {
-    return Container(
-      height: 100,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: double.infinity,
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                'Create new News',
-                style: TextStyle(color: ColorConstants.primaryAppColor),
-              ),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                'Create new Event',
-                style: TextStyle(color: ColorConstants.primaryAppColor),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
