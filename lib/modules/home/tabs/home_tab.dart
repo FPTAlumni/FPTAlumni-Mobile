@@ -197,16 +197,4 @@ class HomeTab extends StatelessWidget {
       ),
     );
   }
-
-  void _popUpMenu() {
-    PopupMenuButton<int>(
-      key: controller.key,
-      itemBuilder: (context) {
-        return <PopupMenuEntry<int>>[
-          PopupMenuItem(child: Text('News'), value: 0),
-          PopupMenuItem(child: Text('Events'), value: 1),
-        ];
-      },
-    );
-  }
 }
