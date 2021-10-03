@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
+import 'package:uni_alumni/routes/my_keys.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class MainScreen extends GetView<MainController> {
@@ -9,13 +10,23 @@ class MainScreen extends GetView<MainController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Obx(() => _buildWidget(context)),
-      onWillPop: () async => false,
+      onWillPop: () async {
+        return !await Navigator.maybePop(
+          MyKeys.getKeys()[
+                  controller.getCurrentIndex(controller.currentTab.value)]
+              .currentState!
+              .context,
+        );
+      },
     );
   }
 
   Widget _buildWidget(BuildContext context) {
     return Scaffold(
-      body: _buildContent(controller.currentTab.value),
+      body: IndexedStack(
+        index: controller.getCurrentIndex(controller.currentTab.value),
+        children: controller.pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -32,7 +43,7 @@ class MainScreen extends GetView<MainController> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu),
-            label: 'More',
+            label: 'Menu',
           ),
         ],
         unselectedItemColor: ColorConstants.black,
@@ -45,43 +56,21 @@ class MainScreen extends GetView<MainController> {
         onTap: (index) => controller.switchTab(index),
         type: BottomNavigationBarType.fixed,
       ),
-      floatingActionButton:
-          _buildFloatingButton(controller.currentTab.value, context),
     );
   }
 
   Widget _buildContent(MainTabs tab) {
     switch (tab) {
-      case MainTabs.Home:
+      case MainTabs.home:
         return controller.homeTab;
-      case MainTabs.Recruitment:
+      case MainTabs.recruitment:
         return controller.recruitmentsTab;
-      case MainTabs.Groups:
+      case MainTabs.groups:
         return controller.groupsTab;
-      case MainTabs.Menu:
+      case MainTabs.menu:
         return controller.menuTab;
       default:
         return controller.homeTab;
-    }
-  }
-
-  Widget? _buildFloatingButton(MainTabs tab, BuildContext context) {
-    switch (tab) {
-      case MainTabs.Home:
-        return FloatingActionButton(
-          onPressed: () => Get.bottomSheet(
-            _homeTabBottomSheet(),
-            backgroundColor: ColorConstants.white,
-          ),
-          child: Icon(Icons.add),
-          backgroundColor: ColorConstants.primaryAppColor,
-        );
-      case MainTabs.Recruitment:
-        return null;
-      case MainTabs.Groups:
-        return null;
-      case MainTabs.Menu:
-        return null;
     }
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uni_alumni/modules/event/widgets/event_card.dart';
+import 'package:uni_alumni/modules/events/widgets/event_card.dart';
 
 class EventsList extends StatelessWidget {
   final String eventUrl =

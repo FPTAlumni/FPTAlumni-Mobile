@@ -5,6 +5,7 @@ import 'package:uni_alumni/screens/editprofile_screen.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_button_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_profile_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/appbar_widget.dart';
+import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/fake_data.dart';
 
@@ -17,6 +18,47 @@ class Profile extends StatelessWidget {
     final user = UserPreferences.myUser;
     return Scaffold(
       appBar: buildAppBar(context),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(110),
+      //   child: Container(
+      //     color: ColorConstants.white,
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //       children: [
+      //         Container(
+      //           padding: EdgeInsets.only(
+      //             top: 10,
+      //             left: 15.0,
+      //           ),
+      //           margin: EdgeInsets.only(
+      //             bottom: 10,
+      //           ),
+      //           child: Row(
+      //             children: [
+      //               Container(
+      //                 margin: EdgeInsets.only(right: 15.0),
+      //                 child: Image.asset(
+      //                   AssetConstants.logo,
+      //                   width: 40,
+      //                 ),
+      //               ),
+      //               Text(
+      //                 'ALUMNI',
+      //                 style: TextStyle(
+      //                   fontWeight: FontWeight.bold,
+      //                   color: ColorConstants.primaryAppColor,
+      //                   fontSize: 20,
+      //                   fontFamily: 'Poppins',
+      //                   letterSpacing: 3,
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [

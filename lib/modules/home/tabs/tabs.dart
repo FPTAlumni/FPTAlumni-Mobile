@@ -4,8 +4,13 @@ export './groups_tab.dart';
 export './menu_tab.dart';
 
 enum MainTabs {
-  Home,
-  Recruitment,
-  Groups,
-  Menu,
+  home,
+  recruitment,
+  groups,
+  menu,
+}
+
+enum HomeTabs {
+  news,
+  events,
 }

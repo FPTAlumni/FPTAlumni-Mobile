@@ -23,7 +23,7 @@ class EventCard extends StatelessWidget {
         right: 25.0,
         left: 25.0,
       ),
-      color: ColorConstants.lightGray,
+      color: ColorConstants.white,
       child: Column(
         children: [
           Row(
