@@ -14,10 +14,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        //nếu chỗ này để Colors.black, icon màu đen sẽ bị ẩn.
-        primaryColor: Colors.blue.shade300,
-      ),
       initialRoute: Routes.MAIN,
       getPages: AppPages.routes,
     );

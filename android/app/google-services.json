@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "565543647713",
+    "firebase_url": "https://unialumni-89c7d-default-rtdb.firebaseio.com",
+    "project_id": "unialumni-89c7d",
+    "storage_bucket": "unialumni-89c7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565543647713:android:ce31a8f5e8c47021043aa0",
+        "android_client_info": {
+          "package_name": "com.example.uni_alumni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565543647713-5ll6qh3c3nnv22hknacmc5819k884ig9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uni_alumni",
+            "certificate_hash": "4dfaadda79009d398d3444d296ae362e854842ec"
+          }
+        },
+        {
+          "client_id": "565543647713-bbstjpjdo479ud784vbjj9m13bg14m9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwc5efra94BEtS1GqBuTzx7vNsZer2JrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565543647713-bbstjpjdo479ud784vbjj9m13bg14m9m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
