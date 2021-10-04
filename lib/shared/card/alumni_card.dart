@@ -27,36 +27,37 @@ class AlumniIndex extends StatelessWidget {
                 size: 20.0,
               ),
               const SizedBox(height: 5),
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
             ],
+          ),
+          Row(
+           children: [
+             Container(
+               child: Column(
+                 children: <Widget>[
+                   Text(
+                     title,
+                     style: TextStyle(
+                       fontSize: 20,
+                       fontWeight: FontWeight.bold,
+                     ),
+                   ),
+                 ],
+               ),
+             ),
+           ],
           ),
         ],
       ),
 
-
-
-
-
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            color.withOpacity(0.5),
+            color.withOpacity(0.6),
             color,
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.center,
+          end: Alignment.bottomCenter,
         ),
         borderRadius: BorderRadius.circular(15),
 

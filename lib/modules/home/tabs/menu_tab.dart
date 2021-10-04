@@ -2,9 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:uni_alumni/modules/alumni/screens/profile_screen.dart';
-import 'package:uni_alumni/modules/news/widgets/news_card.dart';
+import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
-import 'package:uni_alumni/shared/data/fake_data.dart';
 import 'package:uni_alumni/shared/card/alumni_card.dart';
 
 class MenuTab extends StatelessWidget {
@@ -12,9 +11,10 @@ class MenuTab extends StatelessWidget {
       'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg';
 
   void selectProfile(BuildContext context){
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return Profile();
-    },),);
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return Profile();
+    // },),);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
   }
   
   @override
@@ -23,164 +23,205 @@ class MenuTab extends StatelessWidget {
     //bien nay la de tam thoi check role cho alumni
     bool isLeader = true;
 
-    return Container(
-      padding: const EdgeInsets.all(20.0),
-      child: ListView(
-        children: [
-          ..._buildHeader(title: 'Menu'),
-          //cho nay de avatar, can tach
-         InkWell(
-           onTap: () => selectProfile(context),
-           splashColor: ColorConstants.primaryAppColor,
-           child: Container(
-             child: Column(
-               children: <Widget>[
-                 Row(
-                   children: [
-                     CircleAvatar(
-                       radius: 25,
-                       backgroundImage: NetworkImage(url),
-                       backgroundColor: Colors.transparent,
-                     ),
-                     const SizedBox(height: 5),
-                     Container(
-                       child: Column(
-                         children: <Widget>[
-                           Text(
-                             " Hello,  Ageha Chou",
-                             style: TextStyle(
-                               fontSize: 25,
-                             ),
-                           ),
-                         ],
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100),
+        child: Container(
+          color: ColorConstants.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  top: 35,//chỉnh chổ này cho appBar dịch xuống
+                  left: 15.0,
+                ),
+                margin: EdgeInsets.only(
+                  bottom: 10,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 15.0),
+                      child: Image.asset(
+                        AssetConstants.logo,
+                        width: 40,
+                      ),
+                    ),
+                    Text(
+                      'MENU',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants.primaryAppColor,
+                        fontSize: 20,
+                        fontFamily: 'Poppins',
+                        letterSpacing: 3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(20.0),
+        child: ListView(
+          children: [
+           InkWell(
+             onTap: () => selectProfile(context),
+             splashColor: ColorConstants.primaryAppColor,
+             child: Container(
+               child: Column(
+                 children: <Widget>[
+                   Row(
+                     children: [
+                       CircleAvatar(
+                         radius: 25,
+                         backgroundImage: NetworkImage(url),
+                         backgroundColor: Colors.transparent,
                        ),
-                     ),
-                   ],
-                 ),
-               ],
+                       const SizedBox(height: 5),
+                       Container(
+                         child: Column(
+                           children: <Widget>[
+                             Text(
+                               " Hello,  Ageha Chou",
+                               style: TextStyle(
+                                 fontSize: 25,
+                               ),
+                             ),
+                           ],
+                         ),
+                       ),
+                     ],
+                   ),
+                 ],
+               ),
              ),
            ),
-         ),
-          const Divider(),
-         Container(
-             width: 150,
-             height: 300,
-             margin: EdgeInsets.all(5),
-           padding: EdgeInsets.all(10),
-           child: Column(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     AlumniIndex(" Events", ColorConstants.primaryAppColor, Icons.event),
-                     AlumniIndex(" Jobs", ColorConstants.primaryAppColor, Icons.work),
-                   ],
-                 ),
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     AlumniIndex(" News", ColorConstants.primaryAppColor, Icons.wallpaper),
-                     AlumniIndex(" Referral", ColorConstants.primaryAppColor, Icons.person_add_alt),
-                   ],
-                 ),
-               ],
-         ),
-         ),
+            const Divider(),
+           Container(
+               width: 150,
+               height: 300,
+               margin: EdgeInsets.all(5),
+             padding: EdgeInsets.all(10),
+             child: Column(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       AlumniIndex("Events", ColorConstants.primaryAppColor, Icons.event),
+                       AlumniIndex("Jobs", ColorConstants.primaryAppColor, Icons.work),
+                     ],
+                   ),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       AlumniIndex("News", ColorConstants.primaryAppColor, Icons.wallpaper),
+                       // AlumniIndex(" Referral", ColorConstants.primaryAppColor, Icons.person_add_alt),
+                     ],
+                   ),
+                 ],
+           ),
+           ),
 
-          const Divider(),
-          isLeader ? Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Icon(
-                      Icons.group,
-                      color: ColorConstants.primaryAppColor,
-                      size: 25.0,
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            " Manage Groups",
-                            style: TextStyle(
-                              fontSize: 23,
-                            ),
-                          ),
-                        ],
+            const Divider(),
+            isLeader ? Container(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.group,
+                        color: ColorConstants.primaryAppColor,
+                        size: 25.0,
                       ),
-                    ),
-                    const Divider(),
-                  ],
-                ),
-              ],
-            ),
-          ) : const Divider(),
-          const Divider(),
-          isLeader ? Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Icon(
-                      Icons.group_add,
-                      color: ColorConstants.primaryAppColor,
-                      size: 25.0,
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "  Manage Members",
-                            style: TextStyle(
-                              fontSize: 23,
+                      const SizedBox(height: 5),
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              " Manage Groups",
+                              style: TextStyle(
+                                fontSize: 23,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const Divider(),
-                  ],
-                ),
-              ],
-            ),
-          ) : const Divider(),
-          const Divider(),
-          Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Icon(
-                      Icons.arrow_back_rounded,
-                      color: ColorConstants.primaryAppColor,
-                      size: 25.0,
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            " Sign out",
-                            style: TextStyle(
-                              fontSize: 25,
+                      const Divider(),
+                    ],
+                  ),
+                ],
+              ),
+            ) : const Divider(),
+            const Divider(),
+            isLeader ? Container(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.group_add,
+                        color: ColorConstants.primaryAppColor,
+                        size: 25.0,
+                      ),
+                      const SizedBox(height: 5),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "  Manage Members",
+                              style: TextStyle(
+                                fontSize: 23,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                      const Divider(),
+                    ],
+                  ),
+                ],
+              ),
+            ) : const Divider(),
+            const Divider(),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.arrow_back_rounded,
+                        color: ColorConstants.primaryAppColor,
+                        size: 25.0,
+                      ),
+                      const SizedBox(height: 5),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              " Sign out",
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Divider(),
-        ],
+            const Divider(),
+          ],
+        ),
       ),
     );
   }
