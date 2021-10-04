@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_alumni/model/Alumni.dart';
-import 'package:uni_alumni/screens/editprofile_screen.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_button_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_profile_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/appbar_widget.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/fake_data.dart';
+
+import 'editprofile_screen.dart';
 
 class Profile extends StatelessWidget {
   String url =
@@ -76,6 +77,7 @@ class Profile extends StatelessWidget {
           const SizedBox(height: 24),
           const Divider(),
           Container(
+            padding: EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 Row(
@@ -106,12 +108,13 @@ class Profile extends StatelessWidget {
           ),
           const Divider(),
           Container(
+            padding: EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 Row(
                   children: [
                     Icon(
-                      Icons.group_add,
+                      Icons.map,
                       color: ColorConstants.primaryAppColor,
                       size: 25.0,
                     ),
@@ -136,12 +139,13 @@ class Profile extends StatelessWidget {
           ),
           const Divider(),
           Container(
+            padding: EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 Row(
                   children: [
                     Icon(
-                      Icons.group_add,
+                      Icons.phone,
                       color: ColorConstants.primaryAppColor,
                       size: 25.0,
                     ),
@@ -166,17 +170,19 @@ class Profile extends StatelessWidget {
           ),
           const Divider(),
           Container(
+            padding: EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 Row(
                   children: [
                     Icon(
-                      Icons.group_add,
+                      Icons.cake_rounded,
                       color: ColorConstants.primaryAppColor,
                       size: 25.0,
                     ),
                     const SizedBox(height: 5),
                     Container(
+                      // padding: EdgeInsets.all(10),
                       child: Column(
                         children: <Widget>[
                           Text(

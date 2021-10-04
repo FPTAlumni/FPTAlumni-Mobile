@@ -42,8 +42,8 @@ class MainScreen extends GetView<MainController> {
             label: 'Groups',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Menu',
+            icon: Icon(Icons.person_sharp),
+            label: 'Profile',
           ),
         ],
         unselectedItemColor: ColorConstants.black,
