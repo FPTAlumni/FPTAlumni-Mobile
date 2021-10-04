@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:uni_alumni/modules/auth/screens/sign_in_screen.dart';
 import 'package:uni_alumni/modules/home/main_binding.dart';
 import 'package:uni_alumni/modules/home/main_screen.dart';
 part './app_routes.dart';
@@ -10,6 +11,11 @@ class AppPages {
     GetPage(
       name: Routes.MAIN,
       page: () => MainScreen(),
+      binding: MainBinding(),
+    ),
+    GetPage(
+      name: Routes.SIGN_IN,
+      page: () => SignInScreen(),
       binding: MainBinding(),
     ),
   ];
