@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
+import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/routes/my_keys.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
-class MainScreen extends GetView<MainController> {
+class MainScreen extends StatelessWidget {
+  final MainController controller = Get.put(MainController());
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Obx(() => _buildWidget(context)),
       onWillPop: () async {
+        // if (Get.previousRoute == Routes.SIGN_IN ||
+        //     Get.previousRoute == Routes.SIGN_UP) {
+        //   return false;
+        // }
         return !await Navigator.maybePop(
           MyKeys.getKeys()[
-          controller.getCurrentIndex(controller.currentTab.value)]
+                  controller.getCurrentIndex(controller.currentTab.value)]
               .currentState!
               .context,
         );

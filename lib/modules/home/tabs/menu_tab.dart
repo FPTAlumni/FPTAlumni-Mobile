@@ -1,7 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uni_alumni/modules/alumni/screens/profile_screen.dart';
+import 'package:uni_alumni/modules/auth/auth_controller.dart';
+import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/card/alumni_card.dart';
@@ -193,32 +196,41 @@ class MenuTab extends StatelessWidget {
                   )
                 : const Divider(),
             const Divider(),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.arrow_back_rounded,
-                        color: ColorConstants.primaryAppColor,
-                        size: 25.0,
-                      ),
-                      const SizedBox(height: 5),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              " Sign out",
-                              style: TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                          ],
+            //Diệp thêm tạm ở đây nha
+            GestureDetector(
+              onTap: () {
+                AuthController authController = Get.find();
+                authController.logout();
+                authController.dispose();
+                Get.offAllNamed(Routes.ROOT);
+              },
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.arrow_back_rounded,
+                          color: ColorConstants.primaryAppColor,
+                          size: 25.0,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(height: 5),
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                " Sign out",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             const Divider(),
