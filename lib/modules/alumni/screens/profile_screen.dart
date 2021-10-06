@@ -81,7 +81,7 @@ class Profile extends StatelessWidget {
                   children: [buildCardInfor(Icons.phone, 'Contact')],
                 ),
                 const Divider(),
-                Row(children: [buildCardInfor(Icons.group_add, 'Job'),],),
+                Row(children: [buildCardInfor(Icons.work, 'Job'),],),
                 const Divider(),
                 Row(children: [buildCardInfor(Icons.map, 'Address'),]),
               ],
