@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:uni_alumni/model/Alumni.dart';
+import 'package:uni_alumni/models/alumni.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_profile_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_textfield_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/appbar_widget.dart';
@@ -20,33 +19,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String userAboutMe = "Keep moving forward";
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: buildAppBar(context),
-    body: ListView(
-      padding: EdgeInsets.symmetric(horizontal: 32),
-      physics: BouncingScrollPhysics(),
-      children: [
-        ProfileWidget(imagePath: url, onClicked: () async {}),
-        const SizedBox(height:24),
-        TextFieldWidget(
-          label: "Full Name",
-          text: user.fullName,
-          onChanged: (name) {},
+        appBar: buildAppBar(context),
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 32),
+          physics: BouncingScrollPhysics(),
+          children: [
+            ProfileWidget(imagePath: url, onClicked: () async {}),
+            const SizedBox(height: 24),
+            TextFieldWidget(
+              label: "Full Name",
+              text: user.fullName,
+              onChanged: (name) {},
+            ),
+            const SizedBox(height: 24),
+            TextFieldWidget(
+              label: "Email",
+              text: user.email,
+              onChanged: (name) {},
+            ),
+            const SizedBox(height: 24),
+            TextFieldWidget(
+              label: "About me",
+              maxLines: 5,
+              text: userAboutMe,
+              onChanged: (name) {},
+            ),
+          ],
         ),
-        const SizedBox(height:24),
-        TextFieldWidget(
-          label: "Email",
-          text: user.email,
-          onChanged: (name) {},
-        ),
-        const SizedBox(height:24),
-        TextFieldWidget(
-          label: "About me",
-          maxLines: 5,
-          text: userAboutMe,
-          onChanged: (name) {},
-        ),
-
-      ],
-    ),
-  );
+      );
 }

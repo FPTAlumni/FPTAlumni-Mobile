@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_alumni/models/clazz.dart';
+import 'package:uni_alumni/models/request/user_request.dart';
 import 'package:uni_alumni/models/university.dart';
+import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/auth/widgets/custom_full_screen_dialog.dart';
 import 'package:uni_alumni/modules/universities/university_controller.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 
 class AuthController extends GetxController {
+  AuthRepository authRepository = Get.find();
   UniversityController universityController = Get.find();
   var selectedClass = 0.obs;
   var selectedUniversity = 0.obs;
@@ -97,8 +100,12 @@ class AuthController extends GetxController {
       );
 
       userCredential = await _firebaseAuth.signInWithCredential(credential);
-      await userCredential!.user!.getIdToken().then((token) => print(token));
+      String firebaseToken = await userCredential!.user!.getIdToken();
+      // print(firebaseToken);
       CustomFullScreenDialog.cancelDialog();
+      print('call get app token');
+      await authRepository.getAppToken(UserRequest(
+          tokenId: firebaseToken, universityId: selectedUniversity.value));
       // logout();
       // Get.toNamed(Routes.SIGN_UP);
       isSignIn.value = true;

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_alumni/model/Alumni.dart';
+import 'package:uni_alumni/models/alumni.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_button_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_profile_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/appbar_widget.dart';
@@ -81,9 +81,15 @@ class Profile extends StatelessWidget {
                   children: [buildCardInfor(Icons.phone, 'Contact')],
                 ),
                 const Divider(),
-                Row(children: [buildCardInfor(Icons.work, 'Job'),],),
+                Row(
+                  children: [
+                    buildCardInfor(Icons.work, 'Job'),
+                  ],
+                ),
                 const Divider(),
-                Row(children: [buildCardInfor(Icons.map, 'Address'),]),
+                Row(children: [
+                  buildCardInfor(Icons.map, 'Address'),
+                ]),
               ],
             ),
           ),
@@ -92,8 +98,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-
-  Widget buildCardInfor(IconData icon, String infor){
+  Widget buildCardInfor(IconData icon, String infor) {
     return Container(
       padding: EdgeInsets.all(20),
       child: Column(
@@ -127,7 +132,6 @@ class Profile extends StatelessWidget {
     );
   }
 
-
   //card alumni infor
   Widget buildAlumniCard(Widget widget) {
     return Container(
@@ -142,8 +146,6 @@ class Profile extends StatelessWidget {
       child: widget,
     );
   }
-
-
 
   Widget buildName(Alumni user) => Column(
         children: [
@@ -168,8 +170,7 @@ class Profile extends StatelessWidget {
         text: "Edit Profile",
         onClicked: () {
           Navigator.of(context).push(
-            MaterialPageRoute(
-                builder: (context) => EditProfilePage()),
+            MaterialPageRoute(builder: (context) => EditProfilePage()),
           );
         },
       );
