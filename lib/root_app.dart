@@ -10,5 +10,6 @@ class RootApp extends GetView<AuthController> {
     return Obx(() {
       return controller.isSignIn.value ? MainScreen() : SignInScreen();
     });
+    // return MainScreen() ;
   }
 }
