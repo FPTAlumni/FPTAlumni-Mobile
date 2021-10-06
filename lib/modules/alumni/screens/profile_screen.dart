@@ -135,7 +135,7 @@ class Profile extends StatelessWidget {
           color: Colors.white,
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(25),
       padding: EdgeInsets.all(10),
       height: 250,
       width: 100,
