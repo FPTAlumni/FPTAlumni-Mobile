@@ -1,23 +1,27 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_alumni/models/clazz.dart';
+import 'package:uni_alumni/models/university.dart';
 import 'package:uni_alumni/modules/auth/widgets/custom_full_screen_dialog.dart';
+import 'package:uni_alumni/modules/universities/university_controller.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 
 class AuthController extends GetxController {
+  UniversityController universityController = Get.find();
   var selectedClass = 0.obs;
-  final formKey = GlobalKey<FormState>();
+  var selectedUniversity = 0.obs;
+  final signUpKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
   final phoneController = TextEditingController();
   final dobController = TextEditingController();
 
-  List<DropdownMenuItem> dropdownClass = [];
+  final signInKey = GlobalKey<FormState>();
+  List<DropdownMenuItem> dropdownClasses = [];
+  var dropdownUniversities = [].obs;
 
-  List<Clazz> _listClass = [
+  List<Clazz> _listClasses = [
     Clazz(1, 'K6'),
     Clazz(2, 'K7'),
     Clazz(3, 'K8'),
@@ -39,10 +43,21 @@ class AuthController extends GetxController {
     super.onInit();
 
     //load _listClass to dropdownClass
-    _listClass.forEach((clazz) {
-      dropdownClass.add(DropdownMenuItem(
+    _listClasses.forEach((clazz) {
+      dropdownClasses.add(DropdownMenuItem(
         value: clazz.id,
         child: Text(clazz.name),
+      ));
+    });
+  }
+
+  _loadDropdownUniversities(listUniversities) {
+    //load listUniversities to dropdownUniversities
+    print('load list');
+    listUniversities.forEach((university) {
+      dropdownUniversities.add(DropdownMenuItem(
+        value: university.id,
+        child: Text(university.name),
       ));
     });
   }
@@ -50,9 +65,10 @@ class AuthController extends GetxController {
   //Todo: auto login (do later)
   @override
   onReady() async {
-    print('onReady');
-    _googleSignIn = GoogleSignIn();
+    // _googleSignIn = GoogleSignIn();
     // isSignIn = await firebaseAuth.currentUser != null;
+
+    ever(universityController.universities, _loadDropdownUniversities);
   }
 
   @override
@@ -60,6 +76,9 @@ class AuthController extends GetxController {
   InternalFinalCallback<void> get onDelete => super.onDelete;
 
   void signIn() async {
+    if (!signInKey.currentState!.validate()) {
+      return;
+    }
     //showing spinning
     CustomFullScreenDialog.showDialog();
 
@@ -96,10 +115,14 @@ class AuthController extends GetxController {
     selectedClass.value = value;
   }
 
+  onChangeUniversity(int value) async {
+    selectedUniversity.value = value;
+  }
+
   onSubmitForm() {
     print(userCredential!.user!.email);
     Get.toNamed(Routes.MAIN);
-    final isValidate = formKey.currentState!.validate();
+    final isValidate = signUpKey.currentState!.validate();
     if (!isValidate) return;
   }
 }

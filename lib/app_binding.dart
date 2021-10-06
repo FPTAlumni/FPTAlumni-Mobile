@@ -6,6 +6,6 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(ApiProvider(), permanent: true);
-    Get.put(AuthRepository(apiProvider: Get.find()), permanent: true);
+    // Get.put(AuthRepository(apiProvider: Get.find()), permanent: true);
   }
 }
