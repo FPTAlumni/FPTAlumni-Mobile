@@ -14,11 +14,6 @@ class UniversityController extends GetxController {
     super.onInit();
     loadUniversities();
   }
-  //
-  // @override
-  // onReady() async {
-  //   await loadUniversities();
-  // }
 
   Future<void> loadUniversities() async {
     List<University>? _universities =
