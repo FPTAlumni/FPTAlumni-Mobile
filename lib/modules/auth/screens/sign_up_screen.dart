@@ -48,7 +48,7 @@ class SignUpScreen extends GetView<AuthController> {
                   ),
                 ),
                 Form(
-                  key: controller.formKey,
+                  key: controller.signUpKey,
                   child: Column(
                     children: [
                       _buildTextFormField(
@@ -107,12 +107,16 @@ class SignUpScreen extends GetView<AuthController> {
                               borderSide: BorderSide(color: Color(0xFF2F5233)),
                               borderRadius: BorderRadius.circular(10),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                          hint: Text('Please choose your class'),
+                          hint: Text('Choose your class'),
                           value: controller.selectedClass.value == 0
                               ? null
                               : controller.selectedClass.value,
-                          items: controller.dropdownClass,
+                          items: controller.dropdownClasses,
                           onChanged: (value) {
                             controller
                                 .onChangeClass(int.parse(value.toString()));
@@ -199,6 +203,10 @@ class SignUpScreen extends GetView<AuthController> {
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Color(0xFF2F5233)),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
             borderRadius: BorderRadius.circular(10),
           ),
         ),
