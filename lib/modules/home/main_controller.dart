@@ -9,7 +9,7 @@ class MainController extends GetxController {
 
   late HomeTab homeTab;
   late RecruitmentTab recruitmentsTab;
-  late GroupsTab groupsTab;
+  late ReferralTab referralTab;
   late MenuTab menuTab;
 
   List<Widget> _pages = [
@@ -48,10 +48,10 @@ class MainController extends GetxController {
         return MyKeys.home;
       case MainTabs.recruitment:
         return MyKeys.jobs;
-      case MainTabs.groups:
-        return MyKeys.groups;
-      case MainTabs.menu:
-        return MyKeys.menu;
+      case MainTabs.referral:
+        return MyKeys.referral;
+      case MainTabs.profile:
+        return MyKeys.profile;
     }
   }
 
@@ -65,13 +65,15 @@ class MainController extends GetxController {
         _pages[index] = MyNavigator(
             navigatorKey: MyKeys.jobs, name: 'Jobs', widget: RecruitmentTab());
         break;
-      case MainTabs.groups:
+      case MainTabs.referral:
         _pages[index] = MyNavigator(
-            navigatorKey: MyKeys.groups, name: 'Groups', widget: GroupsTab());
+            navigatorKey: MyKeys.referral,
+            name: 'Referral',
+            widget: ReferralTab());
         break;
-      case MainTabs.menu:
+      case MainTabs.profile:
         _pages[index] = MyNavigator(
-            navigatorKey: MyKeys.menu, name: 'Menu', widget: MenuTab());
+            navigatorKey: MyKeys.profile, name: 'Profile', widget: MenuTab());
         break;
     }
   }
@@ -82,9 +84,9 @@ class MainController extends GetxController {
         return 0;
       case MainTabs.recruitment:
         return 1;
-      case MainTabs.groups:
+      case MainTabs.referral:
         return 2;
-      case MainTabs.menu:
+      case MainTabs.profile:
         return 3;
       default:
         return 0;
@@ -98,9 +100,9 @@ class MainController extends GetxController {
       case 1:
         return MainTabs.recruitment;
       case 2:
-        return MainTabs.groups;
+        return MainTabs.referral;
       case 3:
-        return MainTabs.menu;
+        return MainTabs.profile;
       default:
         return MainTabs.home;
     }
