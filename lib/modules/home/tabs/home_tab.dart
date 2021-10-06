@@ -30,7 +30,7 @@ class HomeTab extends StatelessWidget {
                   children: [
                     Container(
                       padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 10,
+                        top: MediaQuery.of(context).padding.top + 5,
                         left: 15.0,
                       ),
                       child: Row(
@@ -58,7 +58,7 @@ class HomeTab extends StatelessWidget {
                     Spacer(),
                     Container(
                       margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 6,
+                        top: MediaQuery.of(context).padding.top + 10,
                       ),
                       child: Row(
                         children: [

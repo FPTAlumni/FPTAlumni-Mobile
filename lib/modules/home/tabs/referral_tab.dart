@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:uni_alumni/modules/groups/group_controller.dart';
-import 'package:uni_alumni/modules/groups/widgets/groups_list.dart';
+import 'package:get/get.dart';
+import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
-import 'package:get/get.dart';
-import 'package:uni_alumni/shared/data/filters.dart';
-import 'package:uni_alumni/shared/utils/FilterDialog.dart';
 
-class GroupsTab extends StatelessWidget {
-  final GroupController controller = Get.put(GroupController());
+class ReferralTab extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstants.lightScaffoldBackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(110),
         child: Container(
@@ -49,36 +44,6 @@ class GroupsTab extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              ClipOval(
-                child: Material(
-                  elevation: 2.0,
-                  color: ColorConstants.lightPrimaryAppColor,
-                  child: InkWell(
-                    splashColor: Color.fromRGBO(128, 128, 128, 0.6),
-                    onTap: () async {
-                      FilterDialog dialog = FilterDialog();
-                      await dialog.showDialog(
-                          context: context,
-                          filtersData: FiltersData.jobsFilters,
-                          selectedFilters: controller.selectedFilterList
-                              .toList()
-                              .cast<String>());
-                      controller.selectedFilterList.value = dialog.filterList;
-                    },
-                    child: SizedBox(
-                      width: 35,
-                      height: 35,
-                      child: Container(
-                        child: Image.asset(
-                          AssetConstants.filter,
-                          color: Colors.white70,
-                        ),
-                        padding: const EdgeInsets.all(5.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(width: 8),
               ClipOval(
                 child: Material(
@@ -107,7 +72,11 @@ class GroupsTab extends StatelessWidget {
           ),
         ),
       ),
-      body: GroupsList(),
+      body: Container(
+        child: Center(
+          child: Text('Referral'),
+        ),
+      ),
     );
   }
 }

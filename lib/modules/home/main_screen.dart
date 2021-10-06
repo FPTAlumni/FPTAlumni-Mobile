@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
-import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/routes/my_keys.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
@@ -44,8 +43,8 @@ class MainScreen extends StatelessWidget {
             label: 'Jobs',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groups',
+            icon: Icon(Icons.assignment_ind),
+            label: 'Referral',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_sharp),
@@ -71,9 +70,9 @@ class MainScreen extends StatelessWidget {
         return controller.homeTab;
       case MainTabs.recruitment:
         return controller.recruitmentsTab;
-      case MainTabs.groups:
-        return controller.groupsTab;
-      case MainTabs.menu:
+      case MainTabs.referral:
+        return controller.referralTab;
+      case MainTabs.profile:
         return controller.menuTab;
       default:
         return controller.homeTab;
