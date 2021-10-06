@@ -70,133 +70,20 @@ class Profile extends StatelessWidget {
           Center(
             child: buildEditProfileButton(context),
           ),
-          const SizedBox(height: 24),
           // NumbersWidget(),
           const SizedBox(height: 24),
           buildAbout(),
           const SizedBox(height: 24),
-          const Divider(),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: <Widget>[
+          buildAlumniCard(
+            Column(
+              children: [
                 Row(
-                  children: [
-                    Icon(
-                      Icons.group_add,
-                      color: ColorConstants.primaryAppColor,
-                      size: 25.0,
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "  Full-stack developer",
-                            style: TextStyle(
-                              fontSize: 23,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                  ],
+                  children: [buildCardInfor(Icons.phone, 'Contact')],
                 ),
-              ],
-            ),
-          ),
-          const Divider(),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Icon(
-                      Icons.map,
-                      color: ColorConstants.primaryAppColor,
-                      size: 25.0,
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "  Address",
-                            style: TextStyle(
-                              fontSize: 23,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Divider(),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Icon(
-                      Icons.phone,
-                      color: ColorConstants.primaryAppColor,
-                      size: 25.0,
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "  Phone",
-                            style: TextStyle(
-                              fontSize: 23,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Divider(),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Icon(
-                      Icons.cake_rounded,
-                      color: ColorConstants.primaryAppColor,
-                      size: 25.0,
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      // padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "  DOB",
-                            style: TextStyle(
-                              fontSize: 23,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                  ],
-                ),
+                const Divider(),
+                Row(children: [buildCardInfor(Icons.work, 'Job'),],),
+                const Divider(),
+                Row(children: [buildCardInfor(Icons.map, 'Address'),]),
               ],
             ),
           ),
@@ -204,6 +91,59 @@ class Profile extends StatelessWidget {
       ),
     );
   }
+
+
+  Widget buildCardInfor(IconData icon, String infor){
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: [
+              Icon(
+                icon,
+                color: ColorConstants.primaryAppColor,
+                size: 25.0,
+              ),
+              const SizedBox(height: 5),
+              Container(
+                // padding: EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "  " + infor,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  //card alumni infor
+  Widget buildAlumniCard(Widget widget) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10)),
+      margin: EdgeInsets.all(25),
+      padding: EdgeInsets.all(10),
+      height: 250,
+      width: 100,
+      child: widget,
+    );
+  }
+
+
 
   Widget buildName(Alumni user) => Column(
         children: [
