@@ -9,6 +9,7 @@ class AuthRepository {
   Future<String?> getAppToken(UserRequest data) async {
     print(data.toJson().toString());
     final response = await apiProvider.getAppToken('/login', data);
-    print(">>Backend Token: " + response.body);
+    print(response.statusCode);
+    print(response.body);
   }
 }

@@ -5,7 +5,7 @@ class UserRequest {
   UserRequest({required this.tokenId, required this.universityId});
 
   Map<String, dynamic> toJson() => {
-        "idToken": tokenId,
-        "universityId": universityId.toString(),
+        "token": tokenId,
+        "university_id": universityId.toString(),
       };
 }

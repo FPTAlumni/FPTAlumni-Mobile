@@ -8,7 +8,7 @@ class UniversityRepository {
   Future<List<University>?> getUniversities() async {
     final response = await apiProvider.getUniversities('/university');
     if (response.statusCode == 200) {
-      List responseList = response.body;
+      List responseList = response.body['data'];
       return responseList.map((json) => University.fromJson(json)).toList();
     }
   }

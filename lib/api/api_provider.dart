@@ -9,6 +9,6 @@ class ApiProvider extends BaseProvider {
 
   //get app token from backend
   Future<Response> getAppToken(String path, UserRequest data) {
-    return post(path, "", query: data.toJson());
+    return post(path, data.toJson());
   }
 }
