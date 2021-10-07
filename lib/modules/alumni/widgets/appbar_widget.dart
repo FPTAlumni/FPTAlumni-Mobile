@@ -6,12 +6,12 @@ AppBar buildAppBar(BuildContext context){
   final icon = CupertinoIcons.square_arrow_left;
 
   return AppBar(
-    leading: BackButton(),
+    leading: BackButton(color: Colors.black),
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [
         IconButton(
-          icon: Icon(icon),
+          icon: Icon(icon, color: Colors.black),
           onPressed: () {},
         ),
       ],
