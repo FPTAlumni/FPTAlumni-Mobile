@@ -1,8 +1,8 @@
-class UserRequest {
+class AppTokenRequest {
   String tokenId;
   int universityId;
 
-  UserRequest({required this.tokenId, required this.universityId});
+  AppTokenRequest({required this.tokenId, required this.universityId});
 
   Map<String, dynamic> toJson() => {
         "token": tokenId,
