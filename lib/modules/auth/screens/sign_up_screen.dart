@@ -7,6 +7,7 @@ import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class SignUpScreen extends GetView<AuthController> {
+  final GlobalKey<FormState> signUpKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -35,20 +36,19 @@ class SignUpScreen extends GetView<AuthController> {
                         ),
                       ),
                       Text(
-                        'ALUMNI',
+                        'Registration',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: ColorConstants.primaryAppColor,
                           fontSize: 30,
                           fontFamily: 'Poppins',
-                          letterSpacing: 3,
                         ),
                       ),
                     ],
                   ),
                 ),
                 Form(
-                  key: controller.signUpKey,
+                  key: signUpKey,
                   child: Column(
                     children: [
                       _buildTextFormField(
@@ -67,6 +67,7 @@ class SignUpScreen extends GetView<AuthController> {
                         labelText: 'Phone number',
                         controller: controller.phoneController,
                         maxLength: 15,
+                        keyboardType: TextInputType.phone,
                         validator: (value) {
                           if (value!.trim().isEmpty) {
                             return "Please enter your phone number";
@@ -113,6 +114,10 @@ class SignUpScreen extends GetView<AuthController> {
                               borderSide: BorderSide(color: Colors.red),
                               borderRadius: BorderRadius.circular(10),
                             ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                           hint: Text('Choose your class'),
                           value: controller.selectedClass.value == 0
@@ -142,7 +147,9 @@ class SignUpScreen extends GetView<AuthController> {
                                 const EdgeInsets.all(0)),
                           ),
                           onPressed: () {
-                            controller.onSubmitForm();
+                            if (signUpKey.currentState!.validate()) {
+                              controller.onSubmitForm();
+                            }
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -185,6 +192,7 @@ class SignUpScreen extends GetView<AuthController> {
     bool? readOnly = false,
     VoidCallback? onTapHandler,
     int? maxLength,
+    TextInputType? keyboardType = TextInputType.text,
   }) {
     return Container(
       alignment: Alignment.center,
@@ -195,6 +203,7 @@ class SignUpScreen extends GetView<AuthController> {
         controller: controller,
         validator: validator,
         maxLength: maxLength,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
           counterText: "",
           labelText: labelText,
@@ -211,6 +220,10 @@ class SignUpScreen extends GetView<AuthController> {
             borderRadius: BorderRadius.circular(10),
           ),
           errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
             borderRadius: BorderRadius.circular(10),
           ),
