@@ -67,15 +67,6 @@ class AuthController extends GetxController {
   onReady() async {
     super.onReady();
 
-    // isSignIn.value = _firebaseAuth.currentUser != null;
-    // _firebaseAuth.authStateChanges().listen((event) {
-    //   isSignIn.value = event != null;
-    // });
-
-    // CustomFullScreenDialog.showDialog();
-    // await _autoSignIn();
-    // CustomFullScreenDialog.cancelDialog();
-
     if (!isSignIn.value) {
       universityController.loadUniversities();
     }

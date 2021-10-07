@@ -80,7 +80,7 @@ class SignUpScreen extends GetView<AuthController> {
                         labelText: 'Date of birth',
                         controller: controller.dobController,
                         readOnly: true,
-                        hint: 'dd/MM/yyyy',
+                        hint: 'MM/dd/yyyy',
                         onTapHandler: () async {
                           await pickDate(context);
                         },
