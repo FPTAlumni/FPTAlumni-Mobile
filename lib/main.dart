@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/app_binding.dart';
-import 'package:uni_alumni/modules/auth/screens/splash_screen.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 
 void main() {
