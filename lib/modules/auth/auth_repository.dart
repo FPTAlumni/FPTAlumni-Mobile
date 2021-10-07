@@ -1,5 +1,6 @@
 import 'package:uni_alumni/api/api_provider.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
+import 'package:uni_alumni/models/request/registration_request.dart';
 
 class AuthRepository {
   final ApiProvider apiProvider;
@@ -15,5 +16,11 @@ class AuthRepository {
       case 201:
         return null;
     }
+  }
+
+  Future<bool> register(RegistrationRequest data) async {
+    final response = await apiProvider.register('/alumnus', data);
+    if (response.statusCode == 404) return false;
+    return true;
   }
 }

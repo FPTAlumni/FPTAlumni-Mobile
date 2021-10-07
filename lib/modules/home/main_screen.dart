@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
-import 'package:uni_alumni/routes/my_keys.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class MainScreen extends StatelessWidget {
@@ -17,7 +16,8 @@ class MainScreen extends StatelessWidget {
         //   return false;
         // }
         return !await Navigator.maybePop(
-          MyKeys.getKeys()[
+          controller.myKeys
+              .getKeys()[
                   controller.getCurrentIndex(controller.currentTab.value)]
               .currentState!
               .context,

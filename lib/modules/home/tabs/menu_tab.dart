@@ -198,11 +198,10 @@ class MenuTab extends StatelessWidget {
                 : const Divider(),
             const Divider(),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 AuthController authController = Get.find();
-                authController.logout();
-                authController.dispose();
-                Get.offAllNamed(Routes.ROOT);
+                await authController.logout();
+                Get.offNamedUntil(Routes.ROOT, (route) => false);
               },
               child: Container(
                 child: Column(
