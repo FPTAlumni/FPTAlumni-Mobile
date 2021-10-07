@@ -6,6 +6,7 @@ import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class SignInScreen extends GetView<AuthController> {
+  final GlobalKey<FormState> signInKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +44,7 @@ class SignInScreen extends GetView<AuthController> {
               ),
             ),
             Form(
-              key: controller.signInKey,
+              key: signInKey,
               child: Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(
@@ -70,6 +71,10 @@ class SignInScreen extends GetView<AuthController> {
                         borderSide: BorderSide(color: Colors.red),
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                     hint: Text('Choose your university'),
                     value: controller.selectedUniversity.value == 0
@@ -90,7 +95,9 @@ class SignInScreen extends GetView<AuthController> {
               borderRadius: BorderRadius.circular(15.0),
               child: InkWell(
                 onTap: () {
-                  controller.signIn();
+                  if (signInKey.currentState!.validate()) {
+                    controller.signIn();
+                  }
                 },
                 // splashColor: ,
                 borderRadius: BorderRadius.circular(15.0),

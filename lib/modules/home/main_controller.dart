@@ -12,12 +12,9 @@ class MainController extends GetxController {
   late ReferralTab referralTab;
   late MenuTab menuTab;
 
-  List<Widget> _pages = [
-    MyNavigator(navigatorKey: MyKeys.home, name: 'home', widget: HomeTab()),
-    SizedBox(),
-    SizedBox(),
-    SizedBox(),
-  ];
+  MyKeys myKeys = new MyKeys();
+
+  List<Widget> _pages = [];
 
   List<Widget> get pages {
     return [..._pages];
@@ -26,6 +23,12 @@ class MainController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _pages = [
+      MyNavigator(navigatorKey: myKeys.home, name: 'home', widget: HomeTab()),
+      SizedBox(),
+      SizedBox(),
+      SizedBox(),
+    ];
   }
 
   void switchTab(index) {
@@ -45,13 +48,13 @@ class MainController extends GetxController {
   GlobalKey<NavigatorState> _getKey(MainTabs tab) {
     switch (tab) {
       case MainTabs.home:
-        return MyKeys.home;
+        return myKeys.home;
       case MainTabs.recruitment:
-        return MyKeys.jobs;
+        return myKeys.jobs;
       case MainTabs.referral:
-        return MyKeys.referral;
+        return myKeys.referral;
       case MainTabs.profile:
-        return MyKeys.profile;
+        return myKeys.profile;
     }
   }
 
@@ -59,21 +62,21 @@ class MainController extends GetxController {
     switch (tab) {
       case MainTabs.home:
         _pages[index] = MyNavigator(
-            navigatorKey: MyKeys.home, name: 'home', widget: HomeTab());
+            navigatorKey: myKeys.home, name: 'home', widget: HomeTab());
         break;
       case MainTabs.recruitment:
         _pages[index] = MyNavigator(
-            navigatorKey: MyKeys.jobs, name: 'Jobs', widget: RecruitmentTab());
+            navigatorKey: myKeys.jobs, name: 'Jobs', widget: RecruitmentTab());
         break;
       case MainTabs.referral:
         _pages[index] = MyNavigator(
-            navigatorKey: MyKeys.referral,
+            navigatorKey: myKeys.referral,
             name: 'Referral',
             widget: ReferralTab());
         break;
       case MainTabs.profile:
         _pages[index] = MyNavigator(
-            navigatorKey: MyKeys.profile, name: 'Profile', widget: MenuTab());
+            navigatorKey: myKeys.profile, name: 'Profile', widget: MenuTab());
         break;
     }
   }

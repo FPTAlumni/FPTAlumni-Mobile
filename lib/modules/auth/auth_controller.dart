@@ -2,12 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
+import 'package:uni_alumni/models/request/registration_request.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/auth/widgets/custom_full_screen_dialog.dart';
 import 'package:uni_alumni/modules/clazz/clazz_controller.dart';
 import 'package:uni_alumni/modules/universities/university_controller.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 
 class AuthController extends GetxController {
   AuthRepository authRepository = Get.find();
@@ -18,12 +22,11 @@ class AuthController extends GetxController {
 
   var selectedClass = 0.obs;
   var selectedUniversity = 0.obs;
-  final signUpKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
   final phoneController = TextEditingController();
   final dobController = TextEditingController();
 
-  final signInKey = GlobalKey<FormState>();
+  // GlobalKey<FormState>? signInKey = GlobalKey<FormState>();
   var dropdownUniversities = [].obs;
   var dropdownClasses = [].obs;
 
@@ -35,7 +38,6 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    universityController.loadUniversities();
   }
 
   _loadDropdownUniversities(listUniversities) {
@@ -65,19 +67,24 @@ class AuthController extends GetxController {
   onReady() async {
     super.onReady();
 
-    isSignIn.value = _firebaseAuth.currentUser != null;
-    _firebaseAuth.authStateChanges().listen((event) {
-      isSignIn.value = event != null;
-    });
+    // isSignIn.value = _firebaseAuth.currentUser != null;
+    // _firebaseAuth.authStateChanges().listen((event) {
+    //   isSignIn.value = event != null;
+    // });
+
+    // CustomFullScreenDialog.showDialog();
+    // await _autoSignIn();
+    // CustomFullScreenDialog.cancelDialog();
+
+    if (!isSignIn.value) {
+      universityController.loadUniversities();
+    }
 
     ever(universityController.universities, _loadDropdownUniversities);
     ever(clazzController.clazzList, _loadDropdownClasses);
   }
 
   void signIn() async {
-    if (!signInKey.currentState!.validate()) {
-      return;
-    }
     //showing spinning
     CustomFullScreenDialog.showDialog();
 
@@ -97,26 +104,48 @@ class AuthController extends GetxController {
 
       userCredential = await _firebaseAuth.signInWithCredential(credential);
       String firebaseToken = await userCredential!.user!.getIdToken();
-      // print(firebaseToken);
-      CustomFullScreenDialog.cancelDialog();
+
       print('call get app token');
       userToken = await authRepository.getAppToken(AppTokenRequest(
           tokenId: firebaseToken, universityId: selectedUniversity.value));
 
+      CustomFullScreenDialog.cancelDialog();
+
       if (userToken != null) {
+        //save universityId
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setInt('universityId', selectedUniversity.value);
+
         isSignIn.value = true;
       } else {
         await clazzController.loadClasses();
         Get.toNamed(Routes.SIGN_UP);
       }
-      // logout();
     }
   }
 
-  void logout() async {
+  Future<void> logout() async {
     await _googleSignIn.disconnect();
     await _firebaseAuth.signOut();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     isSignIn.value = false;
+  }
+
+  Future<void> autoSignIn() async {
+    bool isFirebaseSignIn = _firebaseAuth.currentUser != null;
+    if (!isFirebaseSignIn) return;
+    final prefs = await SharedPreferences.getInstance();
+    final universityId = prefs.getInt('universityId');
+    if (universityId == null) return;
+
+    String tokenId = await _firebaseAuth.currentUser!.getIdToken();
+    print('call get app token');
+    userToken = await authRepository.getAppToken(
+        AppTokenRequest(tokenId: tokenId, universityId: universityId));
+    if (userToken != null) {
+      isSignIn.value = true;
+    }
   }
 
   onChangeClass(int value) async {
@@ -127,18 +156,39 @@ class AuthController extends GetxController {
     selectedUniversity.value = value;
   }
 
-  onSubmitForm() {
-    //check form validation
-    final isValidate = signUpKey.currentState!.validate();
-    if (!isValidate) return;
+  onSubmitForm() async {
+    CustomFullScreenDialog.showDialog();
+
+    //create data
+    RegistrationRequest data = RegistrationRequest(
+      uid: userCredential!.user!.uid,
+      phone: phoneController.text,
+      fullName: fullNameController.text,
+      dob: DateFormat('MM/dd/yyyy').parse(dobController.text),
+      classId: selectedClass.value,
+    );
 
     //send registration request to server
+    bool isSuccess = await authRepository.register(data);
 
-    //back to sign in page and print
-    //"Please wait for our admin verify your information"
+    if (isSuccess) {
+      CustomFullScreenDialog.cancelDialog();
 
-    //sign out current account
-
-    print(userCredential!.user!.email);
+      //show dialog
+      //"Please wait for our admins verify your information"
+      await Get.defaultDialog(
+        title: 'Notifications',
+        middleText: "Please wait for our admins verify your information",
+        textConfirm: 'Close',
+        confirmTextColor: Colors.white,
+        barrierDismissible: false,
+        buttonColor: ColorConstants.primaryAppColor,
+        titlePadding: const EdgeInsets.all(10),
+        onConfirm: () {
+          Get.offNamedUntil(Routes.ROOT, (route) => false);
+          logout();
+        },
+      );
+    }
   }
 }

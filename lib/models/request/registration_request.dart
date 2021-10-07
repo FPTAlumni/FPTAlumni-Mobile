@@ -23,7 +23,7 @@ class RegistrationRequest {
     this.universityMajorId = 0,
   });
 
-  Map<String, dynamic> fromJson() => {
+  Map<String, dynamic> toJson() => {
         'uid': uid,
         'phone': phone,
         'full_name': fullName,
