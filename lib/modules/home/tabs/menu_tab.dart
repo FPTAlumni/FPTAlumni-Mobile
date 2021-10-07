@@ -27,41 +27,39 @@ class MenuTab extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(110),
         child: Container(
+          height: 110 - MediaQuery.of(context).padding.top - 5,
           color: ColorConstants.white,
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 10,
+            left: 15.0,
+          ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.only(
-                  top: 35, //chỉnh chổ này cho appBar dịch xuống
-                  left: 15.0,
-                ),
-                margin: EdgeInsets.only(
-                  bottom: 10,
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 15.0),
-                      child: Image.asset(
-                        AssetConstants.logo,
-                        width: 40,
-                      ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: 15.0),
+                    child: Image.asset(
+                      AssetConstants.logo,
+                      width: 40,
                     ),
-                    Text(
-                      'MENU',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: ColorConstants.primaryAppColor,
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        letterSpacing: 3,
-                      ),
+                  ),
+                  Text(
+                    'ALUMNI',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.primaryAppColor,
+                      fontSize: 20,
+                      fontFamily: 'Poppins',
+                      letterSpacing: 3,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

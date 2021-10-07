@@ -54,6 +54,7 @@ class SignUpScreen extends GetView<AuthController> {
                       _buildTextFormField(
                         labelText: 'Full name',
                         controller: controller.fullNameController,
+                        maxLength: 70,
                         validator: (value) {
                           if (value!.trim().isEmpty) {
                             return "Please enter your full name";
@@ -65,6 +66,7 @@ class SignUpScreen extends GetView<AuthController> {
                       _buildTextFormField(
                         labelText: 'Phone number',
                         controller: controller.phoneController,
+                        maxLength: 15,
                         validator: (value) {
                           if (value!.trim().isEmpty) {
                             return "Please enter your phone number";
@@ -116,7 +118,7 @@ class SignUpScreen extends GetView<AuthController> {
                           value: controller.selectedClass.value == 0
                               ? null
                               : controller.selectedClass.value,
-                          items: controller.dropdownClasses,
+                          items: controller.dropdownClasses.toList().cast(),
                           onChanged: (value) {
                             controller
                                 .onChangeClass(int.parse(value.toString()));
@@ -182,6 +184,7 @@ class SignUpScreen extends GetView<AuthController> {
     TextEditingController? controller,
     bool? readOnly = false,
     VoidCallback? onTapHandler,
+    int? maxLength,
   }) {
     return Container(
       alignment: Alignment.center,
@@ -191,7 +194,9 @@ class SignUpScreen extends GetView<AuthController> {
         readOnly: readOnly!,
         controller: controller,
         validator: validator,
+        maxLength: maxLength,
         decoration: InputDecoration(
+          counterText: "",
           labelText: labelText,
           hintText: hint,
           labelStyle: TextStyle(
