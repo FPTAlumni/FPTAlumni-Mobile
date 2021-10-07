@@ -2,17 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:uni_alumni/models/clazz.dart';
-import 'package:uni_alumni/models/request/user_request.dart';
-import 'package:uni_alumni/models/university.dart';
+import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/auth/widgets/custom_full_screen_dialog.dart';
+import 'package:uni_alumni/modules/clazz/clazz_controller.dart';
 import 'package:uni_alumni/modules/universities/university_controller.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 
 class AuthController extends GetxController {
   AuthRepository authRepository = Get.find();
   UniversityController universityController = Get.find();
+  ClazzController clazzController = Get.find();
+
+  String? userToken;
+
   var selectedClass = 0.obs;
   var selectedUniversity = 0.obs;
   final signUpKey = GlobalKey<FormState>();
@@ -21,19 +24,8 @@ class AuthController extends GetxController {
   final dobController = TextEditingController();
 
   final signInKey = GlobalKey<FormState>();
-  List<DropdownMenuItem> dropdownClasses = [];
   var dropdownUniversities = [].obs;
-
-  List<Clazz> _listClasses = [
-    Clazz(1, 'K6'),
-    Clazz(2, 'K7'),
-    Clazz(3, 'K8'),
-    Clazz(4, 'K9'),
-    Clazz(5, 'K10'),
-    Clazz(6, 'K11'),
-    Clazz(7, 'K12'),
-    Clazz(8, 'K13'),
-  ];
+  var dropdownClasses = [].obs;
 
   late GoogleSignIn _googleSignIn = GoogleSignIn();
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -42,21 +34,13 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    print('onInit');
     super.onInit();
-
-    //load _listClass to dropdownClass
-    _listClasses.forEach((clazz) {
-      dropdownClasses.add(DropdownMenuItem(
-        value: clazz.id,
-        child: Text(clazz.name),
-      ));
-    });
+    universityController.loadUniversities();
   }
 
   _loadDropdownUniversities(listUniversities) {
     //load listUniversities to dropdownUniversities
-    print('load list');
+    print('load universities');
     listUniversities.forEach((university) {
       dropdownUniversities.add(DropdownMenuItem(
         value: university.id,
@@ -65,18 +49,30 @@ class AuthController extends GetxController {
     });
   }
 
+  _loadDropdownClasses(listClasses) {
+    //load clazzList to dropdownClasses
+    print('load classes');
+    listClasses.forEach((clazz) {
+      dropdownClasses.add(DropdownMenuItem(
+        value: clazz.id,
+        child: Text(clazz.name),
+      ));
+    });
+  }
+
   //Todo: auto login (do later)
   @override
   onReady() async {
-    // _googleSignIn = GoogleSignIn();
-    // isSignIn = await firebaseAuth.currentUser != null;
+    super.onReady();
+
+    isSignIn.value = _firebaseAuth.currentUser != null;
+    _firebaseAuth.authStateChanges().listen((event) {
+      isSignIn.value = event != null;
+    });
 
     ever(universityController.universities, _loadDropdownUniversities);
+    ever(clazzController.clazzList, _loadDropdownClasses);
   }
-
-  @override
-  // TODO: implement onDelete
-  InternalFinalCallback<void> get onDelete => super.onDelete;
 
   void signIn() async {
     if (!signInKey.currentState!.validate()) {
@@ -104,11 +100,16 @@ class AuthController extends GetxController {
       // print(firebaseToken);
       CustomFullScreenDialog.cancelDialog();
       print('call get app token');
-      await authRepository.getAppToken(UserRequest(
+      userToken = await authRepository.getAppToken(AppTokenRequest(
           tokenId: firebaseToken, universityId: selectedUniversity.value));
+
+      if (userToken != null) {
+        isSignIn.value = true;
+      } else {
+        await clazzController.loadClasses();
+        Get.toNamed(Routes.SIGN_UP);
+      }
       // logout();
-      // Get.toNamed(Routes.SIGN_UP);
-      isSignIn.value = true;
     }
   }
 
@@ -127,9 +128,17 @@ class AuthController extends GetxController {
   }
 
   onSubmitForm() {
-    print(userCredential!.user!.email);
-    Get.toNamed(Routes.MAIN);
+    //check form validation
     final isValidate = signUpKey.currentState!.validate();
     if (!isValidate) return;
+
+    //send registration request to server
+
+    //back to sign in page and print
+    //"Please wait for our admin verify your information"
+
+    //sign out current account
+
+    print(userCredential!.user!.email);
   }
 }
