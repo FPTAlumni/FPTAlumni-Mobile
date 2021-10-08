@@ -4,10 +4,12 @@ import 'package:uni_alumni/shared/constants/colors.dart';
 class NewsCard extends StatelessWidget {
   final String newsUrl;
   final String avatar;
+  // final String title;
 
   const NewsCard({
     required this.newsUrl,
     required this.avatar,
+    // required this.title,
   });
 
   @override
@@ -27,7 +29,8 @@ class NewsCard extends StatelessWidget {
               vertical: 7.0,
             ),
             child: Text(
-              'This is a very very very very very long long long long long long title',
+              // title,
+              'FPT Orientation',
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
               textAlign: TextAlign.center,

@@ -10,3 +10,5 @@ class Clazz {
       name: json['class_of'],
       startYear: json['start_year']);
 }
+
+

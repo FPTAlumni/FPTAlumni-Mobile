@@ -5,17 +5,18 @@ import 'package:uni_alumni/models/request/registration_request.dart';
 import 'package:uni_alumni/shared/utils/header.dart';
 
 class ApiProvider extends BaseProvider {
-  //------------University------------
   Future<Response> getUniversities(String path) {
     return get(path);
   }
 
-  //------------Class------------
   Future<Response> getClasses(String path) {
     return get(path);
   }
 
-  //------------Authentication------------
+  Future<Response> getNews(String path){
+    return get(path);
+  }
+
   //get app token from backend
   Future<Response> getAppToken(String path, AppTokenRequest data) {
     return post(path, data.toJson());
