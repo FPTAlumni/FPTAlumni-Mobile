@@ -8,10 +8,10 @@ import '../event_controller.dart';
 
 class EventScreen extends StatelessWidget {
 
-
-  final EventController eventController;
-
-  EventScreen({required this.eventController});
+  //
+  // final EventController eventController;
+  //
+  // EventScreen({required this.eventController});
 
   @override
   Widget build(BuildContext context) {

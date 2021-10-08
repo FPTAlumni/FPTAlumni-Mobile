@@ -38,20 +38,20 @@ class AlumniInfo {
   });
 
   factory AlumniInfo.fromJson(Map<String, dynamic> json) => AlumniInfo(
-        id: json['id'],
-        email: json['email'],
-        phone: json['phone'],
-        fullName: json['full_name'],
-        uid: json['uid'],
-        dob: DateFormat('dd/MM/yyyy').parse(json['dob']),
-        createdDate:
-            FormatUtils.fromddMMyyyyHHmmtoDateTime(json['created_date']),
-        aboutMe: json['about_me'],
-        address: json['address'],
-        job: json['job'],
-        status: json['status'],
-        company: Company.formJson(json['company']),
-        clazz: Clazz.fromJson(json['class']),
-        major: Major.fromJson(json['major']),
-      );
+    id: json['id'],
+    email: json['email'],
+    phone: json['phone'],
+    fullName: json['full_name'],
+    uid: json['uid'],
+    dob: DateFormat('dd/MM/yyyy').parse(json['dob']),
+    createdDate:
+    FormatUtils.fromddMMyyyyHHmmtoDateTime(json['created_date']),
+    aboutMe: json['about_me'],
+    address: json['address'],
+    job: json['job'],
+    status: json['status'],
+    company: Company.formJson(json['company']),
+    clazz: Clazz.fromJson(json['class']),
+    major: Major.fromJson(json['major']),
+  );
 }
