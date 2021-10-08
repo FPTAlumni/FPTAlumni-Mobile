@@ -7,5 +7,6 @@ class BaseProvider extends GetConnect {
   void onInit() {
     super.onInit();
     httpClient.baseUrl = ApiConstants.baseUrl;
+    httpClient.defaultContentType = ApiConstants.contentType;
   }
 }

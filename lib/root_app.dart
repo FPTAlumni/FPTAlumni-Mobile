@@ -12,7 +12,7 @@ class RootApp extends GetView<AuthController> {
       return controller.isSignIn.value
           ? MainScreen()
           : FutureBuilder(
-              future: controller.autoSignIn(),
+              future: controller.autoSignIn,
               builder: (ctx, authResultSnapshot) =>
                   authResultSnapshot.connectionState == ConnectionState.waiting
                       ? SplashScreen()
