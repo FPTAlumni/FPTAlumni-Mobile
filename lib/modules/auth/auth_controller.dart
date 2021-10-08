@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
+import 'package:uni_alumni/models/response/app_token_response.dart';
+import 'package:uni_alumni/models/alumni_info.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/auth/widgets/custom_full_screen_dialog.dart';
 import 'package:uni_alumni/modules/clazz/clazz_controller.dart';
@@ -18,7 +20,8 @@ class AuthController extends GetxController {
   UniversityController universityController = Get.find();
   ClazzController clazzController = Get.find();
 
-  String? userToken;
+  AppTokenResponse? userAuthentication;
+  AlumniInfo? currentUser;
 
   var selectedClass = 0.obs;
   var selectedUniversity = 0.obs;
@@ -26,7 +29,6 @@ class AuthController extends GetxController {
   final phoneController = TextEditingController();
   final dobController = TextEditingController();
 
-  // GlobalKey<FormState>? signInKey = GlobalKey<FormState>();
   var dropdownUniversities = [].obs;
   var dropdownClasses = [].obs;
 
@@ -35,9 +37,102 @@ class AuthController extends GetxController {
   var isSignIn = false.obs;
   UserCredential? userCredential;
 
+  late Future<void> autoSignIn;
+
   @override
   void onInit() {
     super.onInit();
+    autoSignIn = _autoSignIn();
+  }
+
+  //Todo: auto login (do later)
+  @override
+  onReady() async {
+    super.onReady();
+
+    if (!isSignIn.value) {
+      universityController.loadUniversities();
+    }
+
+    ever(universityController.universities, _loadDropdownUniversities);
+    ever(clazzController.clazzList, _loadDropdownClasses);
+  }
+
+  void signIn() async {
+    print('Sign In');
+    //showing spinning
+    CustomFullScreenDialog.showDialog();
+
+    //open a dialog where user can select email to sign in
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    if (googleUser == null) {
+      CustomFullScreenDialog.cancelDialog();
+    } else {
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      //get credential
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      userCredential = await _firebaseAuth.signInWithCredential(credential);
+      String firebaseToken = await userCredential!.user!.getIdToken();
+
+      print('call get app token');
+      userAuthentication = await authRepository.getAppToken(AppTokenRequest(
+          tokenId: firebaseToken, universityId: selectedUniversity.value));
+
+      CustomFullScreenDialog.cancelDialog();
+
+      if (userAuthentication != null) {
+        print(userAuthentication!.appToken);
+        //save universityId
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setInt('universityId', selectedUniversity.value);
+
+        currentUser = await authRepository.getUserById(
+            userAuthentication!.id, userAuthentication!.appToken);
+
+        isSignIn.value = true;
+      } else {
+        await clazzController.loadClasses();
+        Get.toNamed(Routes.SIGN_UP);
+      }
+    }
+  }
+
+  Future<void> logout() async {
+    await _googleSignIn.disconnect();
+    await _firebaseAuth.signOut();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    isSignIn.value = false;
+  }
+
+  Future<void> _autoSignIn() async {
+    print('Auto Sign In');
+    //check firebase authentication
+    final isFirebaseSignIn = _firebaseAuth.currentUser != null;
+    if (!isFirebaseSignIn) return;
+
+    //check if university id exist
+    final prefs = await SharedPreferences.getInstance();
+    final universityId = prefs.getInt('universityId');
+    if (universityId == null) return;
+
+    String tokenId = await _firebaseAuth.currentUser!.getIdToken();
+    // print('call get app token');
+    userAuthentication = await authRepository.getAppToken(
+        AppTokenRequest(tokenId: tokenId, universityId: universityId));
+    print(userAuthentication!.appToken);
+    if (userAuthentication != null) {
+      // print('Get user Id');
+      currentUser = await authRepository.getUserById(
+          userAuthentication!.id, userAuthentication!.appToken);
+      isSignIn.value = true;
+    }
   }
 
   _loadDropdownUniversities(listUniversities) {
@@ -60,83 +155,6 @@ class AuthController extends GetxController {
         child: Text(clazz.name),
       ));
     });
-  }
-
-  //Todo: auto login (do later)
-  @override
-  onReady() async {
-    super.onReady();
-
-    if (!isSignIn.value) {
-      universityController.loadUniversities();
-    }
-
-    ever(universityController.universities, _loadDropdownUniversities);
-    ever(clazzController.clazzList, _loadDropdownClasses);
-  }
-
-  void signIn() async {
-    //showing spinning
-    CustomFullScreenDialog.showDialog();
-
-    //open a dialog where user can select email to sign in
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-    if (googleUser == null) {
-      CustomFullScreenDialog.cancelDialog();
-    } else {
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-
-      //get credential
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      userCredential = await _firebaseAuth.signInWithCredential(credential);
-      String firebaseToken = await userCredential!.user!.getIdToken();
-
-      print('call get app token');
-      userToken = await authRepository.getAppToken(AppTokenRequest(
-          tokenId: firebaseToken, universityId: selectedUniversity.value));
-
-      CustomFullScreenDialog.cancelDialog();
-
-      if (userToken != null) {
-        //save universityId
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setInt('universityId', selectedUniversity.value);
-
-        isSignIn.value = true;
-      } else {
-        await clazzController.loadClasses();
-        Get.toNamed(Routes.SIGN_UP);
-      }
-    }
-  }
-
-  Future<void> logout() async {
-    await _googleSignIn.disconnect();
-    await _firebaseAuth.signOut();
-    final prefs = await SharedPreferences.getInstance();
-    prefs.clear();
-    isSignIn.value = false;
-  }
-
-  Future<void> autoSignIn() async {
-    bool isFirebaseSignIn = _firebaseAuth.currentUser != null;
-    if (!isFirebaseSignIn) return;
-    final prefs = await SharedPreferences.getInstance();
-    final universityId = prefs.getInt('universityId');
-    if (universityId == null) return;
-
-    String tokenId = await _firebaseAuth.currentUser!.getIdToken();
-    print('call get app token');
-    userToken = await authRepository.getAppToken(
-        AppTokenRequest(tokenId: tokenId, universityId: universityId));
-    if (userToken != null) {
-      isSignIn.value = true;
-    }
   }
 
   onChangeClass(int value) async {
