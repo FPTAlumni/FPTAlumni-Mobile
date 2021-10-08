@@ -10,6 +10,7 @@ import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/card/alumni_card.dart';
 
 class MenuTab extends StatelessWidget {
+  final authController = Get.find<AuthController>();
   String url =
       'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg';
 
@@ -87,7 +88,7 @@ class MenuTab extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                " Hello,  Ageha Chou",
+                                " Hello, ${authController.currentUser!.fullName}",
                                 style: TextStyle(
                                   fontSize: 25,
                                 ),

@@ -1,5 +1,5 @@
 class AppTokenRequest {
-  String tokenId;
+  String tokenId; //firebase token
   int universityId;
 
   AppTokenRequest({required this.tokenId, required this.universityId});
