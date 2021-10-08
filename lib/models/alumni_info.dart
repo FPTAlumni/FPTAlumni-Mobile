@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:uni_alumni/models/Major.dart';
 import 'package:uni_alumni/models/clazz.dart';
 import 'package:uni_alumni/models/company.dart';
+import 'package:uni_alumni/shared/utils/format_utils.dart';
 
 class AlumniInfo {
   String email;
@@ -43,7 +44,8 @@ class AlumniInfo {
         fullName: json['full_name'],
         uid: json['uid'],
         dob: DateFormat('dd/MM/yyyy').parse(json['dob']),
-        createdDate: DateFormat('dd/MM/yyyy HH:mm').parse(json['created_date']),
+        createdDate:
+            FormatUtils.fromddMMyyyyHHmmtoDateTime(json['created_date']),
         aboutMe: json['about_me'],
         address: json['address'],
         job: json['job'],

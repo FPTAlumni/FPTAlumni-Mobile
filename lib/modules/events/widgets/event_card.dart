@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:uni_alumni/models/event.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class EventCard extends StatelessWidget {
-  const EventCard({
-    Key? key,
-    required this.eventUrl,
-  }) : super(key: key);
+  final Event event;
 
-  final String eventUrl;
+  EventCard(this.event);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        color: ColorConstants.white,
+      ),
       padding: const EdgeInsets.only(
-        top: 5,
-        right: 7,
-        left: 7,
+        top: 8,
       ),
       margin: const EdgeInsets.only(
         top: 5.0,
@@ -23,26 +24,30 @@ class EventCard extends StatelessWidget {
         right: 25.0,
         left: 25.0,
       ),
-      color: ColorConstants.white,
       child: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 flex: 3,
                 child: Container(
+                  margin: EdgeInsets.only(
+                    right: 8,
+                    left: 8,
+                  ),
                   width: 80,
                   height: 80,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     image: DecorationImage(
-                      image: NetworkImage(eventUrl),
+                      image: NetworkImage(event.banner),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 4),
+              const SizedBox(width: 5),
               Expanded(
                 flex: 5,
                 child: Container(
@@ -51,7 +56,7 @@ class EventCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Macklemore & Ryan Lewis',
+                        event.eventName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
@@ -69,7 +74,7 @@ class EventCard extends StatelessWidget {
                               color: Colors.grey,
                             ),
                             Text(
-                              '30/09/2021 | 10AM',
+                              '${DateFormat('dd/MM/yyyy | HH:mm aaa').format(event.startDate)}',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
@@ -89,7 +94,7 @@ class EventCard extends StatelessWidget {
                               color: Colors.grey,
                             ),
                             Text(
-                              'FPT University',
+                              event.location,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
@@ -107,22 +112,25 @@ class EventCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Container(
-            width: double.infinity,
             decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.grey)),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10.0),
+                bottomRight: Radius.circular(10.0),
+              ),
+              color: ColorConstants.primaryAppColor,
             ),
-            child: Row(
-              children: [
-                Spacer(),
-                TextButton(
-                  child: Text('Register'),
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(
-                        ColorConstants.primaryAppColor),
-                  ),
-                  onPressed: () {},
-                ),
-              ],
+            padding: EdgeInsets.only(
+              top: 8,
+              bottom: 8,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              'Register',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
