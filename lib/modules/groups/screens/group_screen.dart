@@ -5,7 +5,7 @@ import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/shared/data/filters.dart';
-import 'package:uni_alumni/shared/utils/FilterDialog.dart';
+import 'package:uni_alumni/shared/utils/filter_dialog.dart';
 
 class GroupScreen extends StatelessWidget {
   final GroupController controller = Get.put(GroupController());
