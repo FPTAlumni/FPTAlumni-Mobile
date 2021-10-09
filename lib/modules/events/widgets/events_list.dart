@@ -15,9 +15,12 @@ class EventsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: ListView.builder(
-        itemCount: eventController.events.length,
-        itemBuilder: (ctx, i) => EventCard(eventController.events[i]),
+      child: RefreshIndicator(
+        onRefresh: () => eventController.getEventsOfCurrentAlumni(),
+        child: ListView.builder(
+          itemCount: eventController.events.length,
+          itemBuilder: (ctx, i) => EventCard(eventController.events[i]),
+        ),
       ),
     );
   }

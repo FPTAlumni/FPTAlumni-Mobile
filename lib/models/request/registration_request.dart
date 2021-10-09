@@ -1,13 +1,37 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'registration_request.g.dart';
+
+@JsonSerializable(includeIfNull: false)
 class RegistrationRequest {
+  @JsonKey(name: 'uid')
   String uid; //uid get from firebase
+
+  @JsonKey(name: 'phone')
   String phone;
+
+  @JsonKey(name: 'full_name')
   String fullName;
+
+  @JsonKey(name: 'address')
   String? address;
+
+  @JsonKey(name: 'dob')
   DateTime dob;
+
+  @JsonKey(name: 'job')
   String? job;
+
+  @JsonKey(name: 'about_me')
   String? aboutMe;
+
+  @JsonKey(name: 'company_id')
   int? companyId;
+
+  @JsonKey(name: 'university_major_id')
   int? universityMajorId;
+
+  @JsonKey(name: 'class_id')
   int classId;
 
   RegistrationRequest({
@@ -23,15 +47,5 @@ class RegistrationRequest {
     this.universityMajorId = 0,
   });
 
-  Map<String, dynamic> toJson() => {
-        'uid': uid,
-        'phone': phone,
-        'full_name': fullName,
-        'address': address,
-        'dob': dob.toIso8601String(),
-        'job': job,
-        'about_me': aboutMe,
-        'company_id': companyId,
-        'class_id': classId,
-      };
+  Map<String, dynamic> toJson() => _$RegistrationRequestToJson(this);
 }
