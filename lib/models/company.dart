@@ -1,10 +1,22 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'company.g.dart';
+
+@JsonSerializable(includeIfNull: false)
 class Company {
+  @JsonKey(name: 'id')
   int id;
+
+  @JsonKey(name: 'company_name')
   String companyName;
+
+  @JsonKey(name: 'location')
   String location;
+
+  @JsonKey(name: 'business')
   String business;
+
+  @JsonKey(name: 'description')
   String? description;
 
   Company(
@@ -14,11 +26,7 @@ class Company {
       required this.business,
       this.description});
 
-  factory Company.formJson(Map<String, dynamic> json) => Company(
-        id: json['id'],
-        companyName: json['company_name'],
-        location: json['location'],
-        business: json['business'],
-        description: json['description'],
-      );
+  factory Company.fromJson(Map<String, dynamic> json) =>
+      _$CompanyFromJson(json);
+  Map<String, dynamic> toJson() => _$CompanyToJson(this);
 }

@@ -5,7 +5,7 @@ import 'package:uni_alumni/models/event.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/events/event_repository.dart';
-import 'package:uni_alumni/shared/data/event_enum.dart';
+import 'package:uni_alumni/shared/data/enum/common_enum.dart';
 
 class EventController extends GetxController {
   final EventRepository eventRepository;

@@ -1,25 +1,57 @@
-import 'package:uni_alumni/shared/data/event_enum.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:uni_alumni/shared/data/enum/common_enum.dart';
+import 'package:uni_alumni/shared/data/enum/event_enum.dart';
 
+part 'event_request.g.dart';
+
+@JsonSerializable(includeIfNull: false)
 class EventRequest {
+  @JsonKey(name: 'eventName')
   String? eventName;
+
+  @JsonKey(name: 'eventContent')
   String? eventContent;
+
+  @JsonKey(name: 'location')
   String? location;
+
+  @JsonKey(name: 'registrationStartDate')
   DateTime? registrationStartDate;
+
+  @JsonKey(name: 'registrationEndDate')
   DateTime? registrationEndDate;
+
+  @JsonKey(name: 'startDate')
   DateTime? startDate;
+
+  @JsonKey(name: 'endDate')
   DateTime? endDate;
+
+  @JsonKey(name: 'groupId')
   int? groupId;
+
+  @JsonKey(name: 'alumniId')
   int? alumniId;
+
+  @JsonKey(name: 'status')
   EventStatus? status;
+
+  @JsonKey(name: 'page')
   int? page;
+
+  @JsonKey(name: 'page-size', defaultValue: 10)
   int? pageSize;
+
+  @JsonKey(name: 'sort-key')
   EventSortKey? sortKey;
+
+  @JsonKey(name: 'sort-order', defaultValue: SortOrder.DESC)
   SortOrder? sortOrder;
 
   EventRequest(
-      {this.eventName = '',
-      this.eventContent = '',
-      this.location = '',
+      {this.eventName,
+      this.eventContent,
+      this.location,
       this.registrationStartDate,
       this.registrationEndDate,
       this.startDate,
@@ -28,29 +60,9 @@ class EventRequest {
       this.alumniId,
       this.status,
       this.page,
-      this.pageSize = 10,
+      this.pageSize,
       this.sortKey,
       this.sortOrder});
 
-  Map<String, dynamic> toJson() => {
-        'eventName': eventName,
-        'eventContent': eventContent,
-        'location': location,
-        'registrationStartDate': registrationEndDate == null
-            ? ''
-            : registrationEndDate!.toIso8601String(),
-        'registrationEndDate': registrationEndDate == null
-            ? ''
-            : registrationEndDate!.toIso8601String(),
-        'startDate': startDate == null ? '' : startDate!.toIso8601String(),
-        'endDate': endDate == null ? '' : endDate!.toIso8601String(),
-        'groupId': groupId == null ? '' : groupId.toString(),
-        'alumniId': alumniId == null ? '' : alumniId.toString(),
-        'status': status == null ? '' : EventEnum.getStatus(status!),
-        // 'page': page == null ? '' : page.toString(),
-        'page-size': pageSize.toString(),
-        // 'sort-key': sortKey == null ? '' : EventEnum.getEventSortKey(sortKey!),
-        'sort-order':
-            sortOrder == null ? '' : EventEnum.getSortOrder(sortOrder!),
-      };
+  Map<String, dynamic> toJson() => _$EventRequestToJson(this);
 }

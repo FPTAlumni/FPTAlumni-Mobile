@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
 import 'package:uni_alumni/models/response/app_token_response.dart';
-import 'package:uni_alumni/models/alumni_info.dart';
+import 'package:uni_alumni/models/alumni.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/auth/widgets/custom_full_screen_dialog.dart';
 import 'package:uni_alumni/modules/clazz/clazz_controller.dart';
@@ -21,7 +21,7 @@ class AuthController extends GetxController {
   ClazzController clazzController = Get.find();
 
   AppTokenResponse? userAuthentication;
-  AlumniInfo? currentUser;
+  Alumni? currentUser;
 
   var selectedClass = 0.obs;
   var selectedUniversity = 0.obs;

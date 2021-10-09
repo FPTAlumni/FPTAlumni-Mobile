@@ -2,7 +2,7 @@ import 'package:uni_alumni/api/api_provider.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
 import 'package:uni_alumni/models/response/app_token_response.dart';
-import 'package:uni_alumni/models/alumni_info.dart';
+import 'package:uni_alumni/models/alumni.dart';
 
 class AuthRepository {
   final ApiProvider apiProvider;
@@ -29,10 +29,10 @@ class AuthRepository {
     return true;
   }
 
-  Future<AlumniInfo?> getUserById(int id, String token) async {
+  Future<Alumni?> getUserById(int id, String token) async {
     final response = await apiProvider.getUserById('/alumnus/$id', token);
     if (response.statusCode == 200) {
-      return AlumniInfo.fromJson(response.body['data']);
+      return Alumni.fromJson(response.body['data']);
     }
   }
 }
