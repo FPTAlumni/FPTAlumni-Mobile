@@ -105,52 +105,43 @@ class HomeTab extends StatelessWidget {
                             child: Material(
                               elevation: 2.0,
                               color: ColorConstants.lightPrimaryAppColor,
-                              child: InkWell(
-                                splashColor: Color.fromRGBO(128, 128, 128, 0.6),
-                                onTap: () {},
-                                child: SizedBox(
-                                  width: 35,
-                                  height: 35,
-                                  child: Container(
-                                    child: PopupMenuButton(
-                                      onSelected: (index) {
-                                        if (index == 0) {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (ctx) =>
-                                                      NewsScreen()));
-                                        } else {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (ctx) =>
-                                                      CreateEventScreen()));
-                                        }
-                                      },
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Colors.white70,
-                                        size: 25.0,
-                                      ),
-                                      itemBuilder: (context) => [
-                                        const PopupMenuItem(
-                                          child: ListTile(
-                                            leading: Icon(Icons.article),
-                                            title: Text('Create News'),
-                                          ),
-                                          value: 0,
-                                        ),
-                                        const PopupMenuItem(
-                                          child: ListTile(
-                                            leading: Icon(Icons.event),
-                                            title: Text('Create an Event'),
-                                          ),
-                                          value: 1,
-                                        ),
-                                      ],
-                                    ),
-                                    padding: const EdgeInsets.all(5.0),
+                              child: PopupMenuButton(
+                                onSelected: (index) {
+                                  if (index == 0) {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (ctx) => NewsScreen()));
+                                  } else {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (ctx) =>
+                                                CreateEventScreen()));
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.white70,
+                                    size: 25,
                                   ),
                                 ),
+                                itemBuilder: (context) => [
+                                  const PopupMenuItem(
+                                    child: ListTile(
+                                      leading: Icon(Icons.article),
+                                      title: Text('Create News'),
+                                    ),
+                                    value: 0,
+                                  ),
+                                  const PopupMenuItem(
+                                    child: ListTile(
+                                      leading: Icon(Icons.event),
+                                      title: Text('Create an Event'),
+                                    ),
+                                    value: 1,
+                                  ),
+                                ],
                               ),
                             ),
                           ),

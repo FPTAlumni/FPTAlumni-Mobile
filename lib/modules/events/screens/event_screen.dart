@@ -5,7 +5,7 @@ class EventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SubScreenAppBar(),
+      // appBar: SubScreenAppBar(),
       body: Container(
         child: Center(
           child: Text('Event'),
