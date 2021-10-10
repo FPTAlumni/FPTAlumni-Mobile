@@ -1,9 +1,25 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'major.g.dart';
+
+@JsonSerializable(includeIfNull: false)
 class Major {
+  @JsonKey(name: 'short_name')
   String shortName;
+
+  @JsonKey(name: 'vietnamese_name')
   String vietnameseName;
-  String? createdDate;
+
+  @JsonKey(name: 'created_date')
+  DateTime? createdDate;
+
+  @JsonKey(name: 'status')
   int status;
+
+  @JsonKey(name: 'id')
   int id;
+
+  @JsonKey(name: 'full_name')
   String fullName;
 
   Major({
@@ -15,12 +31,6 @@ class Major {
     this.createdDate,
   });
 
-  factory Major.fromJson(Map<String, dynamic> json) => Major(
-        shortName: json['short_name'],
-        vietnameseName: json['vietnamese_name'],
-        createdDate: json['created_date'],
-        status: json['status'],
-        id: json['id'],
-        fullName: json['full_name'],
-      );
+  factory Major.fromJson(Map<String, dynamic> json) => _$MajorFromJson(json);
+  Map<String, dynamic> toJson() => _$MajorToJson(this);
 }

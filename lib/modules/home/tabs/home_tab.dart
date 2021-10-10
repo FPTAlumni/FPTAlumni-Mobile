@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uni_alumni/modules/events/screens/event_screen.dart';
+import 'package:uni_alumni/modules/events/screens/create_event_screen.dart';
 import 'package:uni_alumni/modules/events/widgets/events_list.dart';
 import 'package:uni_alumni/modules/home/tabs/home_tab_controller.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
@@ -10,7 +10,7 @@ import 'package:uni_alumni/modules/news/widgets/news_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/filters.dart';
-import 'package:uni_alumni/shared/utils/FilterDialog.dart';
+import 'package:uni_alumni/shared/utils/filter_dialog.dart';
 
 class HomeTab extends StatelessWidget {
   final HomeTabController controller = Get.put(HomeTabController());
@@ -123,7 +123,7 @@ class HomeTab extends StatelessWidget {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (ctx) =>
-                                                      EventScreen()));
+                                                      CreateEventScreen()));
                                         }
                                       },
                                       child: Icon(
@@ -141,7 +141,7 @@ class HomeTab extends StatelessWidget {
                                         ),
                                         const PopupMenuItem(
                                           child: ListTile(
-                                            leading: Icon(Icons.schedule),
+                                            leading: Icon(Icons.event),
                                             title: Text('Create an Event'),
                                           ),
                                           value: 1,

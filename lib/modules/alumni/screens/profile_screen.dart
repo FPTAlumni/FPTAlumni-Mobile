@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uni_alumni/models/alumni_info.dart';
+import 'package:uni_alumni/models/alumni.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_button_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/alumni_profile_widget.dart';
 import 'package:uni_alumni/modules/alumni/widgets/appbar_widget.dart';
@@ -107,7 +107,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget buildName(AlumniInfo user) => Column(
+  Widget buildName(Alumni user) => Column(
         children: [
           Text(
             user.fullName,

@@ -6,7 +6,7 @@ import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/filters.dart';
-import 'package:uni_alumni/shared/utils/FilterDialog.dart';
+import 'package:uni_alumni/shared/utils/filter_dialog.dart';
 
 class RecruitmentTab extends StatelessWidget {
   final RecruitmentController controller = Get.put(RecruitmentController());
