@@ -16,6 +16,7 @@ class NewsList extends StatelessWidget {
         children: [
           NewsCard(newsUrl: newsUrl, avatar: avatar),
           NewsCard(newsUrl: newsUrl, avatar: avatar),
+          NewsCard(newsUrl: newsUrl, avatar: avatar),
         ],
       ),
     );

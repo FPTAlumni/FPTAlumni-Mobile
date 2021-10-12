@@ -19,7 +19,14 @@ class EventController extends GetxController {
 
   List<Event> events = [];
 
-  final HtmlEditorController htmlController = HtmlEditorController();
+  final eventNameController = TextEditingController();
+  final locationController = TextEditingController();
+  final registrationStartController = TextEditingController();
+  final registrationEndController = TextEditingController();
+  final eventStartController = TextEditingController();
+  final eventEndController = TextEditingController();
+
+  final HtmlEditorController contentController = HtmlEditorController();
   final ImagePicker _picker = ImagePicker();
 
   var banner = XFile('').obs;
@@ -45,13 +52,13 @@ class EventController extends GetxController {
     }
   }
 
-  void showImageDialog() async {
-    XFile? _banner = await _picker.pickImage(source: ImageSource.gallery);
-    if (_banner == null) return;
-    banner.value = _banner;
-  }
-
-  bool isContainedImage() => banner.value.path.isNotEmpty;
+  // void showImageDialog() async {
+  //   XFile? _banner = await _picker.pickImage(source: ImageSource.gallery);
+  //   if (_banner == null) return;
+  //   banner.value = _banner;
+  // }
+  //
+  // bool isContainedImage() => banner.value.path.isNotEmpty;
 
   void showDatePicker() {
     DatePicker.showPicker(Get.context!,
