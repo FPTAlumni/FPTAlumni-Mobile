@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uni_alumni/shared/constants/assets.dart';
-import 'package:uni_alumni/shared/constants/colors.dart';
 
 class SubScreenAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
@@ -13,7 +11,12 @@ class SubScreenAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Text(title, style: TextStyle(color: Colors.black)),
+      title: Text(
+        title,
+        overflow: TextOverflow.ellipsis,
+        softWrap: false,
+        style: TextStyle(color: Colors.black),
+      ),
       iconTheme: IconThemeData(
         color: Colors.black,
       ),

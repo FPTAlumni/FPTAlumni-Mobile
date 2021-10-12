@@ -22,11 +22,11 @@ EventRequest _$EventRequestFromJson(Map<String, dynamic> json) => EventRequest(
       endDate: json['endDate'] == null
           ? null
           : DateTime.parse(json['endDate'] as String),
-      groupId: json['groupId'] as int?,
-      alumniId: json['alumniId'] as int?,
+      groupId: json['groupId'] as String?,
+      alumniId: json['alumniId'] as String?,
       status: _$enumDecodeNullable(_$EventStatusEnumMap, json['status']),
-      page: json['page'] as int?,
-      pageSize: json['page-size'] as int? ?? 10,
+      page: json['page'] as String?,
+      pageSize: json['page-size'] as String? ?? '10',
       sortKey: _$enumDecodeNullable(_$EventSortKeyEnumMap, json['sort-key']),
       sortOrder: _$enumDecodeNullable(_$SortOrderEnumMap, json['sort-order']) ??
           SortOrder.DESC,
@@ -50,8 +50,8 @@ Map<String, dynamic> _$EventRequestToJson(EventRequest instance) {
       'registrationEndDate', instance.registrationEndDate?.toIso8601String());
   writeNotNull('startDate', instance.startDate?.toIso8601String());
   writeNotNull('endDate', instance.endDate?.toIso8601String());
-  writeNotNull('groupId', instance.groupId?.toString());
-  writeNotNull('alumniId', instance.alumniId?.toString());
+  writeNotNull('groupId', instance.groupId);
+  writeNotNull('alumniId', instance.alumniId);
   writeNotNull('status', _$EventStatusEnumMap[instance.status]);
   writeNotNull('page', instance.page);
   writeNotNull('page-size', instance.pageSize);

@@ -69,6 +69,5 @@ class Alumni {
     this.job,
   });
 
-  factory Alumni.fromJson(Map<String, dynamic> json) =>
-      _$AlumniInfoFromJson(json);
+  factory Alumni.fromJson(Map<String, dynamic> json) => _$AlumniFromJson(json);
 }

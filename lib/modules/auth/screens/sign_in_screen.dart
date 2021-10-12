@@ -6,7 +6,6 @@ import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class SignInScreen extends GetView<AuthController> {
-  final GlobalKey<FormState> signInKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,61 +42,13 @@ class SignInScreen extends GetView<AuthController> {
                 ],
               ),
             ),
-            Form(
-              key: signInKey,
-              child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(
-                  left: 65,
-                  right: 65,
-                  bottom: 25,
-                ),
-                child: Obx(
-                  () => DropdownButtonFormField<dynamic>(
-                    validator: (value) {
-                      if (value == null) return 'Please your university';
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF2F5233)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    hint: Text('Choose your university'),
-                    value: controller.selectedUniversity.value == 0
-                        ? null
-                        : controller.selectedUniversity.value,
-                    items: controller.dropdownUniversities.toList().cast(),
-                    onChanged: (value) {
-                      controller
-                          .onChangeUniversity(int.parse(value.toString()));
-                    },
-                  ),
-                ),
-              ),
-            ),
             Material(
               color: Colors.white,
               elevation: 5,
               borderRadius: BorderRadius.circular(15.0),
               child: InkWell(
                 onTap: () {
-                  if (signInKey.currentState!.validate()) {
-                    controller.signIn();
-                  }
+                  controller.signIn();
                 },
                 // splashColor: ,
                 borderRadius: BorderRadius.circular(15.0),

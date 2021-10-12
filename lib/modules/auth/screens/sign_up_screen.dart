@@ -92,45 +92,54 @@ class SignUpScreen extends GetView<AuthController> {
                         },
                       ),
                       SizedBox(height: size.height * 0.01),
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        child: DropdownButtonFormField<dynamic>(
-                          validator: (value) {
-                            if (value == null)
-                              return 'Please choose your class';
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFF2F5233)),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          hint: Text('Choose your class'),
-                          value: controller.selectedClass.value == 0
-                              ? null
-                              : controller.selectedClass.value,
-                          items: controller.dropdownClasses.toList().cast(),
-                          onChanged: (value) {
-                            controller
-                                .onChangeClass(int.parse(value.toString()));
-                          },
-                        ),
+                      _buildDropDown(
+                        hint: 'Choose your university',
+                        value: controller.selectedUniversity.value == 0
+                            ? null
+                            : controller.selectedUniversity.value,
+                        items: controller.dropdownUniversities.toList().cast(),
+                        onChanged: (value) {
+                          controller
+                              .onChangeUniversity(int.parse(value.toString()));
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please choose your university';
+                          }
+                          return null;
+                        },
                       ),
-                      SizedBox(height: size.height * 0.05),
+                      SizedBox(height: size.height * 0.01),
+                      _buildDropDown(
+                        hint: 'Choose your class',
+                        value: controller.selectedClass.value == 0
+                            ? null
+                            : controller.selectedClass.value,
+                        items: controller.dropdownClasses.toList().cast(),
+                        onChanged: (value) {
+                          controller.onChangeClass(int.parse(value.toString()));
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please choose your class';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: size.height * 0.01),
+                      _buildDropDown(
+                        hint: 'Choose your major',
+                        value: null,
+                        items: [],
+                        onChanged: (value) {},
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please choose your major';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: size.height * 0.02),
                       Container(
                         alignment: Alignment.centerRight,
                         margin:
@@ -184,6 +193,46 @@ class SignUpScreen extends GetView<AuthController> {
     );
   }
 
+  Widget _buildDropDown({
+    required String hint,
+    required dynamic value,
+    List<DropdownMenuItem<dynamic>>? items,
+    ValueChanged<dynamic>? onChanged,
+    String? Function(dynamic)? validator,
+  }) {
+    return Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: DropdownButtonFormField<dynamic>(
+        validator: validator,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF2F5233)),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        hint: Text(hint),
+        value: value,
+        items: items,
+        onChanged: onChanged,
+      ),
+    );
+  }
+
   Widget _buildTextFormField({
     required String labelText,
     String? Function(String?)? validator,
@@ -195,8 +244,8 @@ class SignUpScreen extends GetView<AuthController> {
     TextInputType? keyboardType = TextInputType.text,
   }) {
     return Container(
-      alignment: Alignment.center,
       margin: EdgeInsets.symmetric(horizontal: 40),
+      alignment: Alignment.center,
       child: TextFormField(
         onTap: onTapHandler,
         readOnly: readOnly!,
@@ -205,6 +254,8 @@ class SignUpScreen extends GetView<AuthController> {
         maxLength: maxLength,
         keyboardType: keyboardType,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
           counterText: "",
           labelText: labelText,
           hintText: hint,

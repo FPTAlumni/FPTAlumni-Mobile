@@ -41,7 +41,7 @@ class EventController extends GetxController {
   //current logged in alumni participated
   getEventsOfCurrentAlumni() async {
     EventRequest params = EventRequest(
-      alumniId: userAuthentication!.id,
+      alumniId: userAuthentication!.id.toString(),
       sortOrder: SortOrder.DESC,
     );
 

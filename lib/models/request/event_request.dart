@@ -28,19 +28,19 @@ class EventRequest {
   DateTime? endDate;
 
   @JsonKey(name: 'groupId')
-  int? groupId;
+  String? groupId;
 
   @JsonKey(name: 'alumniId')
-  int? alumniId;
+  String? alumniId;
 
   @JsonKey(name: 'status')
   EventStatus? status;
 
   @JsonKey(name: 'page')
-  int? page;
+  String? page;
 
-  @JsonKey(name: 'page-size', defaultValue: 10)
-  int? pageSize;
+  @JsonKey(name: 'page-size', defaultValue: '10')
+  String? pageSize;
 
   @JsonKey(name: 'sort-key')
   EventSortKey? sortKey;

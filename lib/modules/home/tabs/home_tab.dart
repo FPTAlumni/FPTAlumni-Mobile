@@ -5,7 +5,7 @@ import 'package:uni_alumni/modules/events/screens/create_event_screen.dart';
 import 'package:uni_alumni/modules/events/widgets/events_list.dart';
 import 'package:uni_alumni/modules/home/tabs/home_tab_controller.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
-import 'package:uni_alumni/modules/news/screens/news_screen.dart';
+import 'package:uni_alumni/modules/news/screens/news_details_screen.dart';
 import 'package:uni_alumni/modules/news/widgets/news_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -101,51 +101,51 @@ class HomeTab extends StatelessWidget {
                             );
                           }),
                           const SizedBox(width: 8),
-                          ClipOval(
-                            child: Material(
-                              elevation: 2.0,
-                              color: ColorConstants.lightPrimaryAppColor,
-                              child: PopupMenuButton(
-                                onSelected: (index) {
-                                  if (index == 0) {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (ctx) => NewsScreen()));
-                                  } else {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (ctx) =>
-                                                CreateEventScreen()));
-                                  }
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white70,
-                                    size: 25,
-                                  ),
-                                ),
-                                itemBuilder: (context) => [
-                                  const PopupMenuItem(
-                                    child: ListTile(
-                                      leading: Icon(Icons.article),
-                                      title: Text('Create News'),
-                                    ),
-                                    value: 0,
-                                  ),
-                                  const PopupMenuItem(
-                                    child: ListTile(
-                                      leading: Icon(Icons.event),
-                                      title: Text('Create an Event'),
-                                    ),
-                                    value: 1,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
+                          // ClipOval(
+                          //   child: Material(
+                          //     elevation: 2.0,
+                          //     color: ColorConstants.lightPrimaryAppColor,
+                          //     child: PopupMenuButton(
+                          //       onSelected: (index) {
+                          //         if (index == 0) {
+                          //           Navigator.of(context).push(
+                          //               MaterialPageRoute(
+                          //                   builder: (ctx) => NewsScreen()));
+                          //         } else {
+                          //           Navigator.of(context).push(
+                          //               MaterialPageRoute(
+                          //                   builder: (ctx) =>
+                          //                       CreateEventScreen()));
+                          //         }
+                          //       },
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.all(5.0),
+                          //         child: Icon(
+                          //           Icons.add,
+                          //           color: Colors.white70,
+                          //           size: 25,
+                          //         ),
+                          //       ),
+                          //       itemBuilder: (context) => [
+                          //         const PopupMenuItem(
+                          //           child: ListTile(
+                          //             leading: Icon(Icons.article),
+                          //             title: Text('Create News'),
+                          //           ),
+                          //           value: 0,
+                          //         ),
+                          //         const PopupMenuItem(
+                          //           child: ListTile(
+                          //             leading: Icon(Icons.event),
+                          //             title: Text('Create an Event'),
+                          //           ),
+                          //           value: 1,
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          // const SizedBox(width: 8),
                         ],
                       ),
                     ),
