@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: SplashScreen(),
+      // home: NewsDetailScreen(),
       initialRoute: Routes.ROOT,
       initialBinding: AppBinding(),
       getPages: AppPages.routes,

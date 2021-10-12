@@ -12,15 +12,13 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       location: json['location'] as String,
       banner: json['banner'] as String,
       eventName: json['event_name'] as String,
-      startDate:
-          FormatUtils.fromddMMyyyyHHmmtoDateTime(json['start_date'] as String),
-      endDate:
-          FormatUtils.fromddMMyyyyHHmmtoDateTime(json['end_date'] as String),
+      startDate: DateTime.parse(json['start_date'] as String),
+      endDate: DateTime.parse(json['end_date'] as String),
       groupId: json['group_id'] as int,
-      registrationStartDate: FormatUtils.fromddMMyyyyHHmmtoDateTime(
-          json['registration_start_date'] as String),
-      registrationEndDate: FormatUtils.fromddMMyyyyHHmmtoDateTime(
-          json['registration_end_date'] as String),
+      registrationStartDate:
+          DateTime.parse(json['registration_start_date'] as String),
+      registrationEndDate:
+          DateTime.parse(json['registration_end_date'] as String),
     );
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{

@@ -6,15 +6,14 @@ part of 'alumni.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Alumni _$AlumniInfoFromJson(Map<String, dynamic> json) => Alumni(
+Alumni _$AlumniFromJson(Map<String, dynamic> json) => Alumni(
       id: json['id'] as int,
       email: json['email'] as String,
       phone: json['phone'] as String,
       fullName: json['full_name'] as String,
       uid: json['uid'] as String,
-      dob: DateFormat('dd/MM/yyyy').parse(json['dob'] as String),
-      createdDate: FormatUtils.fromddMMyyyyHHmmtoDateTime(
-          json['created_date'] as String),
+      dob: DateTime.parse(json['dob'] as String),
+      createdDate: DateTime.parse(json['created_date'] as String),
       status: _$enumDecode(_$AlumniStatusEnumMap, json['status']),
       major: json['major'] == null
           ? null
@@ -30,7 +29,7 @@ Alumni _$AlumniInfoFromJson(Map<String, dynamic> json) => Alumni(
       job: json['job'] as String?,
     );
 
-Map<String, dynamic> _$AlumniInfoToJson(Alumni instance) {
+Map<String, dynamic> _$AlumniToJson(Alumni instance) {
   final val = <String, dynamic>{
     'email': instance.email,
     'phone': instance.phone,

@@ -50,10 +50,6 @@ class AuthController extends GetxController {
   onReady() async {
     super.onReady();
 
-    if (!isSignIn.value) {
-      universityController.loadUniversities();
-    }
-
     ever(universityController.universities, _loadDropdownUniversities);
     ever(clazzController.clazzList, _loadDropdownClasses);
   }
@@ -81,8 +77,8 @@ class AuthController extends GetxController {
       String firebaseToken = await userCredential!.user!.getIdToken();
 
       print('call get app token');
-      userAuthentication = await authRepository.getAppToken(AppTokenRequest(
-          tokenId: firebaseToken, universityId: selectedUniversity.value));
+      userAuthentication = await authRepository
+          .getAppToken(AppTokenRequest(tokenId: firebaseToken));
 
       CustomFullScreenDialog.cancelDialog();
 
@@ -90,14 +86,14 @@ class AuthController extends GetxController {
         print(userAuthentication!.appToken);
         //save universityId
         final prefs = await SharedPreferences.getInstance();
-        prefs.setInt('universityId', selectedUniversity.value);
+        prefs.setString('uId', googleAuth.idToken!);
 
         currentUser = await authRepository.getUserById(
             userAuthentication!.id, userAuthentication!.appToken);
 
         isSignIn.value = true;
       } else {
-        await clazzController.loadClasses();
+        await universityController.loadUniversities();
         Get.toNamed(Routes.SIGN_UP);
       }
     }
@@ -119,13 +115,13 @@ class AuthController extends GetxController {
 
     //check if university id exist
     final prefs = await SharedPreferences.getInstance();
-    final universityId = prefs.getInt('universityId');
-    if (universityId == null) return;
+    final uId = prefs.getString('uId');
+    if (uId == null) return;
 
     String tokenId = await _firebaseAuth.currentUser!.getIdToken();
     // print('call get app token');
-    userAuthentication = await authRepository.getAppToken(
-        AppTokenRequest(tokenId: tokenId, universityId: universityId));
+    userAuthentication =
+        await authRepository.getAppToken(AppTokenRequest(tokenId: tokenId));
     print(userAuthentication!.appToken);
     if (userAuthentication != null) {
       // print('Get user Id');
@@ -157,12 +153,13 @@ class AuthController extends GetxController {
     });
   }
 
-  onChangeClass(int value) async {
-    selectedClass.value = value;
-  }
-
   onChangeUniversity(int value) async {
     selectedUniversity.value = value;
+  }
+
+  onChangeClass(int value) async {
+    selectedClass.value = value;
+    await clazzController.loadClasses();
   }
 
   onSubmitForm() async {
