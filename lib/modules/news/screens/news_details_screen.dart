@@ -2,13 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+import 'package:uni_alumni/shared/widgets/my_chip.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
 class NewsDetailScreen extends StatelessWidget {
-  String data = "<div>"
+  final String data = "<div>"
       "<p>This is a <strong>paragraph</strong>.</p>"
       "<h1>This is a title</h1>"
       "<p>This is a <strong>paragraph</strong>.</p>"
+      "<p>This is a long, long, long very long paragraph to test overflow</p>"
       "<p>I like <i>dogs</i></p>"
       "<ul>"
       "<li>List item 1</li>"
@@ -38,9 +40,9 @@ class NewsDetailScreen extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 10.0,
-                      vertical: 15.0,
+                    margin: const EdgeInsets.only(
+                      right: 10.0,
+                      bottom: 0.0,
                     ),
                     child: CircleAvatar(
                       radius: 25,
@@ -75,7 +77,6 @@ class NewsDetailScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              // TextSpan(text: '  ❯  '),
                               TextSpan(
                                   text: 'GroupName the very very long long'
                                       ' long group name'),
@@ -94,6 +95,20 @@ class NewsDetailScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              Container(
+                width: double.infinity,
+                child: Wrap(
+                  runSpacing: -12.0,
+                  children: [
+                    MyChip(label: '#K14', onTapHandler: () {}),
+                    MyChip(label: '#Hot', onTapHandler: () {}),
+                    MyChip(
+                        label: '#Software Architecture', onTapHandler: () {}),
+                    MyChip(label: '#Testing', onTapHandler: () {}),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10.0),
               Text(
                 'This is a very very very very very long long long long long long title',
                 softWrap: true,
