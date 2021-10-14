@@ -25,15 +25,16 @@ class RecruitmentCard extends StatelessWidget {
             margin: const EdgeInsets.only(
               right: 10,
             ),
-            padding: const EdgeInsets.all(15.0),
+            // padding: const EdgeInsets.all(15.0),
             decoration: BoxDecoration(
               border: Border.all(color: ColorConstants.tipColor),
               borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
-            width: 90,
+            width: 85,
             child: AspectRatio(
               aspectRatio: 1 / 1,
-              child: Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                 child: Image.network(
                   url,
                   fit: BoxFit.cover,

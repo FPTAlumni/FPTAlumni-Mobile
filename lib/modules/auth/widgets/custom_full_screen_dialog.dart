@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 
 class CustomFullScreenDialog {
   static void showDialog() {
@@ -8,7 +9,8 @@ class CustomFullScreenDialog {
         child: Container(
           child: Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(Colors.yellowAccent),
+              valueColor:
+                  AlwaysStoppedAnimation(ColorConstants.primaryAppColor),
             ),
           ),
         ),

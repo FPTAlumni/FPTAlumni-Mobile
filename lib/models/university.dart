@@ -1,8 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uni_alumni/models/clazz.dart';
 
 part 'university.g.dart';
 
-@JsonSerializable(includeIfNull: false)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class University {
   @JsonKey(name: 'id')
   int id;
@@ -16,7 +17,14 @@ class University {
   @JsonKey(name: 'address')
   String? address;
 
-  University({required this.id, required this.name, this.logo, this.address});
+  List<Clazz>? classes;
+
+  University(
+      {required this.id,
+      required this.name,
+      this.logo,
+      this.address,
+      this.classes});
 
   factory University.fromJson(Map<String, dynamic> json) =>
       _$UniversityFromJson(json);

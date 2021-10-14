@@ -15,5 +15,9 @@ class EventRepository {
       List responseList = response.body['data'];
       return responseList.map((event) => Event.fromJson(event)).toList();
     }
+
+    if (response.statusCode == 204) {
+      throw Exception('There is no event');
+    }
   }
 }

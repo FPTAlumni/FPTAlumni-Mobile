@@ -17,7 +17,7 @@ RegistrationRequest _$RegistrationRequestFromJson(Map<String, dynamic> json) =>
       aboutMe: json['about_me'] as String?,
       companyId: json['company_id'] as int? ?? 0,
       job: json['job'] as String?,
-      universityMajorId: json['university_major_id'] as int? ?? 0,
+      majorId: json['major_id'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$RegistrationRequestToJson(RegistrationRequest instance) {
@@ -38,7 +38,7 @@ Map<String, dynamic> _$RegistrationRequestToJson(RegistrationRequest instance) {
   writeNotNull('job', instance.job);
   writeNotNull('about_me', instance.aboutMe);
   writeNotNull('company_id', instance.companyId);
-  writeNotNull('university_major_id', instance.universityMajorId);
+  writeNotNull('major_id', instance.majorId);
   val['class_id'] = instance.classId;
   return val;
 }

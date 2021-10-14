@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/alumni/screens/profile_screen.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
+import 'package:uni_alumni/modules/groups/group_controller.dart';
+import 'package:uni_alumni/modules/groups/screens/group_home.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -125,8 +127,18 @@ class MenuTab extends StatelessWidget {
                     children: [
                       AlumniIndex("News", ColorConstants.primaryAppColor,
                           Icons.wallpaper),
-                      AlumniIndex("Groups", ColorConstants.primaryAppColor,
-                          Icons.group),
+                      AlumniIndex(
+                        "Groups",
+                        ColorConstants.primaryAppColor,
+                        Icons.group,
+                        onTapHandler: () {
+                          // Get.to(() => GroupHome());
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(
+                                  builder: (ctx) => GroupHome()))
+                              .then((_) => Get.delete<GroupController>());
+                        },
+                      ),
                     ],
                   ),
                 ],

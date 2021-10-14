@@ -11,6 +11,9 @@ University _$UniversityFromJson(Map<String, dynamic> json) => University(
       name: json['name'] as String,
       logo: json['logo'] as String?,
       address: json['address'] as String?,
+      classes: (json['classes'] as List<dynamic>?)
+          ?.map((e) => Clazz.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UniversityToJson(University instance) {
@@ -27,5 +30,6 @@ Map<String, dynamic> _$UniversityToJson(University instance) {
 
   writeNotNull('logo', instance.logo);
   writeNotNull('address', instance.address);
+  writeNotNull('classes', instance.classes?.map((e) => e.toJson()).toList());
   return val;
 }

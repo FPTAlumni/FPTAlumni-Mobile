@@ -111,6 +111,7 @@ const _$EventSortKeyEnumMap = {
   EventSortKey.location: 'Location',
   EventSortKey.registrationStartDate: 'RegistrationStartDate',
   EventSortKey.registrationEndDate: 'RegistrationEndDate',
+  EventSortKey.startDate: 'StartDate',
   EventSortKey.endDate: 'EndDate',
 };
 

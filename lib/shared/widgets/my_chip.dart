@@ -8,12 +8,14 @@ class MyChip extends StatelessWidget {
   final Color color;
   final Color? background;
   final double margin;
+  final Widget? icon;
 
   MyChip(
       {required this.label,
       required this.onTapHandler,
       this.color = Colors.white,
       this.background = ColorConstants.lightPrimaryAppColor,
+      this.icon,
       this.margin = 5.0});
 
   @override
@@ -21,6 +23,7 @@ class MyChip extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(margin),
       child: ActionChip(
+          avatar: icon,
           label: Text(
             label,
             textScaleFactor: 5 / 6,
