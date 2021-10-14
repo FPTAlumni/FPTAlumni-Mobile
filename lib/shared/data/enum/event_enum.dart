@@ -5,11 +5,12 @@ enum EventSortKey {
   eventName,
   @JsonValue('Location')
   location,
-
   @JsonValue('RegistrationStartDate')
   registrationStartDate,
   @JsonValue('RegistrationEndDate')
   registrationEndDate,
+  @JsonValue('StartDate')
+  startDate,
   @JsonValue('EndDate')
   endDate,
 }

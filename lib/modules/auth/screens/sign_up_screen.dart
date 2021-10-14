@@ -110,22 +110,25 @@ class SignUpScreen extends GetView<AuthController> {
                         },
                       ),
                       SizedBox(height: size.height * 0.01),
-                      _buildDropDown(
-                        hint: 'Choose your class',
-                        value: controller.selectedClass.value == 0
-                            ? null
-                            : controller.selectedClass.value,
-                        items: controller.dropdownClasses.toList().cast(),
-                        onChanged: (value) {
-                          controller.onChangeClass(int.parse(value.toString()));
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please choose your class';
-                          }
-                          return null;
-                        },
-                      ),
+                      Obx(() {
+                        return _buildDropDown(
+                          hint: 'Choose your class',
+                          value: controller.selectedClass.value == 0
+                              ? null
+                              : controller.selectedClass.value,
+                          items: controller.dropdownClasses.toList().cast(),
+                          onChanged: (value) {
+                            controller
+                                .onChangeClass(int.parse(value.toString()));
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please choose your class';
+                            }
+                            return null;
+                          },
+                        );
+                      }),
                       SizedBox(height: size.height * 0.01),
                       _buildDropDown(
                         hint: 'Choose your major',

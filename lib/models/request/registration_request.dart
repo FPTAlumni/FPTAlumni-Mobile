@@ -28,8 +28,8 @@ class RegistrationRequest {
   @JsonKey(name: 'company_id')
   int? companyId;
 
-  @JsonKey(name: 'university_major_id')
-  int? universityMajorId;
+  @JsonKey(name: 'major_id')
+  int? majorId;
 
   @JsonKey(name: 'class_id')
   int classId;
@@ -44,7 +44,7 @@ class RegistrationRequest {
     this.aboutMe,
     this.companyId = 0,
     this.job,
-    this.universityMajorId = 0,
+    this.majorId = 0,
   });
 
   Map<String, dynamic> toJson() => _$RegistrationRequestToJson(this);

@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_alumni/models/clazz.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
 import 'package:uni_alumni/models/response/app_token_response.dart';
 import 'package:uni_alumni/models/alumni.dart';
+import 'package:uni_alumni/models/university.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/auth/widgets/custom_full_screen_dialog.dart';
 import 'package:uni_alumni/modules/clazz/clazz_controller.dart';
@@ -143,6 +145,9 @@ class AuthController extends GetxController {
   }
 
   _loadDropdownClasses(listClasses) {
+    //reset dropdownClass
+    dropdownClasses.value = [];
+
     //load clazzList to dropdownClasses
     print('load classes');
     listClasses.forEach((clazz) {
@@ -155,11 +160,21 @@ class AuthController extends GetxController {
 
   onChangeUniversity(int value) async {
     selectedUniversity.value = value;
+
+    //load listClasses by university id
+    final List<Clazz>? _listClasses = (universityController.universities
+            .firstWhere((university) => university.id == value) as University)
+        .classes;
+    _listClasses == null
+        ? clazzController.clazzList.value = []
+        : clazzController.clazzList.value = _listClasses;
+
+    //reset selected value
+    selectedClass.value = 0;
   }
 
   onChangeClass(int value) async {
     selectedClass.value = value;
-    await clazzController.loadClasses();
   }
 
   onSubmitForm() async {

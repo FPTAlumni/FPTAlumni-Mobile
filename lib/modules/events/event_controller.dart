@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
@@ -9,6 +10,7 @@ import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/events/event_repository.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/common_enum.dart';
+import 'package:uni_alumni/shared/data/enum/event_enum.dart';
 import 'package:uni_alumni/shared/widgets/custom_datetime_picker.dart';
 
 class EventController extends GetxController {
@@ -17,7 +19,7 @@ class EventController extends GetxController {
 
   EventController({required this.eventRepository});
 
-  List<Event> events = [];
+  var events = [].obs;
 
   final eventNameController = TextEditingController();
   final locationController = TextEditingController();
@@ -29,7 +31,14 @@ class EventController extends GetxController {
   final HtmlEditorController contentController = HtmlEditorController();
   final ImagePicker _picker = ImagePicker();
 
+  String? error;
+
   var banner = XFile('').obs;
+
+  EventRequest? params;
+
+  final _pageSize = 5;
+  int _page = 1;
 
   @override
   onInit() {
@@ -39,17 +48,33 @@ class EventController extends GetxController {
 
   //get all events in all groups that
   //current logged in alumni participated
-  getEventsOfCurrentAlumni() async {
+  Future<void> getEventsOfCurrentAlumni() async {
+    print('load events');
     EventRequest params = EventRequest(
       alumniId: userAuthentication!.id.toString(),
       sortOrder: SortOrder.DESC,
+      sortKey: EventSortKey.startDate,
+      page: _page.toString(),
+      pageSize: _pageSize.toString(),
     );
 
-    List<Event>? _events =
-        await eventRepository.getEvents(userAuthentication!.appToken, params);
-    if (_events != null) {
-      events = _events;
+    try {
+      List<Event>? _events =
+          await eventRepository.getEvents(userAuthentication!.appToken, params);
+      if (_events != null) {
+        events.addAll(_events);
+        _page++;
+      }
+    } on Exception {
+      error = 'There is no Event';
     }
+  }
+
+  Future<void> refresh() async {
+    events.value = [];
+    _page = 1;
+    error = null;
+    await getEventsOfCurrentAlumni();
   }
 
   // void showImageDialog() async {

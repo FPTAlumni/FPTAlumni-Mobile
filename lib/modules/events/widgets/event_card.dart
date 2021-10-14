@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:uni_alumni/models/event.dart';
 import 'package:uni_alumni/modules/events/screens/event_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+import 'package:uni_alumni/shared/utils/format_utils.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
@@ -12,9 +12,11 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool _isEventRegistrationEnd =
+        event.registrationStartDate.isBefore(DateTime.now());
     return GestureDetector(
       onTap: () {
-        Get.to(() => EventDetailsScreen());
+        Get.to(() => EventDetailsScreen(event));
         // Navigator.of(context)
         //     .push(MaterialPageRoute(builder: (ctx) => EventDetailsScreen()));
       },
@@ -81,8 +83,9 @@ class EventCard extends StatelessWidget {
                                 size: 14,
                                 color: Colors.grey,
                               ),
+                              const SizedBox(width: 3),
                               Text(
-                                '${DateFormat('dd/MM/yyyy | HH:mm aaa').format(event.startDate)}',
+                                FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey,
@@ -101,6 +104,7 @@ class EventCard extends StatelessWidget {
                                 size: 14,
                                 color: Colors.grey,
                               ),
+                              const SizedBox(width: 3),
                               Text(
                                 event.location,
                                 style: TextStyle(
@@ -125,7 +129,9 @@ class EventCard extends StatelessWidget {
                   bottomLeft: Radius.circular(10.0),
                   bottomRight: Radius.circular(10.0),
                 ),
-                color: ColorConstants.primaryAppColor,
+                color: _isEventRegistrationEnd
+                    ? Colors.grey[400]
+                    : ColorConstants.primaryAppColor,
               ),
               padding: EdgeInsets.only(
                 top: 8,
@@ -133,7 +139,7 @@ class EventCard extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                'Register',
+                _isEventRegistrationEnd ? "Closed" : "Register",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,

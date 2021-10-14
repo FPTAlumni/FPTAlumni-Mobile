@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:uni_alumni/models/event.dart';
-import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
-
-import '../event_controller.dart';
+import 'package:uni_alumni/shared/utils/format_utils.dart';
 
 class EventDetailsScreen extends StatelessWidget {
-  //
-  // final EventController eventController;
-  //
-  // EventScreen({required this.eventController});
+  final Event event;
+
+  EventDetailsScreen(this.event);
 
   @override
   Widget build(BuildContext context) {
+    final bool _isEventRegistrationEnd =
+        event.registrationStartDate.isBefore(DateTime.now());
     PreferredSizeWidget _banner = PreferredSize(
       preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.35),
       child: Expanded(
         child: Stack(
           children: [
-            // tag: pet.imageUrl,
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      'https://thecolorrun.com/wp-content/uploads/about-image-3.jpg'),
+                  image: NetworkImage(event.banner),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.only(
@@ -53,7 +51,7 @@ class EventDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Posted by",
+                      "Registration End:",
                       style: TextStyle(
                         color: Colors.deepOrange,
                         fontSize: 12,
@@ -64,7 +62,7 @@ class EventDetailsScreen extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      "Nannie Barker",
+                      FormatUtils.toddMMyyyyHHmmaaa(event.registrationEndDate),
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 14,
@@ -74,28 +72,35 @@ class EventDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.orange.shade300.withOpacity(0.5),
-                    spreadRadius: 3,
-                    blurRadius: 5,
-                    offset: Offset(0, 0),
+            GestureDetector(
+              onTap: _isEventRegistrationEnd ? null : () {},
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
                   ),
-                ],
-                color: Colors.deepOrange,
-              ),
-              child: Text(
-                "Register",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: _isEventRegistrationEnd
+                          ? Colors.grey[300]!.withOpacity(0.5)
+                          : Colors.orange.shade300.withOpacity(0.5),
+                      spreadRadius: 3,
+                      blurRadius: 5,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                  color: _isEventRegistrationEnd
+                      ? Colors.grey[400]
+                      : Colors.deepOrange,
+                ),
+                child: Text(
+                  _isEventRegistrationEnd ? "Closed" : "Register",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -146,7 +151,11 @@ class EventDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 20,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -154,7 +163,7 @@ class EventDetailsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Ten event',
+                              event.eventName,
                               style: TextStyle(
                                 color: Colors.deepOrange,
                                 fontWeight: FontWeight.bold,
@@ -175,7 +184,7 @@ class EventDetailsScreen extends StatelessWidget {
                                   width: 4,
                                 ),
                                 Text(
-                                  'Location',
+                                  event.location,
                                   style: TextStyle(
                                     color: Colors.grey[600],
                                     fontSize: 14,
@@ -184,19 +193,9 @@ class EventDetailsScreen extends StatelessWidget {
                                 SizedBox(
                                   width: 4,
                                 ),
-                                Text(
-                                  'Khum biet dien gi',
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
                               ],
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            const SizedBox(height: 8),
                             Row(
                               children: [
                                 Icon(
@@ -204,9 +203,7 @@ class EventDetailsScreen extends StatelessWidget {
                                   color: Colors.grey[600],
                                   size: 20,
                                 ),
-                                SizedBox(
-                                  width: 4,
-                                ),
+                                const SizedBox(width: 4),
                                 Text(
                                   'Group',
                                   style: TextStyle(
@@ -214,17 +211,7 @@ class EventDetailsScreen extends StatelessWidget {
                                     fontSize: 14,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  'Khum biet dien gi',
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                                const SizedBox(width: 4),
                               ],
                             ),
                           ],
@@ -236,8 +223,15 @@ class EventDetailsScreen extends StatelessWidget {
                     padding: EdgeInsets.all(8),
                     child: Row(
                       children: [
-                        buildPetFeature("4 months", "Age"),
-                        buildPetFeature("11 Kg", "Weight"),
+                        _buildEventFeature(
+                          FormatUtils.toddMMyyyyHHmmaaa(
+                              event.registrationStartDate),
+                          "Registration Start",
+                        ),
+                        _buildEventFeature(
+                          FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
+                          "Event Start",
+                        ),
                       ],
                     ),
                   ),
@@ -258,13 +252,7 @@ class EventDetailsScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      "Maine Coon cats are known for their intelligence and "
-                      "playfulness, as well as their size. One of the "
-                      "largest breeds of domestic cats, they are lovingly"
-                      " driving and playing with people so join us to "
-                      "have joyful activities. largest breeds of domestic cats, they are lovingly"
-                      " driving and playing with people so join us to "
-                      "have joyful activities",
+                      event.eventContent,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 14,
@@ -284,11 +272,11 @@ class EventDetailsScreen extends StatelessWidget {
     );
   }
 
-  buildPetFeature(String value, String feature) {
+  _buildEventFeature(String value, String feature) {
     return Expanded(
       child: Container(
-        height: 70,
-        padding: EdgeInsets.all(12),
+        height: 60,
+        padding: EdgeInsets.all(10),
         margin: EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
           border: Border.all(
@@ -300,12 +288,13 @@ class EventDetailsScreen extends StatelessWidget {
           ),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               value,
               style: TextStyle(
                 color: Colors.grey[800],
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -316,7 +305,7 @@ class EventDetailsScreen extends StatelessWidget {
               feature,
               style: TextStyle(
                 color: Colors.grey[600],
-                fontSize: 14,
+                fontSize: 13,
               ),
             ),
           ],
