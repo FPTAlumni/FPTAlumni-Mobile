@@ -16,6 +16,11 @@ class ApiProvider extends BaseProvider {
     return get(path);
   }
 
+  //------------Major------------
+  Future<Response> getMajorsById(String path, int classId) {
+    return get(path, query: {'classId': classId.toString()});
+  }
+
   //------------Authentication------------
   //get app token from backend
   Future<Response> getAppToken(String path, AppTokenRequest data) {

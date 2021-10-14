@@ -13,6 +13,7 @@ import 'package:uni_alumni/models/university.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/auth/widgets/custom_full_screen_dialog.dart';
 import 'package:uni_alumni/modules/clazz/clazz_controller.dart';
+import 'package:uni_alumni/modules/majors/major_controller.dart';
 import 'package:uni_alumni/modules/universities/university_controller.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -21,18 +22,21 @@ class AuthController extends GetxController {
   AuthRepository authRepository = Get.find();
   UniversityController universityController = Get.find();
   ClazzController clazzController = Get.find();
+  MajorController majorController = Get.find();
 
   AppTokenResponse? userAuthentication;
   Alumni? currentUser;
 
   var selectedClass = 0.obs;
   var selectedUniversity = 0.obs;
+  var selectedMajor = 0.obs;
   final fullNameController = TextEditingController();
   final phoneController = TextEditingController();
   final dobController = TextEditingController();
 
   var dropdownUniversities = [].obs;
   var dropdownClasses = [].obs;
+  var dropdownMajors = [].obs;
 
   late GoogleSignIn _googleSignIn = GoogleSignIn();
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -47,13 +51,13 @@ class AuthController extends GetxController {
     autoSignIn = _autoSignIn();
   }
 
-  //Todo: auto login (do later)
   @override
   onReady() async {
     super.onReady();
 
     ever(universityController.universities, _loadDropdownUniversities);
     ever(clazzController.clazzList, _loadDropdownClasses);
+    ever(majorController.majors, _loadDropdownMajors);
   }
 
   void signIn() async {
@@ -158,6 +162,19 @@ class AuthController extends GetxController {
     });
   }
 
+  _loadDropdownMajors(listMajors) {
+    //reset dropdownClass
+    dropdownMajors.value = [];
+
+    print('load majors');
+    listMajors.forEach((major) {
+      dropdownMajors.add(DropdownMenuItem(
+        value: major.id,
+        child: Text(major.fullName),
+      ));
+    });
+  }
+
   onChangeUniversity(int value) async {
     selectedUniversity.value = value;
 
@@ -169,12 +186,26 @@ class AuthController extends GetxController {
         ? clazzController.clazzList.value = []
         : clazzController.clazzList.value = _listClasses;
 
-    //reset selected value
+    //reset selected class value
     selectedClass.value = 0;
+    //reset selected major value
+    selectedMajor.value = 0;
+
+    dropdownMajors.value = [];
   }
 
   onChangeClass(int value) async {
     selectedClass.value = value;
+
+    //load majors from db
+    majorController.getMajors(value);
+
+    //reset selected major value
+    selectedMajor.value = 0;
+  }
+
+  onChangeMajor(int value) {
+    selectedMajor.value = value;
   }
 
   onSubmitForm() async {

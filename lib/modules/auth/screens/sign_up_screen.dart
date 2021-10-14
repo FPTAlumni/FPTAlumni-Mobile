@@ -130,18 +130,24 @@ class SignUpScreen extends GetView<AuthController> {
                         );
                       }),
                       SizedBox(height: size.height * 0.01),
-                      _buildDropDown(
-                        hint: 'Choose your major',
-                        value: null,
-                        items: [],
-                        onChanged: (value) {},
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please choose your major';
-                          }
-                          return null;
-                        },
-                      ),
+                      Obx(() {
+                        return _buildDropDown(
+                          hint: 'Choose your major',
+                          value: controller.selectedMajor.value == 0
+                              ? null
+                              : controller.selectedMajor.value,
+                          items: controller.dropdownMajors.toList().cast(),
+                          onChanged: (value) {
+                            controller.onChangeMajor(value);
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please choose your major';
+                            }
+                            return null;
+                          },
+                        );
+                      }),
                       SizedBox(height: size.height * 0.02),
                       Container(
                         alignment: Alignment.centerRight,
