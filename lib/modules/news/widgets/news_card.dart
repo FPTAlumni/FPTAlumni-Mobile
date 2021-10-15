@@ -31,6 +31,48 @@ class NewsCard extends StatelessWidget {
         },
         child: Column(
           children: [
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(
+                    right: 10.0,
+                    left: 10.0,
+                  ),
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg'),
+                    backgroundColor: Colors.transparent,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Group name the very very long group name to test '
+                        'over flow hehehe',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Text(
+                        '28/09/2021',
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10.0,
@@ -56,46 +98,29 @@ class NewsCard extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 10.0,
-                    vertical: 15.0,
-                  ),
-                  child: CircleAvatar(
-                    radius: 22,
-                    backgroundImage: NetworkImage(avatar),
-                    backgroundColor: Colors.transparent,
-                  ),
-                ),
-                Column(
-                  children: [
-                    Text(
-                      'Username',
-                      style: TextStyle(fontSize: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8.0,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Wrap(
+                      runSpacing: -20.0,
+                      alignment: WrapAlignment.start,
+                      children: [
+                        MyChip(label: '#K14', onTapHandler: () {}),
+                        MyChip(
+                            label: '#Software Architecture',
+                            onTapHandler: () {}),
+                        MyChip(label: '#Hot', onTapHandler: () {}),
+                        MyChip(label: '#Testing', onTapHandler: () {}),
+                      ],
                     ),
-                    Text(
-                      '28/09/2021',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Wrap(
-                    runSpacing: -20.0,
-                    alignment: WrapAlignment.end,
-                    children: [
-                      MyChip(label: '#K14', onTapHandler: () {}),
-                      MyChip(
-                          label: '#Software Architecture', onTapHandler: () {}),
-                      MyChip(label: '#Hot', onTapHandler: () {}),
-                      MyChip(label: '#Testing', onTapHandler: () {}),
-                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),

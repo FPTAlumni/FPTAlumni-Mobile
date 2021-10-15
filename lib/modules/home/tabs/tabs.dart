@@ -5,12 +5,8 @@ export './menu_tab.dart';
 
 enum MainTabs {
   home,
+  event,
   recruitment,
   referral,
   profile,
-}
-
-enum HomeTabs {
-  news,
-  events,
 }

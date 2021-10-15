@@ -1,15 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:uni_alumni/modules/recruitment/recruitment_controller.dart';
-import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
+import 'package:uni_alumni/modules/events/widgets/events_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
-import 'package:uni_alumni/shared/data/filters.dart';
-import 'package:uni_alumni/shared/utils/filter_dialog.dart';
 
-class RecruitmentTab extends StatelessWidget {
-  final RecruitmentController controller = Get.put(RecruitmentController());
+class EventTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +34,7 @@ class RecruitmentTab extends StatelessWidget {
           ],
         ),
       ),
-      body: RecruitmentList(),
+      body: EventsList(),
     );
   }
 }

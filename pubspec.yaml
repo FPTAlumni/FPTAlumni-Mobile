@@ -41,6 +41,7 @@ dependencies:
   image_picker: ^0.8.4+2
   flutter_datetime_picker: ^1.5.1
   flutter_html: ^2.1.5
+  url_launcher: ^6.0.12
 
 dependency_overrides:
   flutter_colorpicker: ^0.6.0

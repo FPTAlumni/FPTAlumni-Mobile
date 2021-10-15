@@ -22,55 +22,57 @@ class GroupsList extends StatelessWidget {
   }
 
   Widget _buildList(List<Group> list) {
-    return ListView.builder(
-      itemCount: list.length,
-      itemBuilder: (ctx, i) => GestureDetector(
-        child: Container(
-          width: double.infinity,
-          color: Colors.white,
-          margin: const EdgeInsets.only(
-            top: 5.0,
-            bottom: 5.0,
-          ),
-          child: Material(
-            child: InkWell(
-              splashColor: Colors.grey[200],
-              onTap: () {
-                // Navigator.of(context)
-                //     .push(MaterialPageRoute(builder: (ctx) => GroupHome()));
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: ListTile(
-                  leading: Container(
-                    width: 60,
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Image.network(
-                          list[i].imageUrl,
-                          fit: BoxFit.cover,
+    return Expanded(
+      child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (ctx, i) => GestureDetector(
+          child: Container(
+            width: double.infinity,
+            color: Colors.white,
+            margin: const EdgeInsets.only(
+              top: 5.0,
+              bottom: 5.0,
+            ),
+            child: Material(
+              child: InkWell(
+                splashColor: Colors.grey[200],
+                onTap: () {
+                  // Navigator.of(context)
+                  //     .push(MaterialPageRoute(builder: (ctx) => GroupHome()));
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: ListTile(
+                    leading: Container(
+                      width: 60,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          child: Image.network(
+                            list[i].imageUrl,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  title: Text(
-                    list[i].name,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                    title: Text(
+                      list[i].name,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
+                    trailing: _buildButton(list[i].isJoin),
                   ),
-                  trailing: _buildButton(list[i].isJoin),
                 ),
               ),
             ),
           ),
+          // ),
         ),
-        // ),
       ),
     );
   }

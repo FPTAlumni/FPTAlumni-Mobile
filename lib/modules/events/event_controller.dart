@@ -37,7 +37,7 @@ class EventController extends GetxController {
 
   EventRequest? params;
 
-  final _pageSize = 5;
+  final _pageSize = 6;
   int _page = 1;
 
   @override

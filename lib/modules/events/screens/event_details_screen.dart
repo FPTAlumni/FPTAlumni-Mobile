@@ -139,13 +139,13 @@ class EventDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _banner,
-          Container(
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top -
-                _banner.preferredSize.height -
-                _registrationPlace.preferredSize.height -
-                kBottomNavigationBarHeight,
-            color: Colors.white,
+          Expanded(
+            // height: MediaQuery.of(context).size.height -
+            //     MediaQuery.of(context).padding.top -
+            //     _banner.preferredSize.height -
+            //     _registrationPlace.preferredSize.height -
+            //     kBottomNavigationBarHeight,
+            // color: Colors.white,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
