@@ -18,7 +18,7 @@ class EventsList extends StatelessWidget {
         eventController.getEventsOfCurrentAlumni().then((_) {
           if (eventController.error != null) {
             _scrollController
-                .jumpTo(_scrollController.position.maxScrollExtent - 50);
+                .jumpTo(_scrollController.position.maxScrollExtent - 45);
           }
         });
       }
@@ -34,19 +34,16 @@ class EventsList extends StatelessWidget {
               itemCount: eventController.events.length,
               itemBuilder: (ctx, i) {
                 if (i == eventController.events.length - 1) {
-                  if (eventController.error == null) {
-                    return Center(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.0),
-                        width: 25,
-                        child: CircularProgressIndicator(
-                          color: ColorConstants.primaryAppColor,
-                        ),
+                  return Center(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: ColorConstants.primaryAppColor,
                       ),
-                    );
-                  } else {
-                    return Container();
-                  }
+                    ),
+                  );
                 }
                 return EventCard(eventController.events[i]);
               },

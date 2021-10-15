@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/modules/home/tabs/event_tab.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
 import 'package:uni_alumni/routes/my_keys.dart';
 import 'package:uni_alumni/routes/my_navigator.dart';
@@ -28,6 +29,7 @@ class MainController extends GetxController {
       SizedBox(),
       SizedBox(),
       SizedBox(),
+      SizedBox(),
     ];
   }
 
@@ -49,6 +51,8 @@ class MainController extends GetxController {
     switch (tab) {
       case MainTabs.home:
         return myKeys.home;
+      case MainTabs.event:
+        return myKeys.events;
       case MainTabs.recruitment:
         return myKeys.jobs;
       case MainTabs.referral:
@@ -62,7 +66,11 @@ class MainController extends GetxController {
     switch (tab) {
       case MainTabs.home:
         _pages[index] = MyNavigator(
-            navigatorKey: myKeys.home, name: 'home', widget: HomeTab());
+            navigatorKey: myKeys.home, name: 'Home', widget: HomeTab());
+        break;
+      case MainTabs.event:
+        _pages[index] = MyNavigator(
+            navigatorKey: myKeys.events, name: 'Events', widget: EventTab());
         break;
       case MainTabs.recruitment:
         _pages[index] = MyNavigator(
@@ -85,12 +93,14 @@ class MainController extends GetxController {
     switch (tab) {
       case MainTabs.home:
         return 0;
-      case MainTabs.recruitment:
+      case MainTabs.event:
         return 1;
-      case MainTabs.referral:
+      case MainTabs.recruitment:
         return 2;
-      case MainTabs.profile:
+      case MainTabs.referral:
         return 3;
+      case MainTabs.profile:
+        return 4;
       default:
         return 0;
     }
@@ -101,10 +111,12 @@ class MainController extends GetxController {
       case 0:
         return MainTabs.home;
       case 1:
-        return MainTabs.recruitment;
+        return MainTabs.event;
       case 2:
-        return MainTabs.referral;
+        return MainTabs.recruitment;
       case 3:
+        return MainTabs.referral;
+      case 4:
         return MainTabs.profile;
       default:
         return MainTabs.home;

@@ -38,27 +38,24 @@ class GroupHome extends StatelessWidget {
       // ],
     );
 
-    PreferredSizeWidget chipTab = PreferredSize(
-      preferredSize: Size.fromHeight(50),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Obx(() {
-            return _buildChip(
-                label: 'Your groups',
-                icon: Icons.group,
-                tab: GroupTabs.yourGroup);
-          }),
-          const SizedBox(width: 10.0),
-          Obx(() {
-            return _buildChip(
-                label: 'Discover',
-                icon: Icons.whatshot_rounded,
-                tab: GroupTabs.discover);
-          }),
-        ],
-      ),
+    Widget chipTab = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Obx(() {
+          return _buildChip(
+              label: 'Your groups',
+              icon: Icons.group,
+              tab: GroupTabs.yourGroup);
+        }),
+        const SizedBox(width: 10.0),
+        Obx(() {
+          return _buildChip(
+              label: 'Discover',
+              icon: Icons.whatshot_rounded,
+              tab: GroupTabs.discover);
+        }),
+      ],
     );
 
     return Scaffold(
@@ -67,14 +64,7 @@ class GroupHome extends StatelessWidget {
       body: Column(
         children: [
           chipTab,
-          Container(
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top -
-                appBar.preferredSize.height -
-                chipTab.preferredSize.height -
-                kBottomNavigationBarHeight,
-            child: GroupsList(),
-          ),
+          GroupsList(),
         ],
       ),
     );

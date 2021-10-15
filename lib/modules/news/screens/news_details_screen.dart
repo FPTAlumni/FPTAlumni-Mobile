@@ -56,32 +56,16 @@ class NewsDetailScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        RichText(
-                          softWrap: true,
-                          text: TextSpan(
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            children: [
-                              TextSpan(text: 'Username'),
-                              WidgetSpan(
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                    top: 5.0,
-                                  ),
-                                  child: Icon(
-                                    Icons.arrow_right,
-                                    size: 17,
-                                    color: Colors.grey[700],
-                                  ),
-                                ),
-                              ),
-                              TextSpan(
-                                  text: 'GroupName the very very long long'
-                                      ' long group name'),
-                            ],
+                        Text(
+                          'Group name the very very long group name to test '
+                          'over flow hehehe',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
                         const SizedBox(
                           height: 5.0,

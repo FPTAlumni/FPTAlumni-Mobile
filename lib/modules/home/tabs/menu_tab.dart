@@ -29,43 +29,30 @@ class MenuTab extends StatelessWidget {
     bool isLeader = true;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(110),
-        child: Container(
-          height: 110 - MediaQuery.of(context).padding.top - 5,
-          color: ColorConstants.white,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 10,
-            left: 15.0,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 15.0),
-                    child: Image.asset(
-                      AssetConstants.logo,
-                      width: 40,
-                    ),
-                  ),
-                  Text(
-                    'ALUMNI',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstants.primaryAppColor,
-                      fontSize: 20,
-                      fontFamily: 'Poppins',
-                      letterSpacing: 3,
-                    ),
-                  ),
-                ],
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 15.0),
+              child: Image.asset(
+                AssetConstants.logo,
+                width: 40,
               ),
-            ],
-          ),
+            ),
+            Text(
+              'ALUMNI',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ColorConstants.primaryAppColor,
+                fontSize: 20,
+                fontFamily: 'Poppins',
+                letterSpacing: 3,
+              ),
+            ),
+          ],
         ),
       ),
       body: Container(
