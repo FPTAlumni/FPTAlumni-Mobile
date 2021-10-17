@@ -20,6 +20,7 @@ class EventController extends GetxController {
   EventController({required this.eventRepository});
 
   var events = [].obs;
+  var event = Event.empty().obs;
 
   final eventNameController = TextEditingController();
   final locationController = TextEditingController();
@@ -75,6 +76,36 @@ class EventController extends GetxController {
     _page = 1;
     error = null;
     await getEventsOfCurrentAlumni();
+  }
+
+  joinEvent(int eventId) async {
+    bool result =
+        await eventRepository.joinEvent(userAuthentication!.appToken, eventId);
+
+    if (result == true) {
+      int index = events.indexWhere((e) {
+        return (e as Event).id == eventId;
+      });
+
+      (events.elementAt(index) as Event).joinEvent();
+
+      events.refresh();
+    }
+  }
+
+  leaveEvent(int eventId) async {
+    bool result =
+        await eventRepository.leaveEvent(userAuthentication!.appToken, eventId);
+
+    if (result == true) {
+      int index = events.indexWhere((e) {
+        return (e as Event).id == eventId;
+      });
+
+      (events.elementAt(index) as Event).leaveEvent();
+
+      events.refresh();
+    }
   }
 
   // void showImageDialog() async {

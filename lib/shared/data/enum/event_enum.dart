@@ -29,3 +29,12 @@ enum EventStatus {
   @JsonValue('Delete')
   delete,
 }
+
+enum EventStatusFrontEnd {
+  registerIsNotOpen,
+  registering,
+  registered,
+  registrationEnd,
+  starting,
+  end,
+}

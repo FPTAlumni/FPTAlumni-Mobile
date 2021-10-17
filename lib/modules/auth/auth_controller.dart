@@ -90,12 +90,15 @@ class AuthController extends GetxController {
 
       if (userAuthentication != null) {
         print(userAuthentication!.appToken);
-        //save universityId
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString('uId', googleAuth.idToken!);
 
         currentUser = await authRepository.getUserById(
             userAuthentication!.id, userAuthentication!.appToken);
+
+        if (currentUser == null) return;
+
+        //save universityId
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('uId', googleAuth.idToken!);
 
         isSignIn.value = true;
       } else {

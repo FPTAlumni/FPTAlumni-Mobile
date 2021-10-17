@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/event.dart';
+import 'package:uni_alumni/modules/events/event_controller.dart';
 import 'package:uni_alumni/modules/events/screens/event_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 
 class EventCard extends StatelessWidget {
+  final controller = Get.find<EventController>();
+
   final Event event;
 
   EventCard(this.event);
 
   @override
   Widget build(BuildContext context) {
-    final bool _isEventRegistrationEnd =
-        event.registrationStartDate.isBefore(DateTime.now());
     return GestureDetector(
-      onTap: () {
-        Get.to(() => EventDetailsScreen(event));
-        // Navigator.of(context)
-        //     .push(MaterialPageRoute(builder: (ctx) => EventDetailsScreen()));
+      onTap: () async {
+        controller.event.value = event;
+        await Get.to(() => EventDetailsScreen());
+        controller.event = Event.empty().obs;
       },
       child: Container(
         decoration: BoxDecoration(
@@ -123,27 +124,39 @@ class EventCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10.0),
-                  bottomRight: Radius.circular(10.0),
+            GestureDetector(
+              onTap: () {
+                if (event.eventStatus != 'Register' &&
+                    event.eventStatus != 'Registered') return null;
+
+                if (!event.inEvent) {
+                  controller.joinEvent(event.id);
+                } else {
+                  controller.leaveEvent(event.id);
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
+                  ),
+                  color: event.eventStatus == 'Register'
+                      ? ColorConstants.primaryAppColor
+                      : Colors.grey[400],
                 ),
-                color: _isEventRegistrationEnd
-                    ? Colors.grey[400]
-                    : ColorConstants.primaryAppColor,
-              ),
-              padding: EdgeInsets.only(
-                top: 8,
-                bottom: 8,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                _isEventRegistrationEnd ? "Closed" : "Register",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                padding: EdgeInsets.only(
+                  top: 8,
+                  bottom: 8,
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  event.eventStatus!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

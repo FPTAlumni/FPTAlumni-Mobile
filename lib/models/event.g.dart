@@ -19,6 +19,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
           DateTime.parse(json['registration_start_date'] as String),
       registrationEndDate:
           DateTime.parse(json['registration_end_date'] as String),
+      inEvent: json['in_event'] as bool,
     );
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
@@ -33,4 +34,5 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'start_date': instance.startDate.toIso8601String(),
       'end_date': instance.endDate.toIso8601String(),
       'group_id': instance.groupId,
+      'in_event': instance.inEvent,
     };

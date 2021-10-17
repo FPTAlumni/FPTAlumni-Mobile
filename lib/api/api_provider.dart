@@ -36,6 +36,14 @@ class ApiProvider extends BaseProvider {
     return get(path, headers: HeaderApi(token).getHeaders());
   }
 
+  Future<Response> joinEvent(String path, String token) {
+    return post(path, {}, headers: HeaderApi(token).getHeaders());
+  }
+
+  Future<Response> leaveEvent(String path, String token) {
+    return delete(path, headers: HeaderApi(token).getHeaders());
+  }
+
   //------------Event------------
   Future<Response> getEvents(String path, String token, EventRequest params) {
     return get(path,
