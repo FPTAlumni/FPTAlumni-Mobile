@@ -31,9 +31,9 @@ class EventsList extends StatelessWidget {
           return Scrollbar(
             child: ListView.builder(
               controller: _scrollController,
-              itemCount: eventController.events.length,
+              itemCount: eventController.events.length + 1,
               itemBuilder: (ctx, i) {
-                if (i == eventController.events.length - 1) {
+                if (i == eventController.events.length) {
                   return Center(
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 10.0),
