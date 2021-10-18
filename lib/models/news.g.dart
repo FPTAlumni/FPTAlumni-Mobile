@@ -8,9 +8,9 @@ part of 'news.dart';
 
 News _$NewsFromJson(Map<String, dynamic> json) => News(
       banner: json['banner'] as String?,
-      createdDate: json['createdDate'] == null
+      createdDate: json['created_date'] == null
           ? null
-          : DateTime.parse(json['createdDate'] as String),
+          : DateTime.parse(json['created_date'] as String),
       status: json['status'] as int?,
       group: json['group'] == null
           ? null
@@ -34,7 +34,7 @@ Map<String, dynamic> _$NewsToJson(News instance) {
   writeNotNull('banner', instance.banner);
   writeNotNull('title', instance.title);
   writeNotNull('content', instance.content);
-  writeNotNull('createdDate', instance.createdDate?.toIso8601String());
+  writeNotNull('created_date', instance.createdDate?.toIso8601String());
   writeNotNull('status', instance.status);
   writeNotNull('group', instance.group?.toJson());
   writeNotNull('tags', instance.tags?.map((e) => e.toJson()).toList());

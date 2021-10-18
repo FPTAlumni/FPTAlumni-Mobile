@@ -8,7 +8,7 @@ part of 'job.dart';
 
 Job _$JobFromJson(Map<String, dynamic> json) => Job(
       id: json['id'] as int,
-      companyName: json['companyName'] as String,
+      companyName: json['company_name'] as String,
       location: json['location'] as String,
       business: json['business'] as String,
       description: json['description'] as String,
@@ -16,7 +16,7 @@ Job _$JobFromJson(Map<String, dynamic> json) => Job(
 
 Map<String, dynamic> _$JobToJson(Job instance) => <String, dynamic>{
       'id': instance.id,
-      'companyName': instance.companyName,
+      'company_name': instance.companyName,
       'location': instance.location,
       'business': instance.business,
       'description': instance.description,

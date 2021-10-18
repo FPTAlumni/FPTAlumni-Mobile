@@ -4,10 +4,10 @@ part 'tag.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class Tag {
-  @JsonValue("id")
+  @JsonKey(name: "id")
   int? id;
 
-  @JsonValue("tagname")
+  @JsonKey(name: "tagname")
   String? tagName;
 
   Tag({this.id, this.tagName});

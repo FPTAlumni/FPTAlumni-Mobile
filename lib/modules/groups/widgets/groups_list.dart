@@ -4,7 +4,7 @@ import 'package:uni_alumni/modules/groups/group_controller.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class GroupsList extends StatelessWidget {
-  final GroupController controller = Get.put(GroupController());
+  final GroupController controller = Get.find<GroupController>();
   @override
   Widget build(BuildContext context) {
     return Obx(() {

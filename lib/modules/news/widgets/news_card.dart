@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui.dart';
 import 'package:uni_alumni/models/news.dart';
 import 'package:uni_alumni/modules/news/screens/news_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+import 'package:uni_alumni/shared/utils/format_utils.dart';
 import 'package:uni_alumni/shared/widgets/my_chip.dart';
 
 class NewsCard extends StatelessWidget {
@@ -11,6 +11,7 @@ class NewsCard extends StatelessWidget {
   final String avatar =
       'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg';
   final News news;
+
   const NewsCard(this.news);
 
   @override
@@ -24,8 +25,8 @@ class NewsCard extends StatelessWidget {
       color: ColorConstants.white,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (ctx) => NewsDetailScreen()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (ctx) => NewsDetailsScreen(news)));
         },
         child: Column(
           children: [
@@ -49,8 +50,7 @@ class NewsCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Group name the very very long group name to test '
-                        'over flow hehehe',
+                        news.group!.groupName!,
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -63,7 +63,7 @@ class NewsCard extends StatelessWidget {
                         height: 5.0,
                       ),
                       Text(
-                        '28/09/2021',
+                        FormatUtils.toddMMyyyy(news.createdDate!),
                         style: TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                     ],
@@ -77,7 +77,7 @@ class NewsCard extends StatelessWidget {
                 vertical: 7.0,
               ),
               child: Text(
-                'This is a very very very very very long long long long long long title',
+                news.title!,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 textAlign: TextAlign.center,
@@ -91,35 +91,36 @@ class NewsCard extends StatelessWidget {
               aspectRatio: 3 / 1,
               child: Container(
                 child: Image.network(
-                  newsUrl,
+                  news.banner!,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Wrap(
-                      runSpacing: -20.0,
-                      alignment: WrapAlignment.start,
-                      children: [
-                        MyChip(label: '#K14', onTapHandler: () {}),
-                        MyChip(
-                            label: '#Software Architecture',
-                            onTapHandler: () {}),
-                        MyChip(label: '#Hot', onTapHandler: () {}),
-                        MyChip(label: '#Testing', onTapHandler: () {}),
-                      ],
+            if (news.tags!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Wrap(
+                        runSpacing: -20.0,
+                        alignment: WrapAlignment.start,
+                        children: news.tags!
+                            .map(
+                              (tag) => MyChip(
+                                label: '#${tag.tagName}',
+                                onTapHandler: () {},
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )
+                  ],
+                ),
+              )
           ],
         ),
       ),

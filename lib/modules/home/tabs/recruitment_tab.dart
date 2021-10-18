@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/recruitment/recruitment_controller.dart';
+import 'package:uni_alumni/modules/recruitment/screen/create_recruitment.dart';
 import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -40,7 +42,39 @@ class RecruitmentTab extends StatelessWidget {
           ],
         ),
       ),
-      body: RecruitmentList(),
+      body: Container(
+        height: double.infinity,
+        child: Stack(
+          children: [
+            RecruitmentList(),
+            Positioned(
+              bottom: 16,
+              right: 16,
+              child: SpeedDial(
+                icon: Icons.category,
+                backgroundColor: ColorConstants.lightPrimaryAppColor,
+                spacing: 15,
+                children: [
+                  SpeedDialChild(
+                    child: Icon(Icons.work),
+                    label: 'Your jobs',
+                    backgroundColor: ColorConstants.lightPrimaryAppColor,
+                    onTap: () {/* Do someting */},
+                  ),
+                  SpeedDialChild(
+                    child: Icon(Icons.add),
+                    label: 'Create your job',
+                    backgroundColor: ColorConstants.lightPrimaryAppColor,
+                    onTap: () {
+                      Get.to(() => CreateRecruitment());
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
