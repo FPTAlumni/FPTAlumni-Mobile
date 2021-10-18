@@ -9,8 +9,6 @@ class EventRepository {
 
   Future<List<Event>?> getEvents(String token, EventRequest params) async {
     final response = await apiProvider.getEvents('/event', token, params);
-    print(params.toJson());
-    print(response.statusCode);
     if (response.statusCode == 200) {
       List responseList = response.body['data'];
       return responseList.map((event) => Event.fromJson(event)).toList();
@@ -19,5 +17,27 @@ class EventRepository {
     if (response.statusCode == 204) {
       throw Exception('There is no event');
     }
+  }
+
+  Future<bool> joinEvent(String token, int eventId) async {
+    print(">>Join");
+    final response =
+        await apiProvider.joinEvent('/alumnus/event/$eventId', token);
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<bool> leaveEvent(String token, int eventId) async {
+    print(">>Leave");
+    final response =
+        await apiProvider.leaveEvent('/alumnus/event/$eventId', token);
+    if (response.statusCode == 204) {
+      return true;
+    }
+
+    return false;
   }
 }

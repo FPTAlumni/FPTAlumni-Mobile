@@ -8,7 +8,7 @@ import 'package:uni_alumni/root_app.dart';
 part './app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.MAIN;
+  static const INITIAL = Routes.ROOT;
 
   static final routes = [
     GetPage(

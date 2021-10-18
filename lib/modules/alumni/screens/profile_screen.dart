@@ -38,7 +38,7 @@ class Profile extends StatelessWidget {
             Column(
               children: [
                 Row(
-                  children: [buildCardInfor(Icons.phone, user.phone)],
+                  children: [buildCardInfor(Icons.phone, user.phone!)],
                 ),
                 const Divider(),
                 Row(
@@ -110,7 +110,7 @@ class Profile extends StatelessWidget {
   Widget buildName(Alumni user) => Column(
         children: [
           Text(
-            user.fullName,
+            user.fullName!,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -118,7 +118,7 @@ class Profile extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            user.email,
+            user.email!,
             style: TextStyle(
               color: Colors.grey,
             ),

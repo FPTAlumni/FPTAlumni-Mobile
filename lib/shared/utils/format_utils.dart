@@ -6,6 +6,7 @@ class FormatUtils {
   }
 
   static String toddMMyyyyHHmmaaa(DateTime time) {
-    return DateFormat('dd/MM/yyyy | HH:mm aaa').format(time);
+    return DateFormat('dd/MM/yyyy | HH:mm aaa')
+        .format(time.isUtc ? time.toLocal() : time);
   }
 }

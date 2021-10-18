@@ -1,17 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:uni_alumni/models/event.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 
+import '../event_controller.dart';
+
 class EventDetailsScreen extends StatelessWidget {
-  final Event event;
-
-  EventDetailsScreen(this.event);
-
   @override
   Widget build(BuildContext context) {
-    final bool _isEventRegistrationEnd =
-        event.registrationStartDate.isBefore(DateTime.now());
+    final controller = Get.find<EventController>();
+    final Event event = controller.event.value;
+    final isRegistering =
+        event.eventStatus == "Register" || event.eventStatus == 'Registered';
+
     PreferredSizeWidget _banner = PreferredSize(
       preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.35),
       child: Expanded(
@@ -72,38 +74,52 @@ class EventDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            GestureDetector(
-              onTap: _isEventRegistrationEnd ? null : () {},
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: _isEventRegistrationEnd
-                          ? Colors.grey[300]!.withOpacity(0.5)
-                          : Colors.orange.shade300.withOpacity(0.5),
-                      spreadRadius: 3,
-                      blurRadius: 5,
-                      offset: Offset(0, 0),
+            if (isRegistering)
+              Obx(
+                () => GestureDetector(
+                  onTap: () {
+                    if (!controller.event.value.inEvent) {
+                      controller.joinEvent(event.id);
+                      controller.event.value.inEvent = true;
+                    } else {
+                      controller.leaveEvent(event.id);
+                      controller.event.value.inEvent = false;
+                    }
+                    controller.event.value.getStatusString();
+                    controller.event.refresh();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              controller.event.value.eventStatus == 'Register'
+                                  ? Colors.orange.shade300.withOpacity(0.5)
+                                  : Colors.grey.shade300.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
+                      color: controller.event.value.eventStatus == 'Register'
+                          ? Colors.deepOrange
+                          : Colors.grey[400],
                     ),
-                  ],
-                  color: _isEventRegistrationEnd
-                      ? Colors.grey[400]
-                      : Colors.deepOrange,
-                ),
-                child: Text(
-                  _isEventRegistrationEnd ? "Closed" : "Register",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    child: Text(
+                      controller.event.value.eventStatus!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
@@ -159,69 +175,87 @@ class EventDetailsScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              event.eventName,
-                              style: TextStyle(
-                                color: Colors.deepOrange,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24,
+                        Flexible(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Obx(
+                                () => Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0,
+                                      vertical: 8.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0))),
+                                    child: Text(
+                                        controller.event.value.eventStatus!),
+                                  ),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Colors.grey[600],
-                                  size: 20,
-                                ),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  event.location,
+                              const SizedBox(height: 3),
+                              Flexible(
+                                child: Text(
+                                  event.eventName,
+                                  softWrap: true,
                                   style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 14,
+                                    color: Colors.deepOrange,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.group,
-                                  color: Colors.grey[600],
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  'Group',
-                                  style: TextStyle(
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
                                     color: Colors.grey[600],
-                                    fontSize: 14,
+                                    size: 20,
                                   ),
-                                ),
-                                const SizedBox(width: 4),
-                              ],
-                            ),
-                          ],
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    event.location,
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.group,
+                                    color: Colors.grey[600],
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Group',
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(8),
-                    child: Row(
+                    child: Column(
                       children: [
                         _buildEventFeature(
                           FormatUtils.toddMMyyyyHHmmaaa(
@@ -231,6 +265,10 @@ class EventDetailsScreen extends StatelessWidget {
                         _buildEventFeature(
                           FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
                           "Event Start",
+                        ),
+                        _buildEventFeature(
+                          FormatUtils.toddMMyyyyHHmmaaa(event.endDate),
+                          "Event End",
                         ),
                       ],
                     ),
@@ -273,43 +311,42 @@ class EventDetailsScreen extends StatelessWidget {
   }
 
   _buildEventFeature(String value, String feature) {
-    return Expanded(
-      child: Container(
-        height: 60,
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.orange,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
+    return Container(
+      width: double.infinity,
+      height: 60,
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 6.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.orange,
+          width: 1,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              value,
-              style: TextStyle(
-                color: Colors.grey[800],
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 4,
-            ),
-            Text(
-              feature,
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 13,
-              ),
-            ),
-          ],
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
         ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            feature,
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 13,
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              color: Colors.grey[800],
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }

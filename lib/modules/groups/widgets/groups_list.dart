@@ -8,7 +8,7 @@ class GroupsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      List<Group> list = [];
+      List<GroupTest> list = [];
       if (controller.selectedTab.value ==
           controller.getTabIndex(GroupTabs.yourGroup)) {
         list = controller.groups.where((group) => group.isJoin == 1).toList();
@@ -21,7 +21,7 @@ class GroupsList extends StatelessWidget {
     });
   }
 
-  Widget _buildList(List<Group> list) {
+  Widget _buildList(List<GroupTest> list) {
     return Expanded(
       child: ListView.builder(
         itemCount: list.length,
@@ -140,7 +140,7 @@ class GroupsList extends StatelessWidget {
   }
 
   _buildBottomSheet(
-      int parentIndex, List<Group> groupChild, BuildContext context) {
+      int parentIndex, List<GroupTest> groupChild, BuildContext context) {
     showModalBottomSheet(
       context: context,
       enableDrag: true,
