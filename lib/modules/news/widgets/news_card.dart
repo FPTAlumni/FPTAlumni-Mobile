@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui.dart';
+import 'package:uni_alumni/models/news.dart';
 import 'package:uni_alumni/modules/news/screens/news_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/my_chip.dart';
 
 class NewsCard extends StatelessWidget {
-  final String newsUrl;
-  final String avatar;
-  final VoidCallback? onTapHandler;
-
-  const NewsCard({
-    required this.newsUrl,
-    required this.avatar,
-    this.onTapHandler,
-  });
+  final String newsUrl =
+      'https://img.timviec.com.vn/2020/09/tap-doan-fpt-1.jpg';
+  final String avatar =
+      'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg';
+  final News news;
+  const NewsCard(this.news);
 
   @override
   Widget build(BuildContext context) {

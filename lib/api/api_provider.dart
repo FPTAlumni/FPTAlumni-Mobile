@@ -2,6 +2,7 @@ import 'package:get/get_connect/connect.dart';
 import 'package:uni_alumni/api/base_provider.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
+import 'package:uni_alumni/models/request/news_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
 import 'package:uni_alumni/shared/utils/header.dart';
 
@@ -46,6 +47,12 @@ class ApiProvider extends BaseProvider {
 
   //------------Event------------
   Future<Response> getEvents(String path, String token, EventRequest params) {
+    return get(path,
+        headers: HeaderApi(token).getHeaders(), query: params.toJson());
+  }
+
+  //------------News------------
+  Future<Response> getNews(String path, String token, NewsRequest params) {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }

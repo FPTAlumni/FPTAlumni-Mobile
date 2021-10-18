@@ -13,4 +13,6 @@ class Tag {
   Tag({this.id, this.tagName});
 
   factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TagToJson(this);
 }

@@ -63,6 +63,7 @@ class EventController extends GetxController {
       List<Event>? _events =
           await eventRepository.getEvents(userAuthentication!.appToken, params);
       if (_events != null) {
+        error = null;
         events.addAll(_events);
         _page++;
       }
