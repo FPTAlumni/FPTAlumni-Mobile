@@ -72,25 +72,24 @@ class Event {
   }
 
   EventStatusFrontEnd _getEventStatus(bool isRegistered) {
-    final DateTime now = DateTime.now();
+    final DateTime now = DateTime.now().toUtc();
 
     if (now.isBefore(registrationStartDate)) {
       return EventStatusFrontEnd.registerIsNotOpen;
     }
 
-    if (now.isAfter(registrationStartDate) &&
-        now.isBefore(registrationEndDate)) {
+    if (now.isBefore(registrationEndDate)) {
       if (isRegistered) {
         return EventStatusFrontEnd.registered;
       }
       return EventStatusFrontEnd.registering;
     }
 
-    if (now.isAfter(registrationEndDate) && now.isBefore(startDate)) {
+    if (now.isBefore(startDate)) {
       return EventStatusFrontEnd.registrationEnd;
     }
 
-    if (now.isAfter(startDate) && now.isAfter(endDate)) {
+    if (now.isBefore(endDate)) {
       return EventStatusFrontEnd.starting;
     }
 

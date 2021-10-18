@@ -7,14 +7,16 @@ part of 'alumni.dart';
 // **************************************************************************
 
 Alumni _$AlumniFromJson(Map<String, dynamic> json) => Alumni(
-      id: json['id'] as int,
-      email: json['email'] as String,
-      phone: json['phone'] as String,
-      fullName: json['full_name'] as String,
-      uid: json['uid'] as String,
-      dob: DateTime.parse(json['dob'] as String),
-      createdDate: DateTime.parse(json['created_date'] as String),
-      status: _$enumDecode(_$AlumniStatusEnumMap, json['status']),
+      id: json['id'] as int?,
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
+      fullName: json['full_name'] as String?,
+      uid: json['uid'] as String?,
+      dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
+      createdDate: json['created_date'] == null
+          ? null
+          : DateTime.parse(json['created_date'] as String),
+      status: _$enumDecodeNullable(_$AlumniStatusEnumMap, json['status']),
       major: json['major'] == null
           ? null
           : Major.fromJson(json['major'] as Map<String, dynamic>),
@@ -30,11 +32,7 @@ Alumni _$AlumniFromJson(Map<String, dynamic> json) => Alumni(
     );
 
 Map<String, dynamic> _$AlumniToJson(Alumni instance) {
-  final val = <String, dynamic>{
-    'email': instance.email,
-    'phone': instance.phone,
-    'full_name': instance.fullName,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -42,14 +40,17 @@ Map<String, dynamic> _$AlumniToJson(Alumni instance) {
     }
   }
 
+  writeNotNull('email', instance.email);
+  writeNotNull('phone', instance.phone);
+  writeNotNull('full_name', instance.fullName);
   writeNotNull('address', instance.address);
-  val['uid'] = instance.uid;
-  val['dob'] = instance.dob.toIso8601String();
+  writeNotNull('uid', instance.uid);
+  writeNotNull('dob', instance.dob?.toIso8601String());
   writeNotNull('job', instance.job);
   writeNotNull('about_me', instance.aboutMe);
-  val['created_date'] = instance.createdDate.toIso8601String();
-  val['status'] = _$AlumniStatusEnumMap[instance.status];
-  val['id'] = instance.id;
+  writeNotNull('created_date', instance.createdDate?.toIso8601String());
+  writeNotNull('status', _$AlumniStatusEnumMap[instance.status]);
+  writeNotNull('id', instance.id);
   writeNotNull('major', instance.major?.toJson());
   writeNotNull('class', instance.clazz?.toJson());
   writeNotNull('company', instance.company?.toJson());
@@ -80,6 +81,17 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
+}
+
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
+  dynamic source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$AlumniStatusEnumMap = {

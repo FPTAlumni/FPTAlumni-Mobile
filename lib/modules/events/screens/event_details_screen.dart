@@ -7,14 +7,13 @@ import 'package:uni_alumni/shared/utils/format_utils.dart';
 import '../event_controller.dart';
 
 class EventDetailsScreen extends StatelessWidget {
-  // EventDetailsScreen(this.event);
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<EventController>();
     final Event event = controller.event.value;
     final isRegistering =
         event.eventStatus == "Register" || event.eventStatus == 'Registered';
+
     PreferredSizeWidget _banner = PreferredSize(
       preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.35),
       child: Expanded(
@@ -76,50 +75,51 @@ class EventDetailsScreen extends StatelessWidget {
               ],
             ),
             if (isRegistering)
-              Obx(() => GestureDetector(
-                    onTap: () {
-                      if (!controller.event.value.inEvent) {
-                        controller.joinEvent(event.id);
-                        controller.event.value.inEvent = true;
-                      } else {
-                        controller.leaveEvent(event.id);
-                        controller.event.value.inEvent = false;
-                      }
-                      controller.event.value.getStatusString();
-                      controller.event.refresh();
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                controller.event.value.eventStatus == 'Register'
-                                    ? Colors.orange.shade300.withOpacity(0.5)
-                                    : Colors.grey.shade300.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                        color: controller.event.value.eventStatus == 'Register'
-                            ? Colors.deepOrange
-                            : Colors.grey[400],
+              Obx(
+                () => GestureDetector(
+                  onTap: () {
+                    if (!controller.event.value.inEvent) {
+                      controller.joinEvent(event.id);
+                      controller.event.value.inEvent = true;
+                    } else {
+                      controller.leaveEvent(event.id);
+                      controller.event.value.inEvent = false;
+                    }
+                    controller.event.value.getStatusString();
+                    controller.event.refresh();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
                       ),
-                      child: Text(
-                        controller.event.value.eventStatus!,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              controller.event.value.eventStatus == 'Register'
+                                  ? Colors.orange.shade300.withOpacity(0.5)
+                                  : Colors.grey.shade300.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 5,
+                          offset: Offset(0, 0),
                         ),
+                      ],
+                      color: controller.event.value.eventStatus == 'Register'
+                          ? Colors.deepOrange
+                          : Colors.grey[400],
+                    ),
+                    child: Text(
+                      controller.event.value.eventStatus!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
-                  )),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

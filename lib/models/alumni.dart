@@ -11,22 +11,22 @@ part 'alumni.g.dart';
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Alumni {
   @JsonKey(name: 'email')
-  String email;
+  String? email;
 
   @JsonKey(name: 'phone')
-  String phone;
+  String? phone;
 
   @JsonKey(name: 'full_name')
-  String fullName;
+  String? fullName;
 
   @JsonKey(name: 'address')
   String? address;
 
   @JsonKey(name: 'uid')
-  String uid;
+  String? uid;
 
   @JsonKey(name: 'dob')
-  DateTime dob;
+  DateTime? dob;
 
   @JsonKey(name: 'job')
   String? job;
@@ -35,13 +35,13 @@ class Alumni {
   String? aboutMe;
 
   @JsonKey(name: 'created_date')
-  DateTime createdDate;
+  DateTime? createdDate;
 
   @JsonKey(name: 'status')
-  AlumniStatus status;
+  AlumniStatus? status;
 
   @JsonKey(name: 'id')
-  int id;
+  int? id;
 
   @JsonKey(name: 'major')
   Major? major;
@@ -53,14 +53,14 @@ class Alumni {
   Company? company;
 
   Alumni({
-    required this.id,
-    required this.email,
-    required this.phone,
-    required this.fullName,
-    required this.uid,
-    required this.dob,
-    required this.createdDate,
-    required this.status,
+    this.id,
+    this.email,
+    this.phone,
+    this.fullName,
+    this.uid,
+    this.dob,
+    this.createdDate,
+    this.status,
     this.major,
     this.company,
     this.clazz,
@@ -70,4 +70,6 @@ class Alumni {
   });
 
   factory Alumni.fromJson(Map<String, dynamic> json) => _$AlumniFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AlumniToJson(this);
 }
