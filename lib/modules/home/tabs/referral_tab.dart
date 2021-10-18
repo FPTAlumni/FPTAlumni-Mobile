@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
+import 'package:uni_alumni/modules/refferal/screens/referral_list.dart';
+import 'package:uni_alumni/modules/refferal/screens/refferal_registration.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
@@ -85,10 +87,12 @@ class ReferralTab extends GetView<MainController> {
                         //Create new referral
                         SizedBox(height: 25),
                         FlatButton(
-                          splashColor: Colors.orangeAccent,
-                          onPressed: () {},
+                          splashColor: ColorConstants.lightGray,
+                          onPressed: () {
+                            Get.to(ReferralRegistration());
+                          },
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                            borderRadius: BorderRadius.circular(15.0),
                             side: BorderSide(
                               color: Colors.blue.shade600,
                             ),
@@ -101,7 +105,7 @@ class ReferralTab extends GetView<MainController> {
                               'Let\'s referral',
                               style: TextStyle(
                                 color: Colors.blue.shade600,
-                                fontSize: 18,
+                                fontSize: 19,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -110,12 +114,14 @@ class ReferralTab extends GetView<MainController> {
                         //Manage referrers
                         SizedBox(height: 20),
                         FlatButton(
-                          splashColor: Colors.orangeAccent,
-                          onPressed: () {},
+                          splashColor: ColorConstants.lightGray,
+                          onPressed: () {
+                            Get.to(ReferralList());
+                          },
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                            borderRadius: BorderRadius.circular(15.0),
                             side: BorderSide(
-                              color: Colors.blue.shade600,
+                              color: Colors.blue.shade500,
                             ),
                           ),
                           child: Container(
@@ -135,10 +141,12 @@ class ReferralTab extends GetView<MainController> {
                         //More Information
                         SizedBox(height: 20),
                         FlatButton(
-                          splashColor: Colors.orangeAccent,
-                          onPressed: () {},
+                          splashColor: ColorConstants.lightGray,
+                          onPressed: () {
+
+                          },
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                            borderRadius: BorderRadius.circular(15.0),
                             side: BorderSide(
                               color: Colors.blue.shade600,
                             ),
