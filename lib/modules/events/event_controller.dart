@@ -20,6 +20,7 @@ class EventController extends GetxController {
   EventController({required this.eventRepository});
 
   var events = [].obs;
+  var myEvents = [].obs;
   var event = Event.empty().obs;
 
   final eventNameController = TextEditingController();
@@ -45,6 +46,7 @@ class EventController extends GetxController {
   onInit() {
     super.onInit();
     getEventsOfCurrentAlumni();
+    getAttendedEvents();
   }
 
   //get all events in all groups that
@@ -54,7 +56,7 @@ class EventController extends GetxController {
     EventRequest params = EventRequest(
       alumniId: userAuthentication!.id.toString(),
       sortOrder: SortOrder.DESC,
-      sortKey: EventSortKey.startDate,
+      sortKey: EventSortKey.registrationEndDate,
       page: _page.toString(),
       pageSize: _pageSize.toString(),
     );
@@ -72,11 +74,31 @@ class EventController extends GetxController {
     }
   }
 
-  Future<void> refresh() async {
+  Future<void> getAttendedEvents() async {
+    EventRequest params = EventRequest(
+      alumniId: userAuthentication!.id.toString(),
+      sortOrder: SortOrder.DESC,
+      sortKey: EventSortKey.registrationEndDate,
+      pageSize: "100",
+    );
+
+    List<Event>? _events =
+        await eventRepository.getEvents(userAuthentication!.appToken, params);
+
+    if (_events != null) {
+      myEvents.value = _events.where((event) => event.inEvent == true).toList();
+    }
+  }
+
+  Future<void> refreshUpcoming() async {
     events.value = [];
     _page = 1;
     error = null;
     await getEventsOfCurrentAlumni();
+  }
+
+  Future<void> refreshYourEvents() async {
+    await getAttendedEvents();
   }
 
   joinEvent(int eventId) async {
@@ -89,8 +111,10 @@ class EventController extends GetxController {
       });
 
       (events.elementAt(index) as Event).joinEvent();
+      myEvents.insert(0, events.elementAt(index));
 
       events.refresh();
+      myEvents.refresh();
     }
   }
 
@@ -104,8 +128,10 @@ class EventController extends GetxController {
       });
 
       (events.elementAt(index) as Event).leaveEvent();
+      myEvents.removeWhere((e) => (e as Event).id == eventId);
 
       events.refresh();
+      myEvents.refresh();
     }
   }
 

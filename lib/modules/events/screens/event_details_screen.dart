@@ -2,14 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/event.dart';
+import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/modules/groups/group_controller.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 
 import '../event_controller.dart';
 
 class EventDetailsScreen extends StatelessWidget {
+  final controller = Get.find<EventController>();
+  final groupController = Get.find<GroupController>();
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<EventController>();
     final Event event = controller.event.value;
     final isRegistering =
         event.eventStatus == "Register" || event.eventStatus == 'Registered';
@@ -125,188 +130,208 @@ class EventDetailsScreen extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        brightness: Brightness.light,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.grey[800],
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.more_horiz,
-              color: Colors.grey[800],
-            ),
-          ),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _banner,
-          Expanded(
-            // height: MediaQuery.of(context).size.height -
-            //     MediaQuery.of(context).padding.top -
-            //     _banner.preferredSize.height -
-            //     _registrationPlace.preferredSize.height -
-            //     kBottomNavigationBarHeight,
-            // color: Colors.white,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 20,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Obx(
-                                () => Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0,
-                                      vertical: 8.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0))),
-                                    child: Text(
-                                        controller.event.value.eventStatus!),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Flexible(
-                                child: Text(
-                                  event.eventName,
-                                  softWrap: true,
-                                  style: TextStyle(
-                                    color: Colors.deepOrange,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: Colors.grey[600],
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    event.location,
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.group,
-                                    color: Colors.grey[600],
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    'Group',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Column(
-                      children: [
-                        _buildEventFeature(
-                          FormatUtils.toddMMyyyyHHmmaaa(
-                              event.registrationStartDate),
-                          "Registration Start",
-                        ),
-                        _buildEventFeature(
-                          FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
-                          "Event Start",
-                        ),
-                        _buildEventFeature(
-                          FormatUtils.toddMMyyyyHHmmaaa(event.endDate),
-                          "Event End",
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      "More detail",
-                      style: TextStyle(
-                        color: Colors.deepOrange,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      event.eventContent,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                ],
+    return FutureBuilder(
+      future: groupController.getGroupById(event.groupId),
+      builder: (ctx, snapshot) {
+        if (snapshot.hasError) {
+          Get.back();
+          return Container();
+        }
+        if (!snapshot.hasData) {
+          return Center(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 10.0),
+              width: 40,
+              height: 40,
+              child: CircularProgressIndicator(
+                color: ColorConstants.primaryAppColor,
               ),
             ),
+          );
+        }
+
+        return Scaffold(
+          backgroundColor: Colors.white,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            brightness: Brightness.light,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.grey[800],
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(right: 16),
+                child: Icon(
+                  Icons.more_horiz,
+                  color: Colors.grey[800],
+                ),
+              ),
+            ],
           ),
-          _registrationPlace,
-        ],
-      ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _banner,
+              Expanded(
+                // height: MediaQuery.of(context).size.height -
+                //     MediaQuery.of(context).padding.top -
+                //     _banner.preferredSize.height -
+                //     _registrationPlace.preferredSize.height -
+                //     kBottomNavigationBarHeight,
+                // color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 20,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Obx(
+                                    () => Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0,
+                                          vertical: 8.0,
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0))),
+                                        child: Text(controller
+                                            .event.value.eventStatus!),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  Flexible(
+                                    child: Text(
+                                      event.eventName,
+                                      softWrap: true,
+                                      style: TextStyle(
+                                        color: Colors.deepOrange,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Colors.grey[600],
+                                        size: 20,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        event.location,
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.group,
+                                        color: Colors.grey[600],
+                                        size: 20,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        (snapshot.data as Group).groupName!,
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            _buildEventFeature(
+                              FormatUtils.toddMMyyyyHHmmaaa(
+                                  event.registrationStartDate),
+                              "Registration Start",
+                            ),
+                            _buildEventFeature(
+                              FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
+                              "Event Start",
+                            ),
+                            _buildEventFeature(
+                              FormatUtils.toddMMyyyyHHmmaaa(event.endDate),
+                              "Event End",
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          "More detail",
+                          style: TextStyle(
+                            color: Colors.deepOrange,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          event.eventContent,
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              _registrationPlace,
+            ],
+          ),
+        );
+      },
     );
   }
 

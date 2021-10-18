@@ -6,31 +6,31 @@ part 'group.g.dart';
 
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Group {
-  @JsonValue("id")
+  @JsonKey(name: "id")
   int? id;
 
-  @JsonValue("banner")
+  @JsonKey(name: "banner")
   String? banner;
 
-  @JsonValue("group_name")
+  @JsonKey(name: "group_name")
   String? groupName;
 
-  @JsonValue("registered_date")
+  @JsonKey(name: "registered_date")
   DateTime? registrationDate;
 
-  @JsonValue("created_date")
+  @JsonKey(name: "created_date")
   DateTime? createdDate;
 
-  @JsonValue("status")
+  @JsonKey(name: "status")
   int? status;
 
-  @JsonValue("number_of_members")
+  @JsonKey(name: "number_of_members")
   int? numberOfMembers;
 
-  @JsonValue("group_leader")
+  @JsonKey(name: "group_leader")
   Alumni? leader;
 
-  @JsonValue("university")
+  @JsonKey(name: "university")
   University? university;
 
   Group({

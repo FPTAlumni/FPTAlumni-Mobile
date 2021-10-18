@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
 class GroupHome extends StatelessWidget {
-  final GroupController controller = Get.put(GroupController());
+  final GroupController controller = Get.find<GroupController>();
   @override
   Widget build(BuildContext context) {
     PreferredSizeWidget appBar = SubScreenAppBar(

@@ -8,22 +8,22 @@ part of 'group.dart';
 
 Group _$GroupFromJson(Map<String, dynamic> json) => Group(
       status: json['status'] as int?,
-      createdDate: json['createdDate'] == null
+      createdDate: json['created_date'] == null
           ? null
-          : DateTime.parse(json['createdDate'] as String),
+          : DateTime.parse(json['created_date'] as String),
       id: json['id'] as int?,
       university: json['university'] == null
           ? null
           : University.fromJson(json['university'] as Map<String, dynamic>),
       banner: json['banner'] as String?,
-      groupName: json['groupName'] as String?,
-      leader: json['leader'] == null
+      groupName: json['group_name'] as String?,
+      leader: json['group_leader'] == null
           ? null
-          : Alumni.fromJson(json['leader'] as Map<String, dynamic>),
-      numberOfMembers: json['numberOfMembers'] as int?,
-      registrationDate: json['registrationDate'] == null
+          : Alumni.fromJson(json['group_leader'] as Map<String, dynamic>),
+      numberOfMembers: json['number_of_members'] as int?,
+      registrationDate: json['registered_date'] == null
           ? null
-          : DateTime.parse(json['registrationDate'] as String),
+          : DateTime.parse(json['registered_date'] as String),
     );
 
 Map<String, dynamic> _$GroupToJson(Group instance) {
@@ -37,13 +37,12 @@ Map<String, dynamic> _$GroupToJson(Group instance) {
 
   writeNotNull('id', instance.id);
   writeNotNull('banner', instance.banner);
-  writeNotNull('groupName', instance.groupName);
-  writeNotNull(
-      'registrationDate', instance.registrationDate?.toIso8601String());
-  writeNotNull('createdDate', instance.createdDate?.toIso8601String());
+  writeNotNull('group_name', instance.groupName);
+  writeNotNull('registered_date', instance.registrationDate?.toIso8601String());
+  writeNotNull('created_date', instance.createdDate?.toIso8601String());
   writeNotNull('status', instance.status);
-  writeNotNull('numberOfMembers', instance.numberOfMembers);
-  writeNotNull('leader', instance.leader?.toJson());
+  writeNotNull('number_of_members', instance.numberOfMembers);
+  writeNotNull('group_leader', instance.leader?.toJson());
   writeNotNull('university', instance.university?.toJson());
   return val;
 }

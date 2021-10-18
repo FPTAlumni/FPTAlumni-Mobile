@@ -1,4 +1,8 @@
 import 'package:get/get.dart';
+import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/modules/auth/auth_controller.dart';
+
+import 'group_repository.dart';
 
 class GroupTest {
   final int id;
@@ -21,6 +25,11 @@ class GroupController extends GetxController {
   var isJoined = 1.obs;
 
   var selectedFilterList = [].obs;
+  final groupRepository;
+  final userAuthentication = Get.find<AuthController>().userAuthentication;
+
+  GroupController({required this.groupRepository});
+
   List<GroupTest> _groups = [
     GroupTest(
       1,
@@ -91,10 +100,6 @@ class GroupController extends GetxController {
     }
   }
 
-  // GroupTabs getTab(int index) {
-  //
-  // }
-
   int getTabIndex(GroupTabs tab) {
     switch (tab) {
       case GroupTabs.yourGroup:
@@ -102,5 +107,9 @@ class GroupController extends GetxController {
       case GroupTabs.discover:
         return 1;
     }
+  }
+
+  Future<Group?> getGroupById(int id) async {
+    return await groupRepository.getGroupById(userAuthentication!.appToken, id);
   }
 }

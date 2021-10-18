@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       // home: NewsDetailScreen(),
       initialRoute: Routes.ROOT,
       initialBinding: AppBinding(),
+      // smartManagement: SmartManagement.keepFactory,
       getPages: AppPages.routes,
     );
   }

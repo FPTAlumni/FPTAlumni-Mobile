@@ -34,8 +34,6 @@ class NewsController extends GetxController {
     List<News>? _news =
         await newsRepository.getNews(userAuthentication!.appToken, params);
 
-    print(_news!.length);
-
     if (_news != null && _news.isNotEmpty) {
       error = null;
       news.addAll(_news);

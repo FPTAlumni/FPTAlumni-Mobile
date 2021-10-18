@@ -9,49 +9,49 @@ part 'recruitment.g.dart';
 
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Recruitment {
-  @JsonValue("title")
+  @JsonKey(name: "title")
   String? title;
 
-  @JsonValue("description")
+  @JsonKey(name: "description")
   String? description;
 
-  @JsonValue("position")
+  @JsonKey(name: "position")
   String? position;
 
-  @JsonValue("type")
+  @JsonKey(name: "type")
   String? type;
 
-  @JsonValue("status")
+  @JsonKey(name: "status")
   String? status;
 
-  @JsonValue("experience_level")
+  @JsonKey(name: "experience_level")
   String? experienceLevel;
 
-  @JsonValue("phone")
+  @JsonKey(name: "phone")
   String? phone;
 
-  @JsonValue("email")
+  @JsonKey(name: "email")
   String? email;
 
-  @JsonValue("end_date")
+  @JsonKey(name: "end_date")
   DateTime? endDate;
 
-  @JsonValue("created_date")
+  @JsonKey(name: "created_date")
   DateTime? createdDate;
 
-  @JsonValue("alumni")
+  @JsonKey(name: "alumni")
   Alumni? alumni;
 
-  @JsonValue("group")
+  @JsonKey(name: "group")
   Group? group;
 
-  @JsonValue("company")
+  @JsonKey(name: "company")
   Company? company;
 
-  @JsonValue("group_origin")
+  @JsonKey(name: "group_origin")
   Group? groupOrigin;
 
-  @JsonValue("major")
+  @JsonKey(name: "major")
   Major? major;
 
   Recruitment(

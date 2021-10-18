@@ -6,25 +6,25 @@ part 'news.g.dart';
 
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class News {
-  @JsonValue("banner")
+  @JsonKey(name: "banner")
   String? banner;
 
-  @JsonValue("title")
+  @JsonKey(name: "title")
   String? title;
 
-  @JsonValue("content")
+  @JsonKey(name: "content")
   String? content;
 
-  @JsonValue("created_date")
+  @JsonKey(name: "created_date")
   DateTime? createdDate;
 
-  @JsonValue("status")
+  @JsonKey(name: "status")
   int? status;
 
-  @JsonValue("group")
+  @JsonKey(name: "group")
   Group? group;
 
-  @JsonValue("tags")
+  @JsonKey(name: "tags")
   List<Tag>? tags;
 
   News(

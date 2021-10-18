@@ -9,7 +9,6 @@ class NewsRepository {
 
   Future<List<News>?> getNews(String token, NewsRequest params) async {
     final response = await apiProvider.getNews("/news", token, params);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       List responseList = response.body['data'];
       return responseList.map((news) => News.fromJson(news)).toList();

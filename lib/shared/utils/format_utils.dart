@@ -9,4 +9,8 @@ class FormatUtils {
     return DateFormat('dd/MM/yyyy | HH:mm aaa')
         .format(time.isUtc ? time.toLocal() : time);
   }
+
+  static String toddMMyyyy(DateTime time) {
+    return DateFormat('dd/MM/yyyy').format(time.isUtc ? time.toLocal() : time);
+  }
 }

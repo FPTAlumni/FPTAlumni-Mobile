@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:uni_alumni/modules/news/widgets/news_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
-import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
 class HomeTab extends StatelessWidget {
   @override
