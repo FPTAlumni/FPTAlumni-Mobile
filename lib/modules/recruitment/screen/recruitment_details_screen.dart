@@ -170,7 +170,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                'Part time',
+                                '#Part time',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -191,7 +191,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                'Senior',
+                                '#Senior',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -242,6 +242,14 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
+                    Text(
+                      "Contacts",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepOrange,
+                      ),
+                    ),
                     Spacer(),
                     ClipOval(
                       child: Material(
