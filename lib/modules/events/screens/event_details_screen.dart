@@ -205,23 +205,29 @@ class EventDetailsScreen extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Obx(
-                                    () => Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 10.0,
-                                          vertical: 8.0,
+                                  // if (controller.event.value.eventStatus !=
+                                  //     'Register')
+                                  Obx(() {
+                                    if (controller.event.value.eventStatus !=
+                                        'Register') {
+                                      return Align(
+                                        alignment: Alignment.topRight,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0,
+                                            vertical: 8.0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0))),
+                                          child: Text(controller
+                                              .event.value.eventStatus!),
                                         ),
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[200],
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0))),
-                                        child: Text(controller
-                                            .event.value.eventStatus!),
-                                      ),
-                                    ),
-                                  ),
+                                      );
+                                    }
+                                    return Container();
+                                  }),
                                   const SizedBox(height: 3),
                                   Flexible(
                                     child: Text(
