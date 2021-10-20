@@ -4,6 +4,8 @@ import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/events/event_controller.dart';
 import 'package:uni_alumni/modules/groups/group_controller.dart';
 import 'package:uni_alumni/modules/groups/group_repository.dart';
+import 'package:uni_alumni/modules/recruitment/recruitment_controller.dart';
+import 'package:uni_alumni/modules/recruitment/recruitment_repository.dart';
 
 import 'modules/events/event_repository.dart';
 
@@ -19,6 +21,11 @@ class AppBinding extends Bindings {
     Get.lazyPut(
         () => EventController(
             eventRepository: EventRepository(apiProvider: Get.find())),
+        fenix: true);
+    Get.lazyPut(
+        () => RecruitmentController(
+            recruitmentRepository:
+                RecruitmentRepository(apiProvider: Get.find())),
         fenix: true);
   }
 }

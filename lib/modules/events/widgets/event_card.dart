@@ -117,6 +117,26 @@ class EventCard extends StatelessWidget {
                             ],
                           ),
                         ),
+                        const SizedBox(height: 5.0),
+                        if (event.eventStatus != 'Register' &&
+                            event.eventStatus != 'Registered')
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                right: 10.0,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0,
+                                vertical: 8.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              child: Text(event.eventStatus!),
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -124,42 +144,46 @@ class EventCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () {
-                if (event.eventStatus != 'Register' &&
-                    event.eventStatus != 'Registered') return null;
+            if (event.eventStatus == 'Register' ||
+                event.eventStatus == 'Registered')
+              GestureDetector(
+                onTap: () {
+                  if (event.eventStatus != 'Register' &&
+                      event.eventStatus != 'Registered') return null;
 
-                if (!event.inEvent) {
-                  controller.joinEvent(event.id);
-                } else {
-                  controller.leaveEvent(event.id);
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10.0),
-                    bottomRight: Radius.circular(10.0),
+                  if (!event.inEvent) {
+                    controller.joinEvent(event.id);
+                  } else {
+                    controller.leaveEvent(event.id);
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10.0),
+                      bottomRight: Radius.circular(10.0),
+                    ),
+                    color: event.eventStatus == 'Register'
+                        ? ColorConstants.primaryAppColor
+                        : Colors.grey[400],
                   ),
-                  color: event.eventStatus == 'Register'
-                      ? ColorConstants.primaryAppColor
-                      : Colors.grey[400],
-                ),
-                padding: EdgeInsets.only(
-                  top: 8,
-                  bottom: 8,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  event.eventStatus!,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                  padding: EdgeInsets.only(
+                    top: 8,
+                    bottom: 8,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    event.eventStatus == 'Registered'
+                        ? 'Unregister'
+                        : event.eventStatus!,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
