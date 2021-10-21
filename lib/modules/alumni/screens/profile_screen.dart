@@ -25,7 +25,7 @@ class Profile extends StatelessWidget {
         children: [
           ProfileWidget(imagePath: url, onClicked: () async {}),
           const SizedBox(height: 24),
-          buildName(user!),
+          buildName(user),
           const SizedBox(height: 24),
           Center(
             child: buildEditProfileButton(context),
@@ -38,17 +38,17 @@ class Profile extends StatelessWidget {
             Column(
               children: [
                 Row(
-                  children: [buildCardInfor(Icons.phone, user.phone!)],
+                  children: [buildCardInfor(Icons.phone, user?.phone ?? '')],
                 ),
                 const Divider(),
                 Row(
                   children: [
-                    buildCardInfor(Icons.work, user.job!),
+                    buildCardInfor(Icons.work, user?.job ?? ''),
                   ],
                 ),
                 const Divider(),
                 Row(children: [
-                  buildCardInfor(Icons.map, user.address!),
+                  buildCardInfor(Icons.map, user?.address ?? ''),
                 ]),
               ],
             ),
@@ -107,10 +107,10 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget buildName(Alumni user) => Column(
+  Widget buildName(Alumni? user) => Column(
         children: [
           Text(
-            user.fullName!,
+            user?.fullName ?? '',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -118,7 +118,7 @@ class Profile extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            user.email!,
+            user?.email ?? '',
             style: TextStyle(
               color: Colors.grey,
             ),

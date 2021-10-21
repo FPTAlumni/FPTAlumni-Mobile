@@ -77,7 +77,8 @@ class MenuTab extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                " Hello, ${authController.currentUser!.fullName}",
+                                " Hello, "
+                                "${authController.currentUser?.fullName ?? ''}",
                                 style: TextStyle(
                                   fontSize: 25,
                                 ),
