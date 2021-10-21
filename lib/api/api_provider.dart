@@ -3,6 +3,7 @@ import 'package:uni_alumni/api/base_provider.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
 import 'package:uni_alumni/models/request/news_request.dart';
+import 'package:uni_alumni/models/request/referral_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
 import 'package:uni_alumni/shared/utils/header.dart';
 
@@ -60,5 +61,10 @@ class ApiProvider extends BaseProvider {
   //------------Group------------
   Future<Response> getGroupById(String path, String token) {
     return get(path, headers: HeaderApi(token).getHeaders());
+  }
+
+  //-----------Referral----------
+  Future<Response> getReferrals(String path, String token, ReferralRequest params ){
+    return get(path, headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
 }

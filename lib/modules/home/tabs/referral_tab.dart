@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/refferal/screens/referral_list.dart';
-import 'package:uni_alumni/modules/refferal/screens/refferal_registration.dart';
+import 'package:uni_alumni/modules/refferal/screens/referral_registration.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
