@@ -1,8 +1,10 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/referral.dart';
+import 'package:uni_alumni/modules/refferal/screens/referral_detail.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 import '../referral_controller.dart';
@@ -27,100 +29,124 @@ class ReferralCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorConstants.white,
-      width: 50,
-      margin: const EdgeInsets.symmetric(
-        vertical: 5.0,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 15.0,
-        horizontal: 25.0,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(
-              right: 10,
-            ),
-            // padding: const EdgeInsets.all(15.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: ColorConstants.tipColor),
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-            width: 85,
-            child: AspectRatio(
-              aspectRatio: 1 / 1,
-              child: ClipRRect(
+    return InkWell(
+      highlightColor: Colors.deepOrange,
+      onTap: (){
+        Get.to (() => ReferrallDetail());
+      },
+      child: Container(
+        color: ColorConstants.white,
+        width: 50,
+        margin: const EdgeInsets.symmetric(
+          vertical: 5.0,
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 15.0,
+          horizontal: 25.0,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                right: 10,
+              ),
+              // padding: const EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: ColorConstants.tipColor),
                 borderRadius: BorderRadius.all(Radius.circular(15)),
-                child: Image.network(
-                  url,
-                  fit: BoxFit.cover,
+              ),
+              width: 85,
+              child: AspectRatio(
+                aspectRatio: 1 / 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  child: Image.network(
+                    url,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  referral.fullName,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    referral.fullName,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  (referral.voucher.discountValue * 100).toString() + " %",
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 13.0,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'Phone: ${referral.phone}',
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 13.0,
-                    color: Colors.grey,
-                  ),
-                ),
-                Container(
-                  width: 250,
-                  child: Wrap(
+                  const SizedBox(height: 2),
+                  Row(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        child: Chip(
-                          backgroundColor: Colors.blue,
-                          label: Text(
-                            referral.status.toString(),
-                            // 'status',
-                            textScaleFactor: 3 / 4,
+                      ImageIcon(
+                        AssetImage("assets/images/voucher.png"),
+                          color: Colors.grey.shade800,
+                        size: 19
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                      (referral.voucher.discountValue * 100).toString() + " %",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ]),
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.phone,
+                        color: Colors.grey.shade800,
+                        size: 19.0
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                      referral.phone,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ]),
+                  Container(
+                    width: 250,
+                    child: Wrap(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(right: 5),
+                          child: Chip(
+                            backgroundColor:controller.changeColorStatus( referral.status),
+                            label: Text(
+                              referral.status.toString(),
+                              // 'status',
+                              textScaleFactor: 3 / 4,
+                            ),
                           ),
                         ),
-                      ),
-                      state ? CustomCancel() : Text('')
-                    ],
+                        state ? CustomCancel() : Text('')
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
