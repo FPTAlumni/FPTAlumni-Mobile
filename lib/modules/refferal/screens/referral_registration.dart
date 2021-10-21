@@ -5,14 +5,11 @@ import 'package:get/get.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
-
-import '../RefferalController.dart';
-
-
+import '../referral_controller.dart';
 
 class ReferralRegistration extends StatelessWidget {
 
-  final ReferralController controller = Get.put(ReferralController());
+  // final ReferralController controller = Get.put(ReferralController());
   final _formKey = GlobalKey<FormState>();
 
 

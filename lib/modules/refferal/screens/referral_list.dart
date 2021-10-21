@@ -2,10 +2,12 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uni_alumni/modules/refferal/widges/referral_information_list.dart';
 
-class ReferralList extends StatelessWidget {
+import '../referral_controller.dart';
 
+class ReferralList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
