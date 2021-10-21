@@ -1,21 +1,29 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:uni_alumni/models/referral.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+
+import '../referral_controller.dart';
 
 
 
 class ReferralCard extends StatelessWidget {
 
-
-  final String url;
-  final String fullName;
-  final String status;
-  final Color color;
+  final String url =  'https://is5-ssl.mzstatic.com/image/thumb/Purple124/v4/49/85/49/498549f0-b50a-1fa5-44d3-248b1fb35f6e/source/512x512bb.jpg';
+  final controller = Get.find<ReferralController>();
+  // final String url;
+  // final String fullName;
+  // final String status;
+  // final Color color;
   bool state = false;
 
+  final Referral referral;
 
-  ReferralCard(this.url, this.fullName, this.status, this.color, this.state);
+  ReferralCard(this.referral);
+
+  // ReferralCard(this.url, this.fullName, this.status, this.color, this.state);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +67,7 @@ class ReferralCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  fullName,
+                  referral.fullName,
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   maxLines: 2,
@@ -70,7 +78,7 @@ class ReferralCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Voucher: 30%',
+                  (referral.voucher.discountValue * 100).toString() + " %",
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   maxLines: 2,
@@ -81,7 +89,7 @@ class ReferralCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Phone: 0777 853 338',
+                  'Phone: ${referral.phone}',
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   maxLines: 2,
@@ -97,9 +105,10 @@ class ReferralCard extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(right: 5),
                         child: Chip(
-                          backgroundColor: color,
+                          backgroundColor: Colors.blue,
                           label: Text(
-                            status,
+                            referral.status.toString(),
+                            // 'status',
                             textScaleFactor: 3 / 4,
                           ),
                         ),
