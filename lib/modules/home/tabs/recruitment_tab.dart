@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:uni_alumni/modules/recruitment/recruitment_controller.dart';
 import 'package:uni_alumni/modules/recruitment/screen/recruitment_crud.dart';
 import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
+import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/filters.dart';
@@ -56,17 +57,23 @@ class RecruitmentTab extends StatelessWidget {
                 spacing: 15,
                 children: [
                   SpeedDialChild(
-                    child: Icon(Icons.work),
+                    child: Icon(
+                      Icons.work,
+                      color: Colors.white,
+                    ),
                     label: 'Your jobs',
                     backgroundColor: ColorConstants.lightPrimaryAppColor,
                     onTap: () {/* Do someting */},
                   ),
                   SpeedDialChild(
-                    child: Icon(Icons.add),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
                     label: 'Create your job',
                     backgroundColor: ColorConstants.lightPrimaryAppColor,
                     onTap: () {
-                      Get.to(() => RecruitmentCRUD());
+                      Get.toNamed(Routes.recruitmentForm);
                     },
                   ),
                 ],

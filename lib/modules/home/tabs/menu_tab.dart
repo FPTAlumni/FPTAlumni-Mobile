@@ -202,7 +202,7 @@ class MenuTab extends StatelessWidget {
               onTap: () async {
                 AuthController authController = Get.find();
                 await authController.logout();
-                Get.offNamedUntil(Routes.ROOT, (route) => false);
+                Get.offNamedUntil(Routes.root, (route) => false);
               },
               child: Container(
                 child: Column(
