@@ -52,8 +52,7 @@ class NewsDetailsScreen extends StatelessWidget {
                     ),
                     child: CircleAvatar(
                       radius: 25,
-                      backgroundImage: NetworkImage(
-                          'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg'),
+                      backgroundImage: NetworkImage(news.group!.banner!),
                       backgroundColor: Colors.transparent,
                     ),
                   ),

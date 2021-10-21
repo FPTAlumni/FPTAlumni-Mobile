@@ -2,7 +2,9 @@ import 'package:get/get_connect/connect.dart';
 import 'package:uni_alumni/api/base_provider.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
+import 'package:uni_alumni/models/request/group_request.dart';
 import 'package:uni_alumni/models/request/news_request.dart';
+import 'package:uni_alumni/models/request/recruitment_post_request.dart';
 import 'package:uni_alumni/models/request/referral_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
 import 'package:uni_alumni/shared/utils/header.dart';
@@ -63,8 +65,21 @@ class ApiProvider extends BaseProvider {
     return get(path, headers: HeaderApi(token).getHeaders());
   }
 
+  Future<Response> getGroups(String path, String token, GroupRequest? params) {
+    return get(path,
+        headers: HeaderApi(token).getHeaders(), query: params?.toJson());
+  }
+
+  //------------Recruitment------------
+  Future<Response> createReferral(
+      String path, String token, RecruitmentPostRequest data) {
+    return post(path, data.toJson(), headers: HeaderApi(token).getHeaders());
+  }
+
   //-----------Referral----------
-  Future<Response> getReferrals(String path, String token, ReferralRequest params ){
-    return get(path, headers: HeaderApi(token).getHeaders(), query: params.toJson());
+  Future<Response> getReferrals(
+      String path, String token, ReferralRequest params) {
+    return get(path,
+        headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
 }

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       // home: NewsDetailScreen(),
-      initialRoute: Routes.ROOT,
+      initialRoute: Routes.root,
       initialBinding: AppBinding(),
       // smartManagement: SmartManagement.keepFactory,
       getPages: AppPages.routes,

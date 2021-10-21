@@ -103,7 +103,7 @@ class AuthController extends GetxController {
         isSignIn.value = true;
       } else {
         await universityController.loadUniversities();
-        Get.toNamed(Routes.SIGN_UP);
+        Get.toNamed(Routes.signUp);
       }
     }
   }
@@ -240,7 +240,7 @@ class AuthController extends GetxController {
         buttonColor: ColorConstants.primaryAppColor,
         titlePadding: const EdgeInsets.all(10),
         onConfirm: () {
-          Get.offNamedUntil(Routes.ROOT, (route) => false);
+          Get.offNamedUntil(Routes.root, (route) => false);
           logout();
         },
       );

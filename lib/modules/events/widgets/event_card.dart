@@ -42,18 +42,21 @@ class EventCard extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 3,
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      right: 8,
-                      left: 8,
-                    ),
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      image: DecorationImage(
-                        image: NetworkImage(event.banner),
-                        fit: BoxFit.cover,
+                  child: Hero(
+                    tag: '${event.id}',
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        right: 8,
+                        left: 8,
+                      ),
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        image: DecorationImage(
+                          image: NetworkImage(event.banner),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),

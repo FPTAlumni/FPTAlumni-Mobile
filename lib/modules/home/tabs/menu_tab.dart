@@ -77,7 +77,8 @@ class MenuTab extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                " Hello, ${authController.currentUser!.fullName}",
+                                " Hello, "
+                                "${authController.currentUser?.fullName ?? ''}",
                                 style: TextStyle(
                                   fontSize: 25,
                                 ),
@@ -201,7 +202,7 @@ class MenuTab extends StatelessWidget {
               onTap: () async {
                 AuthController authController = Get.find();
                 await authController.logout();
-                Get.offNamedUntil(Routes.ROOT, (route) => false);
+                Get.offNamedUntil(Routes.root, (route) => false);
               },
               child: Container(
                 child: Column(
