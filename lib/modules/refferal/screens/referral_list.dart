@@ -2,8 +2,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/refferal/widges/referral_information_list.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 
 import '../referral_controller.dart';
 
@@ -20,7 +22,37 @@ class ReferralList extends StatelessWidget {
               color: Colors.black,
          )
       ),
-      body: ReferralInformation(),
+      body: Container
+        (
+          height: double.infinity,
+          child: Stack(
+              children: [
+                ReferralInformation(),
+                Positioned(
+                  bottom: 16,
+                  right: 16,
+                  child: SpeedDial(
+                    icon: Icons.category,
+                    backgroundColor: ColorConstants.lightPrimaryAppColor,
+                    spacing: 15,
+                    children: [
+                      SpeedDialChild(
+                        child: Icon(Icons.info_outline),
+                        label: 'More Information',
+                        backgroundColor: ColorConstants.lightPrimaryAppColor,
+                        onTap: () {/* Do someting */},
+                      ),
+                      SpeedDialChild(
+                        child: Icon(Icons.add),
+                        label: 'Add new referral',
+                        backgroundColor: ColorConstants.lightPrimaryAppColor,
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ])
+      ),
     );
   }
 }

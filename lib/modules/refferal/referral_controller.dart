@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/referral.dart';
 import 'package:uni_alumni/models/request/referral_request.dart';
@@ -60,7 +61,19 @@ class ReferralController extends GetxController{
 
   }
 
-
+  //Change color of status
+  Color changeColorStatus(String status) {
+    switch (status) {
+      case 'InActive':
+        return Colors.yellow;
+      case 'Active':
+        return Colors.green;
+      case 'Paid':
+        return Colors.blue;
+      default:
+        return Colors.yellow;
+    }
+  }
 
 
   @override
