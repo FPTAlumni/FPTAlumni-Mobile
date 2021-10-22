@@ -70,6 +70,7 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                         ? null
                         : controller.selectedExperience.value,
                     onChanged: (value) {
+                      FocusScope.of(context).requestFocus(FocusNode());
                       controller.onChangeExp(value);
                     },
                     validator: (value) {
@@ -91,6 +92,7 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                         ? null
                         : controller.selectedType.value,
                     onChanged: (value) {
+                      FocusScope.of(context).requestFocus(FocusNode());
                       controller.onChangeType(value);
                     },
                     validator: (value) {
@@ -113,6 +115,7 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                       return null;
                     },
                     onTapHandler: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
                       controller.showDatePicker();
                     }),
                 Obx(() => _buildGroupDropdown()),

@@ -52,7 +52,6 @@ class RecruitmentCrudController extends GetxController {
     //load dropdownType
     print('load type');
     for (var entry in RecruitmentEnum.typeMap.entries) {
-      print(RecruitmentEnum.getTypeIndex(entry.key));
       dropdownType.add(DropdownMenuItem(
         child: Text(entry.value),
         value: RecruitmentEnum.getTypeIndex(entry.key),
@@ -89,8 +88,6 @@ class RecruitmentCrudController extends GetxController {
     String? phone = phoneController.text.isEmpty
         ? currentUser?.phone
         : phoneController.text;
-
-    print(selectedGroup!.id);
 
     RecruitmentPostRequest data = RecruitmentPostRequest(
       title: titleController.text,

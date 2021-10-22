@@ -5,7 +5,7 @@ import 'package:uni_alumni/modules/events/event_controller.dart';
 import 'package:uni_alumni/modules/groups/group_controller.dart';
 import 'package:uni_alumni/modules/groups/group_repository.dart';
 import 'package:uni_alumni/modules/refferal/referral_repository.dart';
-import 'package:uni_alumni/modules/recruitment/recruitment_controller.dart';
+import 'package:uni_alumni/modules/recruitment/recruitment_tab_controller.dart';
 import 'package:uni_alumni/modules/recruitment/recruitment_repository.dart';
 
 import 'modules/events/event_repository.dart';
@@ -25,16 +25,13 @@ class AppBinding extends Bindings {
             eventRepository: EventRepository(apiProvider: Get.find())),
         fenix: true);
     Get.lazyPut(
-        () => RecruitmentController(
+        () => RecruitmentTabController(
             recruitmentRepository:
                 RecruitmentRepository(apiProvider: Get.find())),
         fenix: true);
     Get.lazyPut(
-          () =>
-          ReferralController(
-              referralRepository: ReferralRepository(apiProvider: Get.find())),
-      fenix: true
-    );
+        () => ReferralController(
+            referralRepository: ReferralRepository(apiProvider: Get.find())),
+        fenix: true);
   }
-
 }

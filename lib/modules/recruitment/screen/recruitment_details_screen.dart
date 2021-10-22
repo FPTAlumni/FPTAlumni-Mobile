@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:uni_alumni/models/recruitment.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+import 'package:uni_alumni/shared/utils/format_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RecruitmentDetailsScreen extends StatelessWidget {
   final String url =
       'https://cdn.pixabay.com/photo/2015/12/11/11/43/google-1088004_1280.png';
+
+  final Recruitment job;
+
+  RecruitmentDetailsScreen(this.job);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Google',
+          job.company!.companyName!,
           style: TextStyle(
             color: Colors.black,
           ),
@@ -76,7 +82,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             children: [
-                              TextSpan(text: 'Username'),
+                              TextSpan(text: job.alumni!.fullName),
                               WidgetSpan(
                                 child: Container(
                                   margin: const EdgeInsets.only(
@@ -89,9 +95,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              TextSpan(
-                                  text: 'GroupName the very very long long'
-                                      ' long group name'),
+                              TextSpan(text: job.group!.groupName),
                             ],
                           ),
                         ),
@@ -99,7 +103,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                           height: 5.0,
                         ),
                         Text(
-                          '28/09/2021',
+                          FormatUtils.toddMMyyyyHHmm(job.createdDate!),
                           style: TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ],
@@ -137,7 +141,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                     const SizedBox(height: 32),
                     Center(
                       child: Text(
-                        'Google Product Designer',
+                        job.title!,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 28,
@@ -148,7 +152,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     Center(
                       child: Text(
-                        'HCMC',
+                        job.company!.location!,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -170,7 +174,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                '#Part time',
+                                '#${job.type}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -191,7 +195,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                '#Senior',
+                                '#${job.experienceLevel}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -207,7 +211,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 18),
               Text(
-                "Requirements",
+                "Description",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -220,12 +224,12 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                   physics: BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      buildRequirement('Word hard'),
-                      buildRequirement('Word hard'),
-                      buildRequirement('Word hard'),
-                      buildRequirement('Word hard'),
-                      buildRequirement('Word hard'),
-                      buildRequirement('Word hard'),
+                      Text(
+                        job.description!,
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -258,7 +262,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                           onTap: () async {
                             final Uri phoneLaunchUri = Uri(
                               scheme: 'tel',
-                              path: '0962467699',
+                              path: job.phone,
                             );
 
                             if (await canLaunch(phoneLaunchUri.toString())) {
@@ -292,7 +296,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                           onTap: () async {
                             final Uri emailLaunchUri = Uri(
                               scheme: 'mailTo',
-                              path: 'agehachou2602@gmail.com',
+                              path: job.email,
                             );
 
                             if (await canLaunch(emailLaunchUri.toString())) {

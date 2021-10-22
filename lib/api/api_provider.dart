@@ -4,6 +4,7 @@ import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
 import 'package:uni_alumni/models/request/group_request.dart';
 import 'package:uni_alumni/models/request/news_request.dart';
+import 'package:uni_alumni/models/request/recruitment_get_request.dart';
 import 'package:uni_alumni/models/request/recruitment_post_request.dart';
 import 'package:uni_alumni/models/request/referral_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
@@ -71,9 +72,15 @@ class ApiProvider extends BaseProvider {
   }
 
   //------------Recruitment------------
-  Future<Response> createReferral(
+  Future<Response> createJob(
       String path, String token, RecruitmentPostRequest data) {
     return post(path, data.toJson(), headers: HeaderApi(token).getHeaders());
+  }
+
+  Future<Response> getJobs(
+      String path, String token, RecruitmentGetRequest params) {
+    return get(path,
+        headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
 
   //-----------Referral----------

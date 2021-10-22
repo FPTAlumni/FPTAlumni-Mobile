@@ -32,9 +32,23 @@ class EventsList extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: () => eventController.refreshUpcoming(),
         child: Obx(() {
+          if (list.length == 0) {
+            return Container(
+              alignment: Alignment.center,
+              child: Text(
+                'There is no events for you',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+          }
+
           return Scrollbar(
             child: ListView.builder(
               key: key,
+              physics: BouncingScrollPhysics(),
               controller: scrollController,
               itemCount: list.length + 1,
               itemBuilder: (ctx, i) {

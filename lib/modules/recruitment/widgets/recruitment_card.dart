@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/models/recruitment.dart';
 import 'package:uni_alumni/modules/recruitment/screen/recruitment_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class RecruitmentCard extends StatelessWidget {
-  final String url;
+  final Recruitment job;
 
-  RecruitmentCard(this.url);
+  RecruitmentCard(this.job);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(() => RecruitmentDetailsScreen()),
+      onTap: () => Get.to(() => RecruitmentDetailsScreen(job)),
       child: Container(
         color: ColorConstants.white,
         width: MediaQuery.of(context).size.width,
@@ -40,7 +41,7 @@ class RecruitmentCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                   child: Image.network(
-                    url,
+                    job.company!.imageUrl!,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -52,10 +53,10 @@ class RecruitmentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Google Product Designer',
+                    job.title!,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
-                    maxLines: 2,
+                    maxLines: 1,
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
@@ -63,7 +64,7 @@ class RecruitmentCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'Google',
+                    job.company!.companyName!,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     maxLines: 2,
@@ -81,9 +82,28 @@ class RecruitmentCard extends StatelessWidget {
                           margin: const EdgeInsets.only(right: 5),
                           child: Chip(
                             label: Text(
-                              'Part time',
+                              job.type!,
                               textScaleFactor: 3 / 4,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
+                            backgroundColor: Colors.orange[200],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(right: 5),
+                          child: Chip(
+                            label: Text(
+                              job.experienceLevel!,
+                              textScaleFactor: 3 / 4,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            backgroundColor: Colors.green[200],
                           ),
                         ),
                       ],

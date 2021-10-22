@@ -12,9 +12,9 @@ RecruitmentPostRequest _$RecruitmentPostRequestFromJson(
       alumniId: json['alumni_id'] as int?,
       title: json['title'] as String?,
       groupId: json['group_id'] as int?,
-      endDate: json['endDate'] == null
+      endDate: json['end_date'] == null
           ? null
-          : DateTime.parse(json['endDate'] as String),
+          : DateTime.parse(json['end_date'] as String),
       description: json['description'] as String?,
       type: json['type'] as int?,
       position: json['position'] as String?,
@@ -41,7 +41,7 @@ Map<String, dynamic> _$RecruitmentPostRequestToJson(
   writeNotNull('experience_level', instance.experience);
   writeNotNull('phone', instance.phone);
   writeNotNull('email', instance.email);
-  writeNotNull('endDate', instance.endDate?.toIso8601String());
+  writeNotNull('end_date', instance.endDate?.toIso8601String());
   writeNotNull('alumni_id', instance.alumniId);
   writeNotNull('group_id', instance.groupId);
   writeNotNull('company_id', instance.companyId);
