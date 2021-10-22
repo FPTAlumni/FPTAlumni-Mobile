@@ -41,8 +41,8 @@ class RecruitmentEnum {
   };
 
   static Map<RecruitmentType, String> typeMap = {
-    RecruitmentType.fullTime: 'Full time',
-    RecruitmentType.partTime: 'Part time',
+    RecruitmentType.fullTime: 'Full-time',
+    RecruitmentType.partTime: 'Part-time',
   };
 
   static int getTypeIndex(RecruitmentType type) {

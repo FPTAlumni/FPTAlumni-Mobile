@@ -29,7 +29,21 @@ class NewsList extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: () => controller.refresh(),
         child: Obx(() {
+          if (controller.news.length == 0) {
+            return Container(
+              alignment: Alignment.center,
+              child: Text(
+                'There is no news for you',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+          }
+
           return ListView.builder(
+            physics: BouncingScrollPhysics(),
             controller: _scrollController,
             itemCount: controller.news.length + 1,
             itemBuilder: (ctx, i) {

@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
-import 'package:uni_alumni/modules/recruitment/recruitment_controller.dart';
-import 'package:uni_alumni/modules/recruitment/screen/recruitment_crud.dart';
+import 'package:uni_alumni/modules/recruitment/recruitment_tab_controller.dart';
 import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
@@ -12,7 +11,8 @@ import 'package:uni_alumni/shared/data/filters.dart';
 import 'package:uni_alumni/shared/utils/filter_dialog.dart';
 
 class RecruitmentTab extends StatelessWidget {
-  final RecruitmentController controller = Get.find<RecruitmentController>();
+  final RecruitmentTabController controller =
+      Get.find<RecruitmentTabController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +47,11 @@ class RecruitmentTab extends StatelessWidget {
         height: double.infinity,
         child: Stack(
           children: [
-            RecruitmentList(),
+            RecruitmentList(
+              list: controller.jobs,
+              scrollController: controller.scrollController,
+              onRefresh: controller.refresh,
+            ),
             Positioned(
               bottom: 16,
               right: 16,
