@@ -12,6 +12,8 @@ class RecruitmentPostRequest {
   String? experience;
   String? phone;
   String? email;
+
+  @JsonKey(name: 'end_date')
   DateTime? endDate;
 
   @JsonKey(name: 'alumni_id')
