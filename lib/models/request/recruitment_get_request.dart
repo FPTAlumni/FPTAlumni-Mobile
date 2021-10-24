@@ -6,6 +6,8 @@ part 'recruitment_get_request.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class RecruitmentGetRequest {
+  String? alumniId;
+
   String? companyId;
 
   String? majorId;
@@ -25,6 +27,7 @@ class RecruitmentGetRequest {
   SortOrder? sortOrder;
 
   RecruitmentGetRequest({
+    this.alumniId,
     this.companyId,
     this.groupId,
     this.majorId,

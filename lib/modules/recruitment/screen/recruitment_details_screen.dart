@@ -174,7 +174,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                '#${job.type}',
+                                '#${job.typeString}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

@@ -4,8 +4,10 @@ import 'package:uni_alumni/modules/auth/screens/sign_in_screen.dart';
 import 'package:uni_alumni/modules/auth/screens/sign_up_screen.dart';
 import 'package:uni_alumni/modules/home/main_binding.dart';
 import 'package:uni_alumni/modules/home/main_screen.dart';
-import 'package:uni_alumni/modules/recruitment/recruitment_crud_binding.dart';
+import 'package:uni_alumni/modules/recruitment/bindings/recruitment_crud_binding.dart';
+import 'package:uni_alumni/modules/recruitment/bindings/your_jobs_binding.dart';
 import 'package:uni_alumni/modules/recruitment/screen/recruitment_crud.dart';
+import 'package:uni_alumni/modules/recruitment/screen/your_jobs_screen.dart';
 import 'package:uni_alumni/root_app.dart';
 part './app_routes.dart';
 
@@ -37,6 +39,11 @@ class AppPages {
       name: Routes.recruitmentForm,
       page: () => RecruitmentCrud(),
       binding: RecruitmentCrudBinding(),
+    ),
+    GetPage(
+      name: Routes.yourRecruitment,
+      page: () => YourJobsScreen(),
+      binding: YourJobsBinding(),
     ),
   ];
 }

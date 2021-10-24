@@ -22,8 +22,9 @@ Recruitment _$RecruitmentFromJson(Map<String, dynamic> json) => Recruitment(
           ? null
           : DateTime.parse(json['created_date'] as String),
       position: json['position'] as String?,
-      status: json['status'] as String?,
-      type: json['type'] as String?,
+      stringStatus: json['string_status'] as String?,
+      status: json['status'] as int?,
+      type: json['string_type'] as String?,
       company: json['company'] == null
           ? null
           : Company.fromJson(json['company'] as Map<String, dynamic>),
@@ -50,7 +51,8 @@ Map<String, dynamic> _$RecruitmentToJson(Recruitment instance) {
   writeNotNull('title', instance.title);
   writeNotNull('description', instance.description);
   writeNotNull('position', instance.position);
-  writeNotNull('type', instance.type);
+  writeNotNull('string_type', instance.type);
+  writeNotNull('string_status', instance.stringStatus);
   writeNotNull('status', instance.status);
   writeNotNull('experience_level', instance.experienceLevel);
   writeNotNull('phone', instance.phone);

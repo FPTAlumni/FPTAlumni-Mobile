@@ -16,7 +16,7 @@ class RecruitmentRepository {
     if (response.statusCode == 200) {
       List responseList = response.body['data'];
       return responseList
-          .map((json) => RecruitmentGroupResponse.fromJson(json['group']))
+          .map((json) => RecruitmentGroupResponse.fromJson(json))
           .toList();
     }
   }

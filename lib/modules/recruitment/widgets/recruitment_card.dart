@@ -6,8 +6,9 @@ import 'package:uni_alumni/shared/constants/colors.dart';
 
 class RecruitmentCard extends StatelessWidget {
   final Recruitment job;
+  bool isMyJobs = false;
 
-  RecruitmentCard(this.job);
+  RecruitmentCard({required this.job, this.isMyJobs = false});
 
   @override
   Widget build(BuildContext context) {
@@ -23,94 +24,98 @@ class RecruitmentCard extends StatelessWidget {
           vertical: 15.0,
           horizontal: 15.0,
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.only(
-                right: 10,
-              ),
-              // padding: const EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: ColorConstants.tipColor),
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-              ),
-              width: 85,
-              child: AspectRatio(
-                aspectRatio: 1 / 1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  child: Image.network(
-                    job.company!.imageUrl!,
-                    fit: BoxFit.cover,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(
+                    right: 10,
+                  ),
+                  // padding: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: ColorConstants.tipColor),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  width: 85,
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      child: Image.network(
+                        job.company!.imageUrl!,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    job.title!,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    job.company!.companyName!,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: 13.0,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Container(
-                    width: 250,
-                    child: Wrap(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 5),
-                          child: Chip(
-                            label: Text(
-                              job.type!,
-                              textScaleFactor: 3 / 4,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        job.title!,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        job.company!.companyName!,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: 13.0,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Container(
+                        width: 250,
+                        child: Wrap(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              child: Chip(
+                                label: Text(
+                                  job.typeString,
+                                  textScaleFactor: 3 / 4,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                backgroundColor: Colors.orange[200],
                               ),
                             ),
-                            backgroundColor: Colors.orange[200],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 5),
-                          child: Chip(
-                            label: Text(
-                              job.experienceLevel!,
-                              textScaleFactor: 3 / 4,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                            Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              child: Chip(
+                                label: Text(
+                                  job.experienceLevel!,
+                                  textScaleFactor: 3 / 4,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                backgroundColor: Colors.green[200],
                               ),
                             ),
-                            backgroundColor: Colors.green[200],
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

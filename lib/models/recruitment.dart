@@ -18,11 +18,14 @@ class Recruitment {
   @JsonKey(name: "position")
   String? position;
 
-  @JsonKey(name: "type")
+  @JsonKey(name: "string_type")
   String? type;
 
+  @JsonKey(name: "string_status")
+  String? stringStatus;
+
   @JsonKey(name: "status")
-  String? status;
+  int? status;
 
   @JsonKey(name: "experience_level")
   String? experienceLevel;
@@ -62,6 +65,7 @@ class Recruitment {
       this.email,
       this.createdDate,
       this.position,
+      this.stringStatus,
       this.status,
       this.type,
       this.company,
@@ -73,4 +77,12 @@ class Recruitment {
 
   factory Recruitment.fromJson(Map<String, dynamic> json) =>
       _$RecruitmentFromJson(json);
+
+  String get typeString {
+    if (this.type!.contains("Fulltime")) {
+      return "Full-time";
+    } else {
+      return "Part-time";
+    }
+  }
 }

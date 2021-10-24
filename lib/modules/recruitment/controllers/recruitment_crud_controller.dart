@@ -10,7 +10,7 @@ import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 import 'package:uni_alumni/shared/widgets/custom_datetime_picker.dart';
 
-import 'recruitment_repository.dart';
+import '../recruitment_repository.dart';
 
 class RecruitmentCrudController extends GetxController {
   final RecruitmentRepository recruitmentRepository;

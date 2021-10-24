@@ -29,7 +29,7 @@ class NewsList extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: () => controller.refresh(),
         child: Obx(() {
-          if (controller.news.length == 0) {
+          if (controller.news.length == 0 && controller.isLoading.value) {
             return Container(
               alignment: Alignment.center,
               child: Text(
@@ -45,7 +45,9 @@ class NewsList extends StatelessWidget {
           return ListView.builder(
             physics: BouncingScrollPhysics(),
             controller: _scrollController,
-            itemCount: controller.news.length + 1,
+            itemCount: controller.isLoading.value
+                ? controller.news.length + 1
+                : controller.news.length,
             itemBuilder: (ctx, i) {
               if (i == controller.news.length) {
                 return Center(

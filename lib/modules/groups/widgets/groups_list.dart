@@ -1,78 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/groups/group_controller.dart';
+import 'package:uni_alumni/modules/groups/screens/group_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class GroupsList extends StatelessWidget {
   final GroupController controller = Get.find<GroupController>();
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      List<GroupTest> list = [];
-      if (controller.selectedTab.value ==
-          controller.getTabIndex(GroupTabs.yourGroup)) {
-        list = controller.groups.where((group) => group.isJoin == 1).toList();
-      } else {
-        list = controller.groups
-            .where((group) => group.isJoin == 0 || group.isJoin == -1)
-            .toList();
-      }
-      return _buildList(list);
-    });
-  }
-
-  Widget _buildList(List<GroupTest> list) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (ctx, i) => GestureDetector(
-          child: Container(
-            width: double.infinity,
-            color: Colors.white,
-            margin: const EdgeInsets.only(
-              top: 5.0,
-              bottom: 5.0,
-            ),
-            child: Material(
-              child: InkWell(
-                splashColor: Colors.grey[200],
-                onTap: () {
-                  // Navigator.of(context)
-                  //     .push(MaterialPageRoute(builder: (ctx) => GroupHome()));
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: ListTile(
-                    leading: Container(
-                      width: 60,
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          child: Image.network(
-                            list[i].imageUrl,
-                            fit: BoxFit.cover,
-                          ),
+    return ListView.builder(
+      itemCount: controller.tempGroups.length,
+      itemBuilder: (ctx, i) => GestureDetector(
+        child: Container(
+          width: double.infinity,
+          color: Colors.white,
+          margin: const EdgeInsets.only(
+            top: 5.0,
+            bottom: 5.0,
+          ),
+          child: Material(
+            child: InkWell(
+              splashColor: Colors.grey[200],
+              onTap: () {
+                Get.to(() => GroupDetailsScreen());
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: ListTile(
+                  leading: Container(
+                    width: 60,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        child: Image.network(
+                          controller.tempGroups[i].imageUrl,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    title: Text(
-                      list[i].name,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    trailing: _buildButton(list[i].isJoin),
                   ),
+                  title: Text(
+                    controller.tempGroups[i].name,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  trailing: _buildButton(controller.tempGroups[i].isJoin),
                 ),
               ),
             ),
           ),
-          // ),
         ),
+        // ),
       ),
     );
   }
@@ -137,69 +120,5 @@ class GroupsList extends StatelessWidget {
       //   ),
       // );
     }
-  }
-
-  _buildBottomSheet(
-      int parentIndex, List<GroupTest> groupChild, BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      enableDrag: true,
-      isScrollControlled: true,
-      builder: (_) {
-        return Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height / 2,
-          ),
-          child: SingleChildScrollView(
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5.0),
-                child: Text(
-                  '${controller.groups[parentIndex].name}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              ...groupChild
-                  .map(
-                    (group) => Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      margin: const EdgeInsets.only(
-                        bottom: 5.0,
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: ListTile(
-                        leading: Container(
-                          width: 60,
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              child: Image.network(
-                                group.imageUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                        title: Text(
-                          group.name,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ]),
-          ),
-        );
-      },
-    );
   }
 }

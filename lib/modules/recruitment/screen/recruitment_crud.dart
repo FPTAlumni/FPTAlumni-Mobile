@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/response/recruitment_group_response.dart';
-import 'package:uni_alumni/modules/recruitment/recruitment_crud_controller.dart';
+import 'package:uni_alumni/modules/recruitment/controllers/recruitment_crud_controller.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 

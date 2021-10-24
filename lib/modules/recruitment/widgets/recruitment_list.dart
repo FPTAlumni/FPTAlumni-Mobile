@@ -7,11 +7,15 @@ class RecruitmentList extends StatelessWidget {
   var list;
   final ScrollController scrollController;
   RefreshCallback onRefresh;
+  var isLoading;
+  bool isMyJobs;
 
   RecruitmentList({
     required this.list,
     required this.scrollController,
     required this.onRefresh,
+    this.isLoading,
+    this.isMyJobs = false,
   });
 
   @override
@@ -21,7 +25,7 @@ class RecruitmentList extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: onRefresh,
         child: Obx(() {
-          if (list.length == 0) {
+          if (list.length == 0 && isLoading.value) {
             return Container(
               alignment: Alignment.center,
               child: Text(
@@ -37,7 +41,7 @@ class RecruitmentList extends StatelessWidget {
           return ListView.builder(
             physics: BouncingScrollPhysics(),
             controller: scrollController,
-            itemCount: list.length + 1,
+            itemCount: isLoading.value ? list.length + 1 : list.length,
             itemBuilder: (ctx, i) {
               if (i == list.length) {
                 return Center(
@@ -52,7 +56,7 @@ class RecruitmentList extends StatelessWidget {
                 );
               }
 
-              return RecruitmentCard(list[i]);
+              return RecruitmentCard(job: list[i]);
             },
           );
         }),

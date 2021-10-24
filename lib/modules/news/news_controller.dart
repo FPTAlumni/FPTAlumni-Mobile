@@ -17,6 +17,7 @@ class NewsController extends GetxController {
   final _pageSize = 4;
   int _page = 1;
   String? error;
+  var isLoading = true.obs;
 
   @override
   onInit() {
@@ -38,12 +39,14 @@ class NewsController extends GetxController {
       error = null;
       news.addAll(_news);
       _page++;
+      isLoading.value = true;
     } else {
       error = 'There is no news';
     }
   }
 
   Future<void> refresh() async {
+    isLoading.value = false;
     news.value = [];
     _page = 1;
     error = null;
