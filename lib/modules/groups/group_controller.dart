@@ -21,14 +21,14 @@ enum GroupTabs {
 }
 
 class GroupController extends GetxController {
-  var selectedTab = 0.obs;
-  var isJoined = 1.obs;
-
   var selectedFilterList = [].obs;
   final groupRepository;
   final userAuthentication = Get.find<AuthController>().userAuthentication;
 
   GroupController({required this.groupRepository});
+
+  var yourGroups = [].obs;
+  var discoverGroup = [].obs;
 
   List<GroupTest> _groups = [
     GroupTest(
@@ -87,17 +87,8 @@ class GroupController extends GetxController {
     ),
   ];
 
-  List<GroupTest> get groups {
+  List<GroupTest> get tempGroups {
     return [..._groups];
-  }
-
-  onChangeTab(GroupTabs tab) {
-    selectedTab.value = getTabIndex(tab);
-    if (tab == GroupTabs.yourGroup) {
-      isJoined.value = 1;
-    } else {
-      isJoined.value = 0;
-    }
   }
 
   int getTabIndex(GroupTabs tab) {

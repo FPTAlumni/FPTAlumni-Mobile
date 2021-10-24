@@ -41,6 +41,7 @@ class EventController extends GetxController {
 
   final _pageSize = 6;
   int _page = 1;
+  var isLoading = true.obs;
 
   @override
   onInit() {
@@ -55,6 +56,7 @@ class EventController extends GetxController {
     print('load events');
     EventRequest params = EventRequest(
       alumniId: userAuthentication!.id.toString(),
+      status: EventStatus.registrationStart,
       sortOrder: SortOrder.DESC,
       sortKey: EventSortKey.registrationEndDate,
       page: _page.toString(),
@@ -68,6 +70,7 @@ class EventController extends GetxController {
         error = null;
         events.addAll(_events);
         _page++;
+        isLoading.value = true;
       }
     } on Exception {
       error = 'There is no Event';
@@ -91,6 +94,7 @@ class EventController extends GetxController {
   }
 
   Future<void> refreshUpcoming() async {
+    isLoading.value = false;
     events.value = [];
     _page = 1;
     error = null;
@@ -98,6 +102,7 @@ class EventController extends GetxController {
   }
 
   Future<void> refreshYourEvents() async {
+    isLoading.value = true;
     await getAttendedEvents();
   }
 

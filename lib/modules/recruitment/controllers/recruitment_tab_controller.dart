@@ -20,6 +20,7 @@ class RecruitmentTabController extends GetxController {
   final _pageSize = 5;
   int _page = 1;
   String? error;
+  var isLoading = true.obs;
 
   @override
   void onInit() {
@@ -50,12 +51,18 @@ class RecruitmentTabController extends GetxController {
     if (_jobs != null && _jobs.isNotEmpty) {
       jobs.addAll(_jobs);
       _page++;
+      isLoading.value = true;
+      error = null;
+      if (jobs.length < _pageSize) {
+        isLoading.value = false;
+      }
     } else {
       error = 'There is no news';
     }
   }
 
   Future<void> refresh() async {
+    isLoading.value = false;
     jobs.value = [];
     _page = 1;
     error = null;

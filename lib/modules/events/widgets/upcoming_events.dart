@@ -25,6 +25,7 @@ class UpcomingEvents extends StatelessWidget {
       list: eventController.events,
       scrollController: _scrollController,
       key: PageStorageKey('upcomingEvents'),
+      isLoading: eventController.isLoading,
     );
   }
 }

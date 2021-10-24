@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
-import 'package:uni_alumni/modules/recruitment/recruitment_tab_controller.dart';
+import 'package:uni_alumni/modules/recruitment/controllers/recruitment_tab_controller.dart';
 import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
@@ -51,6 +51,7 @@ class RecruitmentTab extends StatelessWidget {
               list: controller.jobs,
               scrollController: controller.scrollController,
               onRefresh: controller.refresh,
+              isLoading: controller.isLoading,
             ),
             Positioned(
               bottom: 16,
@@ -67,7 +68,9 @@ class RecruitmentTab extends StatelessWidget {
                     ),
                     label: 'Your jobs',
                     backgroundColor: ColorConstants.lightPrimaryAppColor,
-                    onTap: () {/* Do someting */},
+                    onTap: () {
+                      Get.toNamed(Routes.yourRecruitment);
+                    },
                   ),
                   SpeedDialChild(
                     child: Icon(

@@ -7,32 +7,24 @@ import 'package:uni_alumni/shared/constants/colors.dart';
 class EventsList extends StatelessWidget {
   var list;
   final ScrollController scrollController;
-  EventsList({required this.list, required this.scrollController, Key? key})
-      : super(key: key);
+  var isLoading;
+  EventsList({
+    required this.list,
+    required this.scrollController,
+    this.isLoading,
+    Key? key,
+  }) : super(key: key);
 
   final eventController = Get.find<EventController>();
-  // final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    // _scrollController.addListener(() {
-    //   if (_scrollController.position.pixels ==
-    //       _scrollController.position.maxScrollExtent) {
-    //     eventController.getEventsOfCurrentAlumni().then((_) {
-    //       if (eventController.error != null) {
-    //         _scrollController
-    //             .jumpTo(_scrollController.position.maxScrollExtent - 45);
-    //       }
-    //     });
-    //   }
-    // });
-
     return Container(
       width: double.infinity,
       child: RefreshIndicator(
         onRefresh: () => eventController.refreshUpcoming(),
         child: Obx(() {
-          if (list.length == 0) {
+          if (list.length == 0 && isLoading.value) {
             return Container(
               alignment: Alignment.center,
               child: Text(
@@ -50,7 +42,7 @@ class EventsList extends StatelessWidget {
               key: key,
               physics: BouncingScrollPhysics(),
               controller: scrollController,
-              itemCount: list.length + 1,
+              itemCount: isLoading.value ? list.length + 1 : list.length,
               itemBuilder: (ctx, i) {
                 if (i == list.length) {
                   return Center(
