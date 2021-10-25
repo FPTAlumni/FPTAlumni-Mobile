@@ -12,7 +12,7 @@ Referral _$ReferralFromJson(Map<String, dynamic> json) => Referral(
       phone: json['phone'] as String,
       address: json['address'] as String,
       voucherCode: json['voucher_code'] as String,
-      status: json['status'] as String,
+      status: json['status'] as int,
       nominator: Alumni.fromJson(json['nominator'] as Map<String, dynamic>),
       voucher: Voucher.fromJson(json['voucher'] as Map<String, dynamic>),
       major: Major.fromJson(json['major'] as Map<String, dynamic>),

@@ -132,7 +132,7 @@ class ReferralCard extends StatelessWidget {
                           child: Chip(
                             backgroundColor:controller.changeColorStatus( referral.status),
                             label: Text(
-                              referral.status.toString(),
+                              controller.statusName(referral.status),
                               // 'status',
                               textScaleFactor: 3 / 4,
                             ),
