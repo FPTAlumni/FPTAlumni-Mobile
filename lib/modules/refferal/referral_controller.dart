@@ -62,16 +62,35 @@ class ReferralController extends GetxController{
   }
 
   //Change color of status
-  Color changeColorStatus(String status) {
+  Color changeColorStatus(int status) {
     switch (status) {
-      case 'InActive':
-        return Colors.yellow;
-      case 'Active':
+      case 0 :
+        return Colors.grey;
+      case 1 :
         return Colors.green;
-      case 'Paid':
+      case 2 :
         return Colors.blue;
-      default:
+      case 3:
         return Colors.yellow;
+      default:
+        return Colors.red;
+    }
+  }
+
+  String statusName(int status){
+    switch (status){
+      case 0:
+        return 'Inactive';
+      case 1:
+        return 'Verified';
+      case  2:
+        return 'Paid';
+      case 3:
+        return 'Pending';
+      case 4:
+        return 'Rejected';
+      default:
+        return 'Inactive';
     }
   }
 

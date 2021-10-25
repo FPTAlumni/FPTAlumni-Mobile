@@ -24,7 +24,7 @@ class Referral{
   @JsonKey(name: 'create_date', ignore: true)
   DateTime? createdDate;
   @JsonKey(name: 'status')
-  late String status;
+  late int status;
   @JsonKey(name: 'nominator')
   late Alumni nominator;
   @JsonKey(name: 'voucher')
