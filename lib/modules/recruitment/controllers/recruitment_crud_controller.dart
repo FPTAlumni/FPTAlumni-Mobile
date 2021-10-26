@@ -94,8 +94,10 @@ class RecruitmentCrudController extends GetxController {
   }
 
   getGroup() async {
-    GroupRequest params =
-        GroupRequest(alumniId: userAuthentication!.id.toString());
+    GroupRequest params = GroupRequest(
+      alumniId: userAuthentication!.id.toString(),
+      joined: true.toString(),
+    );
 
     List<Group>? _groups = await recruitmentRepository.getGroups(
         userAuthentication!.appToken, params);
