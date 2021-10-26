@@ -239,13 +239,19 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
         label: 'Group*',
         dropdownSearchDecoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-          enabledBorder: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.all(Radius.circular(10))
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
         compareFn: (i, s) => i?.isEqual(s) ?? false,
@@ -350,13 +356,19 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
           label: Text(label),
           hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          enabledBorder: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.all(Radius.circular(10))
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.all(Radius.circular(10))
           ),
         ),
       ),
@@ -396,13 +408,19 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
           // floatingLabelStyle: TextStyle(color: ColorConstants.primaryAppColor),
           // labelStyle: TextStyle(color: Colors.black),
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          enabledBorder: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.all(Radius.circular(10))
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.all(Radius.circular(10))
           ),
         ),
       ),
