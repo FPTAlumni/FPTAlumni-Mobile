@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uni_alumni/models/recruitment.dart';
+import 'package:uni_alumni/modules/recruitment/widgets/bs_job_actions.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,8 +10,9 @@ class RecruitmentDetailsScreen extends StatelessWidget {
       'https://cdn.pixabay.com/photo/2015/12/11/11/43/google-1088004_1280.png';
 
   final Recruitment job;
+  final isMyJob;
 
-  RecruitmentDetailsScreen(this.job);
+  RecruitmentDetailsScreen(this.job, {this.isMyJob = false});
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +111,15 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  if (isMyJob)
+                    GestureDetector(
+                      onTap: () {
+                        BSJobActions.showBottomSheet(job, isInDetails: true);
+                      },
+                      child: Container(
+                        child: Icon(Icons.more_horiz),
+                      ),
+                    ),
                 ],
               ),
               const SizedBox(height: 18.0),
@@ -129,7 +140,7 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                         width: 50,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(url),
+                            image: NetworkImage(job.company!.imageUrl!),
                             fit: BoxFit.fitWidth,
                           ),
                           borderRadius: BorderRadius.all(

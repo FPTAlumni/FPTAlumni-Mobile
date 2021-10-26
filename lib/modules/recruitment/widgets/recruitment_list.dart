@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/modules/recruitment/widgets/my_job_card.dart';
 import 'package:uni_alumni/modules/recruitment/widgets/recruitment_card.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
@@ -56,7 +57,9 @@ class RecruitmentList extends StatelessWidget {
                 );
               }
 
-              return RecruitmentCard(job: list[i]);
+              return isMyJobs
+                  ? MyJobCard(list[i], key: ValueKey(list[i].id))
+                  : RecruitmentCard(job: list[i], key: ValueKey(list[i].id));
             },
           );
         }),

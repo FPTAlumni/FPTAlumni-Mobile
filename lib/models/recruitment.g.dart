@@ -7,6 +7,7 @@ part of 'recruitment.dart';
 // **************************************************************************
 
 Recruitment _$RecruitmentFromJson(Map<String, dynamic> json) => Recruitment(
+      id: json['id'] as int?,
       major: json['major'] == null
           ? null
           : Major.fromJson(json['major'] as Map<String, dynamic>),
@@ -48,6 +49,7 @@ Map<String, dynamic> _$RecruitmentToJson(Recruitment instance) {
     }
   }
 
+  writeNotNull('id', instance.id);
   writeNotNull('title', instance.title);
   writeNotNull('description', instance.description);
   writeNotNull('position', instance.position);

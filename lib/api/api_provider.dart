@@ -2,6 +2,7 @@ import 'package:get/get_connect/connect.dart';
 import 'package:uni_alumni/api/base_provider.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
+import 'package:uni_alumni/models/request/expand_end_date_request.dart';
 import 'package:uni_alumni/models/request/group_request.dart';
 import 'package:uni_alumni/models/request/news_request.dart';
 import 'package:uni_alumni/models/request/recruitment_get_request.dart';
@@ -81,6 +82,20 @@ class ApiProvider extends BaseProvider {
       String path, String token, RecruitmentGetRequest params) {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
+  }
+
+  Future<Response> deleteJob(String path, String token) {
+    return delete(path, headers: HeaderApi(token).getHeaders());
+  }
+
+  Future<Response> changeEndDate(
+      String path, String token, ExpandEndDateRequest data) {
+    return patch(path, data.toJson(), headers: HeaderApi(token).getHeaders());
+  }
+
+  Future<Response> updateJob(
+      String path, String token, RecruitmentPostRequest data) {
+    return put(path, data.toJson(), headers: HeaderApi(token).getHeaders());
   }
 
   //-----------Referral----------

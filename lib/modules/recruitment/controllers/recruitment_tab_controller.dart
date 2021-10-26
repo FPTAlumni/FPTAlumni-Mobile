@@ -4,6 +4,8 @@ import 'package:uni_alumni/models/recruitment.dart';
 import 'package:uni_alumni/models/request/recruitment_get_request.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/recruitment/recruitment_repository.dart';
+import 'package:uni_alumni/shared/data/enum/common_enum.dart';
+import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
 
 class RecruitmentTabController extends GetxController {
   var selectedFilterList = [].obs;
@@ -44,6 +46,8 @@ class RecruitmentTabController extends GetxController {
     RecruitmentGetRequest params = RecruitmentGetRequest(
       page: _page.toString(),
       pageSize: _pageSize.toString(),
+      sortKey: RecruitmentSortKey.createdDate,
+      sortOrder: SortOrder.DESC,
     );
 
     List<Recruitment?>? _jobs = await recruitmentRepository.getJobs(

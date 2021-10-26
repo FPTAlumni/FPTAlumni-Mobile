@@ -14,6 +14,7 @@ class YourJobsScreen extends GetView<YourJobsController> {
         scrollController: controller.scrollController,
         onRefresh: controller.refresh,
         isLoading: controller.isLoading,
+        isMyJobs: true,
       ),
     );
   }

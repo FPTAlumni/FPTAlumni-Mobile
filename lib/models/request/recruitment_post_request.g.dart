@@ -9,6 +9,7 @@ part of 'recruitment_post_request.dart';
 RecruitmentPostRequest _$RecruitmentPostRequestFromJson(
         Map<String, dynamic> json) =>
     RecruitmentPostRequest(
+      id: json['id'] as int?,
       alumniId: json['alumni_id'] as int?,
       title: json['title'] as String?,
       groupId: json['group_id'] as int?,
@@ -35,6 +36,7 @@ Map<String, dynamic> _$RecruitmentPostRequestToJson(
     }
   }
 
+  writeNotNull('id', instance.id);
   writeNotNull('title', instance.title);
   writeNotNull('description', instance.description);
   writeNotNull('position', instance.position);

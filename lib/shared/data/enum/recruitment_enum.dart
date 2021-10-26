@@ -31,6 +31,13 @@ enum RecruitmentSortKey {
   status,
 }
 
+class MyRecruitmentStatus {
+  static const String approved = 'Approved';
+  static const String pending = 'Pending';
+  static const String rejected = 'Rejected';
+  static const String ended = 'Ended';
+}
+
 class RecruitmentEnum {
   static Map<Experience, String> experienceMap = {
     Experience.intern: 'Intern',

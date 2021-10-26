@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/models/recruitment.dart';
 import 'package:uni_alumni/models/request/group_request.dart';
 import 'package:uni_alumni/models/request/recruitment_post_request.dart';
-import 'package:uni_alumni/models/response/recruitment_group_response.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
+import 'package:uni_alumni/modules/recruitment/controllers/your_jobs_controller.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
-import 'package:uni_alumni/shared/widgets/custom_datetime_picker.dart';
+import 'package:uni_alumni/shared/widgets/date_time_picker_dialog.dart';
 
 import '../recruitment_repository.dart';
 
@@ -26,7 +27,7 @@ class RecruitmentCrudController extends GetxController {
   var selectedType = (-1).obs;
 
   var groups = [].obs;
-  RecruitmentGroupResponse? selectedGroup;
+  Group? selectedGroup;
   DateTime? jobEndDate = DateTime.now();
   var jobEndDateText = "".obs;
   final titleController = TextEditingController();
@@ -35,6 +36,8 @@ class RecruitmentCrudController extends GetxController {
   final jobEndDateController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
+
+  Recruitment? currentJob = Get.arguments;
 
   @override
   void onInit() {
@@ -61,6 +64,27 @@ class RecruitmentCrudController extends GetxController {
     getGroup();
   }
 
+  @override
+  void onReady() {
+    super.onReady();
+    if (currentJob != null) {
+      titleController.text = currentJob?.title ?? '';
+      descriptionController.text = currentJob?.description ?? '';
+      positionController.text = currentJob?.position ?? '';
+      jobEndDateController.text =
+          FormatUtils.toddMMyyyy(currentJob!.endDate!.toLocal());
+      phoneController.text = currentJob?.alumni?.phone ?? '';
+      emailController.text = currentJob?.alumni?.email ?? '';
+      selectedExperience.value = currentJob?.experienceLevel ?? '';
+      selectedType.value = currentJob?.typeInt ?? -1;
+      selectedGroup = currentJob?.group ?? null;
+      if (selectedGroup!.banner == null) {
+        selectedGroup!.banner = 'https://previews.123rf'
+            '.com/images/andreypopov/andreypopov1403/andreypopov140301139/27041180-excited-group-of-diverse-people-holding-banner-isolated-on-white.jpg';
+      }
+    }
+  }
+
   onChangeExp(Object? value) {
     selectedExperience.value = value.toString();
   }
@@ -73,15 +97,15 @@ class RecruitmentCrudController extends GetxController {
     GroupRequest params =
         GroupRequest(alumniId: userAuthentication!.id.toString());
 
-    List<RecruitmentGroupResponse>? _groups = await recruitmentRepository
-        .getGroups(userAuthentication!.appToken, params);
+    List<Group>? _groups = await recruitmentRepository.getGroups(
+        userAuthentication!.appToken, params);
 
     if (_groups != null) {
       groups.value = _groups;
     }
   }
 
-  Future<String> onSubmitForm() async {
+  Future<bool?> onSubmitForm() async {
     String? email = emailController.text.isEmpty
         ? currentUser?.email
         : emailController.text;
@@ -90,6 +114,7 @@ class RecruitmentCrudController extends GetxController {
         : phoneController.text;
 
     RecruitmentPostRequest data = RecruitmentPostRequest(
+      id: currentJob?.id ?? null,
       title: titleController.text,
       description: descriptionController.text,
       position: positionController.text,
@@ -100,41 +125,82 @@ class RecruitmentCrudController extends GetxController {
       groupId: selectedGroup!.id,
       companyId: currentUser!.company!.id,
       type: selectedType.value,
-      endDate: jobEndDate!.toUtc(),
+      endDate: currentJob == null ? jobEndDate!.toUtc() : currentJob!.endDate,
       groupOriginId: selectedGroup!.id,
     );
 
+    if (currentJob == null) {
+      return _createJob(data);
+    } else {
+      return _updateJob(data);
+    }
+  }
+
+  Future<bool?> _updateJob(RecruitmentPostRequest data) async {
+    Recruitment? updatedJob = await recruitmentRepository.updateJob(
+        userAuthentication!.appToken, data);
+    if (updatedJob != null) {
+      final yourJobsController = Get.find<YourJobsController>();
+      int index = yourJobsController.myJobs
+          .indexWhere((job) => job.id == updatedJob.id);
+      yourJobsController.myJobs[index] = updatedJob;
+      yourJobsController.myJobs.refresh();
+    } else {
+      return await _showErrorDialog();
+    }
+  }
+
+  Future<bool?> _createJob(RecruitmentPostRequest data) async {
     bool result = await recruitmentRepository.createRecruitment(
         userAuthentication!.appToken, data);
     if (result) {
-      return 'Your job has been created successfully.\r\n'
-          'Please wait for admin to approve it';
+      return await Get.defaultDialog(
+        title: 'Announcement',
+        content: Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 5.0,
+          ),
+          child: Text('Your job has been created successfully.\r\n'
+              'Please wait for admin to approve it'),
+        ),
+        confirm: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: ColorConstants.primaryAppColor,
+            textStyle: TextStyle(color: Colors.white),
+          ),
+          onPressed: () {
+            Get.back();
+          },
+          child: Text(
+            'Close',
+          ),
+        ),
+      );
+    } else {
+      return await _showErrorDialog();
     }
-    return 'Error occurred';
   }
 
-  showDatePicker() async {
-    DateTime? _jobEndDate = await DatePicker.showPicker(Get.context!,
-        showTitleActions: true,
-        theme: DatePickerTheme(
-          doneStyle: TextStyle(
-            color: ColorConstants.primaryAppColor,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ), onChanged: (date) {
-      print('change $date in time zone ' +
-          date.timeZoneOffset.inHours.toString());
-    },
-        pickerModel: CustomDateTimePicker(
-          currentTime: DateTime.now(),
-          minTime: DateTime.now(),
-        ),
-        locale: LocaleType.en);
+  _showErrorDialog() async {
+    return await Get.defaultDialog(
+      title: 'Error!',
+      content: Text('Some errors occurred'),
+      cancel: TextButton(
+        onPressed: () {
+          Get.back(result: false);
+        },
+        child: Text('Cancel'),
+      ),
+    );
+  }
+
+  showDatePicker({DateTime? date}) async {
+    DateTime? _jobEndDate =
+        await DateTimePickerDialog.showDatePickerDialog(selectedDate: date);
 
     if (_jobEndDate != null) {
       jobEndDate = _jobEndDate;
-      jobEndDateController.text = FormatUtils.toddMMyyyyHHmm(_jobEndDate);
+      jobEndDateController.text = FormatUtils.toddMMyyyy(_jobEndDate);
     }
   }
 }
