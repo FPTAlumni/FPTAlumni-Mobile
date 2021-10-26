@@ -4,6 +4,7 @@ part 'recruitment_post_request.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class RecruitmentPostRequest {
+  int? id;
   String? title;
   String? description;
   String? position;
@@ -31,6 +32,7 @@ class RecruitmentPostRequest {
   int? type;
 
   RecruitmentPostRequest({
+    this.id,
     this.alumniId,
     this.title,
     this.groupId,

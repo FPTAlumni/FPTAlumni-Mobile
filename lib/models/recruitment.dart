@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uni_alumni/models/alumni.dart';
 import 'package:uni_alumni/models/company.dart';
 import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
 
 import 'major.dart';
 
@@ -9,6 +11,9 @@ part 'recruitment.g.dart';
 
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Recruitment {
+  @JsonKey(name: "id")
+  int? id;
+
   @JsonKey(name: "title")
   String? title;
 
@@ -58,7 +63,8 @@ class Recruitment {
   Major? major;
 
   Recruitment(
-      {this.major,
+      {this.id,
+      this.major,
       this.alumni,
       this.endDate,
       this.phone,
@@ -83,6 +89,48 @@ class Recruitment {
       return "Full-time";
     } else {
       return "Part-time";
+    }
+  }
+
+  int get typeInt {
+    if (this.type!.contains("Fulltime")) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
+  String get statusString {
+    if (endDate == null) return 'Permanent';
+
+    if (DateTime.now().toUtc().isAfter(endDate!) && status != 3) {
+      return MyRecruitmentStatus.ended;
+    }
+
+    switch (status) {
+      case 1:
+        return MyRecruitmentStatus.approved;
+      case 2:
+        return MyRecruitmentStatus.pending;
+      case 3:
+        return MyRecruitmentStatus.rejected;
+      default:
+        return MyRecruitmentStatus.ended;
+    }
+  }
+
+  Color get color {
+    switch (statusString) {
+      case MyRecruitmentStatus.approved:
+        return Colors.green;
+      case MyRecruitmentStatus.pending:
+        return Colors.orangeAccent;
+      case MyRecruitmentStatus.rejected:
+        return Colors.red;
+      case MyRecruitmentStatus.ended:
+        return Colors.grey;
+      default:
+        return Colors.grey;
     }
   }
 }

@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/recruitment.dart';
 import 'package:uni_alumni/modules/recruitment/screen/recruitment_details_screen.dart';
+import 'package:uni_alumni/modules/recruitment/widgets/bs_job_actions.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 
-class RecruitmentCard extends StatelessWidget {
+class MyJobCard extends StatelessWidget {
   final Recruitment job;
 
-  RecruitmentCard({required this.job, Key? key}) : super(key: key);
+  MyJobCard(this.job, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(() => RecruitmentDetailsScreen(job)),
+      onTap: () => Get.to(() => RecruitmentDetailsScreen(
+            job,
+            isMyJob: true,
+          )),
       child: Container(
         color: ColorConstants.white,
         width: MediaQuery.of(context).size.width,
@@ -39,7 +43,7 @@ class RecruitmentCard extends StatelessWidget {
                     border: Border.all(color: ColorConstants.tipColor),
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                  width: 100,
+                  width: 80,
                   child: AspectRatio(
                     aspectRatio: 1 / 1,
                     child: ClipRRect(
@@ -56,33 +60,35 @@ class RecruitmentCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        job.title!,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        job.company!.companyName!,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 13.0,
-                          color: Colors.grey,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            job.title!,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              BSJobActions.showBottomSheet(job);
+                            },
+                            child: Container(
+                              child: Icon(Icons.more_horiz),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 2),
                       Text(
                         'End date: ${FormatUtils.toddMMyyyyHHmm(job.endDate!)}',
                         overflow: TextOverflow.ellipsis,
                         softWrap: false,
-                        maxLines: 1,
+                        maxLines: 2,
                         style: TextStyle(
                           fontSize: 12.0,
                           color: Colors.grey,
@@ -117,6 +123,30 @@ class RecruitmentCard extends StatelessWidget {
                                 ),
                               ),
                               backgroundColor: Colors.green[200],
+                            ),
+                          ),
+                          Spacer(),
+                          Container(
+                            width: 70,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 3.0,
+                              vertical: 5.0,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: job.color,
+                                width: 0.7,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                            ),
+                            child: Text(
+                              job.statusString,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: job.color,
+                                fontSize: 13,
+                              ),
                             ),
                           ),
                         ],

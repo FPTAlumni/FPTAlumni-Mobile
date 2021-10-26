@@ -21,6 +21,9 @@ class Group {
   @JsonKey(name: "created_date")
   DateTime? createdDate;
 
+  @JsonKey(name: "joined")
+  bool? isJoined;
+
   @JsonKey(name: "status")
   int? status;
 
@@ -33,19 +36,28 @@ class Group {
   @JsonKey(name: "university")
   University? university;
 
-  Group({
-    this.status,
-    this.createdDate,
-    this.id,
-    this.university,
-    this.banner,
-    this.groupName,
-    this.leader,
-    this.numberOfMembers,
-    this.registrationDate,
-  });
+  Group(
+      {this.status,
+      this.createdDate,
+      this.id,
+      this.university,
+      this.banner,
+      this.groupName,
+      this.leader,
+      this.numberOfMembers,
+      this.registrationDate,
+      this.isJoined});
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
 
   Map<String, dynamic> toJson() => _$GroupToJson(this);
+
+  @override
+  String toString() {
+    return '$groupName';
+  }
+
+  bool isEqual(Group? model) {
+    return this.id == model?.id;
+  }
 }

@@ -2,7 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui.dart';
 import 'package:get/get.dart';
-import 'package:uni_alumni/models/response/recruitment_group_response.dart';
+import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/modules/recruitment/controllers/recruitment_crud_controller.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
@@ -33,6 +33,9 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                       if (value!.isEmpty) {
                         return "Please enter job title";
                       }
+                      if (value.length > 100) {
+                        return "Title only contain 100 characters";
+                      }
                       return null;
                     }),
                 _buildTextFormField(
@@ -56,6 +59,9 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter job position";
+                      }
+                      if (value.length > 70) {
+                        return "Position only contain 70 characters";
                       }
                       return null;
                     }),
@@ -105,7 +111,7 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                 }),
                 _buildTextFormField(
                     label: 'Job End Date*',
-                    hintText: 'dd/MM/yyyy HH:mm',
+                    hintText: 'dd/MM/yyyy',
                     controller: controller.jobEndDateController,
                     readOnly: true,
                     validator: (value) {
@@ -116,7 +122,12 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                     },
                     onTapHandler: () {
                       FocusScope.of(context).requestFocus(FocusNode());
-                      controller.showDatePicker();
+                      if (controller.currentJob == null) {
+                        controller.showDatePicker();
+                      } else {
+                        controller.showDatePicker(
+                            date: controller.currentJob!.endDate);
+                      }
                     }),
                 Obx(() => _buildGroupDropdown()),
                 _buildHeader(
@@ -148,36 +159,14 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                     onPressed: () async {
                       bool isValid = _formKey.currentState!.validate();
                       if (!isValid) return;
-                      String message = await controller.onSubmitForm();
-                      await Get.defaultDialog(
-                        title: 'Announcement',
-                        content: Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 5.0,
-                          ),
-                          child: Text(message),
-                        ),
-                        confirm: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: ColorConstants.primaryAppColor,
-                            textStyle: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            Get.back();
-                          },
-                          child: Text(
-                            'Close',
-                          ),
-                        ),
-                      );
-                      print(message);
-                      if (message.contains('Error')) {
+                      bool? isError = await controller.onSubmitForm();
+                      if (isError != null) {
                         return;
                       }
-
                       Get.back();
                     },
-                    child: Text('Create'),
+                    child: Text(
+                        controller.currentJob == null ? 'Create' : 'Update'),
                     style: ElevatedButton.styleFrom(
                       elevation: 2.0,
                       primary: ColorConstants.primaryAppColor,
@@ -234,20 +223,27 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
         left: 30.0,
         right: 30.0,
       ),
-      child: DropdownSearch<RecruitmentGroupResponse>(
+      child: DropdownSearch<Group>(
         mode: Mode.BOTTOM_SHEET,
         label: 'Group*',
         dropdownSearchDecoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-          enabledBorder: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
           errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(color: Colors.red),
           ),
           focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(color: Colors.red),
           ),
         ),
+        selectedItem: controller.selectedGroup,
         compareFn: (i, s) => i?.isEqual(s) ?? false,
         showSelectedItems: true,
         popupTitle: Container(
@@ -266,7 +262,7 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
         onChanged: (selectedGroup) {
           controller.selectedGroup = selectedGroup;
         },
-        items: controller.groups.toList().cast<RecruitmentGroupResponse>(),
+        items: controller.groups.toList().cast<Group>(),
         popupSafeArea: PopupSafeArea(top: true, bottom: true),
         scrollbarProps: ScrollbarProps(
           isAlwaysShown: true,
@@ -282,8 +278,7 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
     );
   }
 
-  Widget _customDropdownBuilder(
-      BuildContext context, RecruitmentGroupResponse? group) {
+  Widget _customDropdownBuilder(BuildContext context, Group? group) {
     if (group == null) {
       return Text(
         'Choose a group',
@@ -295,7 +290,7 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
   }
 
   Widget _customPopupItemBuilder(
-      BuildContext context, RecruitmentGroupResponse? group, bool isSelected) {
+      BuildContext context, Group? group, bool isSelected) {
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 8.0,
@@ -350,12 +345,18 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
           label: Text(label),
           hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          enabledBorder: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
           errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(color: Colors.red),
           ),
           focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(color: Colors.red),
           ),
         ),
@@ -396,12 +397,18 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
           // floatingLabelStyle: TextStyle(color: ColorConstants.primaryAppColor),
           // labelStyle: TextStyle(color: Colors.black),
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          enabledBorder: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
           errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(color: Colors.red),
           ),
           focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(color: Colors.red),
           ),
         ),
