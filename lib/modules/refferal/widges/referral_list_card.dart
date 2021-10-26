@@ -32,7 +32,7 @@ class ReferralCard extends StatelessWidget {
     return InkWell(
       highlightColor: Colors.deepOrange,
       onTap: (){
-        Get.to (() => ReferrallDetail());
+        Get.to (() => ReferralDetail(this.referral));
       },
       child: Container(
         color: ColorConstants.white,

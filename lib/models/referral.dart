@@ -34,6 +34,13 @@ class Referral{
   @JsonKey(name: 'university')
   late University university;
 
+  @JsonKey(name: 'parent_name')
+  String? parentName;
+  @JsonKey(name: 'parent_phone')
+  String? parentPhone;
+  @JsonKey(name: 'high_school_name')
+  String? highSchoolName;
+
   Referral({
     required this.id,
     required this.fullName,
@@ -46,6 +53,9 @@ class Referral{
     required this.voucher,
     required this.major,
     required this.university,
+    this.parentName,
+    this.parentPhone,
+    this.highSchoolName,
 });
 
   factory Referral.fromJson(Map<String, dynamic> json) => _$ReferralFromJson(json);

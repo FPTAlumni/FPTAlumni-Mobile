@@ -20,6 +20,7 @@ class Profile extends StatelessWidget {
     final user = authController.currentUser;
     return Scaffold(
       appBar: buildAppBar(context),
+      backgroundColor: ColorConstants.lightScaffoldBackgroundColor,
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
