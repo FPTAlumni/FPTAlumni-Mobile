@@ -10,6 +10,8 @@ class GroupRequest {
 
   String? alumniId;
 
+  String? joined;
+
   String? groupLeaderId;
 
   String? parentGroupId;
@@ -45,6 +47,7 @@ class GroupRequest {
     this.groupLeaderId,
     this.majorId,
     this.parentGroupId,
+    this.joined,
   });
 
   Map<String, dynamic> toJson() => _$GroupRequestToJson(this);

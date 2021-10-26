@@ -20,6 +20,7 @@ GroupRequest _$GroupRequestFromJson(Map<String, dynamic> json) => GroupRequest(
       groupLeaderId: json['groupLeaderId'] as String?,
       majorId: json['majorId'] as String?,
       parentGroupId: json['parentGroupId'] as String?,
+      joined: json['joined'] as String?,
     );
 
 Map<String, dynamic> _$GroupRequestToJson(GroupRequest instance) {
@@ -33,6 +34,7 @@ Map<String, dynamic> _$GroupRequestToJson(GroupRequest instance) {
 
   writeNotNull('groupName', instance.groupName);
   writeNotNull('alumniId', instance.alumniId);
+  writeNotNull('joined', instance.joined);
   writeNotNull('groupLeaderId', instance.groupLeaderId);
   writeNotNull('parentGroupId', instance.parentGroupId);
   writeNotNull('majorId', instance.majorId);
