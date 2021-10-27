@@ -5,7 +5,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/refferal/screens/referral_moreinformation.dart';
-import 'package:uni_alumni/modules/refferal/screens/referral_list.dart';
 import 'package:uni_alumni/modules/refferal/screens/referral_registration.dart';
 import 'package:uni_alumni/modules/refferal/widges/referral_information_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
@@ -48,7 +47,7 @@ class ReferralTab extends GetView<MainController> {
           height: double.infinity,
           child: Stack(
               children: [
-                ReferralInformation(),
+                new ReferralInformation(),
                 Positioned(
                   bottom: 16,
                   right: 16,

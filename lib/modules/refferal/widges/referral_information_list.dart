@@ -10,7 +10,9 @@ class ReferralInformation extends StatelessWidget {
   final referralController = Get.find<ReferralController>();
   var list;
   // final ScrollController scrollController;
-  // ReferralInformation({required this.list, required this.scrollController, Key? key});
+  // RefreshCallback  onRefresh;
+  var isLoading;
+  // ReferralInformation({required this.list, required this.scrollController, required this.onRefresh});
 
 
   @override
@@ -18,31 +20,44 @@ class ReferralInformation extends StatelessWidget {
     list = referralController.referrals;
     return Container(
       width: double.infinity,
-      child: Obx(()  {
-        return Scrollbar(
-          child: ListView.builder(
-              key: key,
-              // controller: scrollController,
-              itemCount: list.length + 1,
-              itemBuilder: (ctx, i){
-                if(i  ==  list.length){
-                  const SizedBox(height: 10);
-                  return Center(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: ColorConstants.primaryAppColor,
+        child: Obx(()  {
+          // if (list.length == 0 && isLoading.value) {
+          //   return Container(
+          //     alignment: Alignment.center,
+          //     child: Text(
+          //       'There is no referral',
+          //       style: TextStyle(
+          //         fontSize: 18,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   );
+          // }
+          return  Scrollbar(
+            child: ListView.builder(
+                key: key,
+                // controller: scrollController ,
+                itemCount: list.length,
+                itemBuilder: (ctx, i){
+                  if(i  ==  list.length){
+                    const SizedBox(height: 10);
+                    return Center(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: ColorConstants.primaryAppColor,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
+                  return ReferralCard(list[i]);
                 }
-                return ReferralCard(list[i]);
-              }
-          ),
-        );
-      })
+            ),
+          );
+        }),
+
       // child: ListView(
       //   shrinkWrap: true,
       //   children: [
