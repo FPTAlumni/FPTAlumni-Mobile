@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/referral.dart';
+import 'package:uni_alumni/modules/alumni/widgets/alumni_button_widget.dart';
 import 'package:uni_alumni/modules/refferal/screens/referral_detail.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
@@ -123,24 +124,29 @@ class ReferralCard extends StatelessWidget {
                       ),
                     ),
                   ]),
-                  Container(
-                    width: 250,
-                    child: Wrap(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 5),
-                          child: Chip(
-                            backgroundColor:controller.changeColorStatus( referral.status),
-                            label: Text(
-                              controller.statusName(referral.status),
-                              // 'status',
-                              textScaleFactor: 3 / 4,
+                  Row(
+                    children: [
+                      Container(
+                        width: 100,
+                        child: Wrap(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              child: Chip(
+                                backgroundColor:controller.changeColorStatus( referral.status),
+                                label: Text(
+                                  controller.statusName(referral.status),
+                                  // 'status',
+                                  textScaleFactor: 3 / 4,
+                                ),
+                              ),
                             ),
-                          ),
+                            state ? CustomCancel() : Text('')
+                          ],
                         ),
-                        state ? CustomCancel() : Text('')
-                      ],
-                    ),
+                      ),
+                      const SizedBox(width: 5),
+                    ],
                   ),
                 ],
               ),
@@ -150,6 +156,9 @@ class ReferralCard extends StatelessWidget {
       ),
     );
   }
+
+
+
 
 
   Widget CustomCancel() {

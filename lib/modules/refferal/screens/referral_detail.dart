@@ -8,12 +8,10 @@ import 'package:uni_alumni/shared/constants/colors.dart';
 import '../referral_controller.dart';
 
 class ReferralDetail extends StatelessWidget {
-
   final Referral referral;
   final controller = Get.find<ReferralController>();
 
   ReferralDetail(this.referral);
-
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +19,10 @@ class ReferralDetail extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
-          leading: BackButton(color: Colors.black),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Text("Referral", style: TextStyle(color: Colors.black))
-        ),
+            leading: BackButton(color: Colors.black),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: Text("Referral", style: TextStyle(color: Colors.black))),
         body: Stack(fit: StackFit.expand, children: [
           Container(
             decoration: BoxDecoration(
@@ -54,10 +51,10 @@ class ReferralDetail extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Container(
-                    height: height * 0.4,
+                    height: height * 0.35,
                     child: LayoutBuilder(builder: (context, constraints) {
                       double innerHeight = constraints.maxHeight;
                       double innerWidth = constraints.maxWidth;
@@ -67,7 +64,7 @@ class ReferralDetail extends StatelessWidget {
                           left: 0,
                           right: 0,
                           child: Container(
-                            height: innerHeight * 0.65,
+                            height: innerHeight * 0.90,
                             width: innerWidth,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
@@ -75,19 +72,33 @@ class ReferralDetail extends StatelessWidget {
                             ),
                             child: Column(children: [
                               SizedBox(height: 45),
-                              Text(
-                                referral.fullName,
-                                style: TextStyle(
-                                    color:  Color.fromRGBO(39, 105, 171, 1),
-                                    fontFamily: 'Nunito',
-                                    fontSize: 30
+                              // Text(
+                              //   referral.fullName,
+                              //   style: TextStyle(
+                              //       color:  Color.fromRGBO(39, 105, 171, 1),
+                              //       fontFamily: 'Nunito',
+                              //       fontSize: 30
+                              //   ),
+                              // ),
+                              Flexible(
+                                child: Text(
+                                  referral.fullName,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontSize: 27,
+                                        color: Color.fromRGBO(39, 105, 171, 1),
+                                        fontFamily: 'Nunito',
+                                      ),
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    children: [
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Column(children: [
                                       Text(
                                         'Voucher',
                                         style: TextStyle(
@@ -98,278 +109,285 @@ class ReferralDetail extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        (referral.voucher.discountValue * 100).toString() + " %" ,
+                                        (referral.voucher.discountValue * 100)
+                                                .toString() +
+                                            " %",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Nunito',
                                           fontSize: 21,
                                         ),
                                       ),
-                                    ]
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 15,
-                                      vertical: 30
+                                    ]),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 30),
+                                      child: Container(
+                                          height: 40,
+                                          width: 5,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            color: Colors.black,
+                                          )),
                                     ),
-                                    child: Container(
-                                      height: 40,
-                                      width: 5,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(100),
-                                        color: Colors.black,
-                                      )
-                                    ),
-                                  ),
-                                  Column(
-                                      children: [
-                                        Text(
-                                          'Status',
-                                          style: TextStyle(
+                                    Column(children: [
+                                      Text(
+                                        'Status',
+                                        style: TextStyle(
                                             color: Colors.orange,
                                             fontFamily: 'Nunito',
                                             fontSize: 21,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                        Text(
-                                          controller.statusName(referral.status),
-                                          style: TextStyle(
-                                            color: controller.changeColorStatus(referral.status),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        controller.statusName(referral.status),
+                                        style: TextStyle(
+                                            color: controller.changeColorStatus(
+                                                referral.status),
                                             fontFamily: 'Nunito',
                                             fontSize: 21,
-                                              fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                      ]
-                                  ),
-                                ]
-                              ),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ]),
+                                  ]),
+                              referral.status == 3
+                                  ? buildEditProfileButton(context)
+                                  : Text('Information can not edit',
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontStyle: FontStyle.italic)),
                             ]),
                           ),
                         ),
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          child: Center(
-                            child: Container(
-                                width: innerWidth * 5,
-                                height: innerHeight * 0.5,
-                                  child:CircleAvatar(
-                                    radius: 50,
-                                    child: ClipOval(
-                                      child: Image.asset(
-                                        'assets/images/ava.jpg',
-                                        height: 150,
-                                        width: 150,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-
-                            ),
-                          ),
-                        ),
+                        // Positioned(
+                        //   top: 0,
+                        //   left: 0,
+                        //   right: 0,
+                        //   child: Center(
+                        //     child: Container(
+                        //         width: innerWidth * 5,
+                        //         height: innerHeight * 0.5,
+                        //           child:CircleAvatar(
+                        //             radius: 50,
+                        //             child: ClipOval(
+                        //               child: Image.asset(
+                        //                 'assets/images/ava.jpg',
+                        //                 height: 150,
+                        //                 width: 150,
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //
+                        //     ),
+                        //   ),
+                        // ),
                       ]);
                     }),
                   ),
                   SizedBox(height: 25),
                   SingleChildScrollView(
                     child: Container(
-                      height: height * 0.35,
-                      width: width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Column(
-                          children:[
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                            'Referral\'s Information',
-                            style: TextStyle(
-                              color: Color.fromRGBO(39, 105, 171, 1),
-                              fontSize: 25,
-                              fontFamily: 'Nunito',
-                              fontWeight: FontWeight.bold
-                            )
-                          ),
-                            Divider(
-                              thickness: 2.5,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Icon(Icons.phone, color: Colors.orange, size: 30),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      referral.phone,
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ]
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Icon(Icons.map, color: Colors.orange, size: 30),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      referral.address,
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ]
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Icon(Icons.school, color: Colors.orange, size: 30),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      referral.highSchoolName.toString().isEmpty ?
-                                      "Not fill yet": referral.highSchoolName.toString(),
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ]
-                            ),
-
-                          ],
+                        height: height * 0.35,
+                        width: width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.white,
                         ),
-                      )
-                    ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text('Referral\'s Information',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(39, 105, 171, 1),
+                                      fontSize: 25,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.bold)),
+                              Divider(
+                                thickness: 2.5,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(children: [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Icon(Icons.phone,
+                                    color: Colors.orange, size: 30),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    referral.phone,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ),
+                              ]),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(children: [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Icon(Icons.map, color: Colors.orange, size: 30),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    referral.address,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ),
+                              ]),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(children: [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Icon(Icons.school,
+                                    color: Colors.orange, size: 30),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    referral.highSchoolName.toString() ==
+                                            null.toString()
+                                        ? "No information"
+                                        : referral.highSchoolName.toString(),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ),
+                              ]),
+                            ],
+                          ),
+                        )),
                   ),
                   SizedBox(height: 25),
                   SingleChildScrollView(
                     child: Container(
-                      height: height * 0.3,
-                      width: width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Column(
-                          children:[
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                            'More Information',
-                            style: TextStyle(
-                              color: Color.fromRGBO(39, 105, 171, 1),
-                              fontSize: 25,
-                              fontFamily: 'Nunito',
-                              fontWeight: FontWeight.bold
-                            )
-                          ),
-                            Divider(
-                              thickness: 2.5,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            //Parent
-                            Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Icon(Icons.person_sharp, color: Colors.orange, size: 30),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      referral.parentName.toString().isEmpty ?
-                                      "Not fill yet": "(Mr./Ms.) " + referral.parentName.toString(),
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ]
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Icon(Icons.phone, color: Colors.orange, size: 30),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      referral.parentPhone.toString().isEmpty ?
-                                      "Not fill yet": referral.parentPhone.toString(),
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ]
-                            ),
-                          ],
+                        height: height * 0.3,
+                        width: width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.white,
                         ),
-                      )
-                    ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text('More Information',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(39, 105, 171, 1),
+                                      fontSize: 25,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.bold)),
+                              Divider(
+                                thickness: 2.5,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              //Parent
+                              Row(children: [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Icon(Icons.person_sharp,
+                                    color: Colors.orange, size: 30),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    referral.parentName.toString() ==
+                                            null.toString()
+                                        ? "No information"
+                                        : "(Mr./Ms.) " +
+                                            referral.parentName.toString(),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ),
+                              ]),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(children: [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Icon(Icons.phone,
+                                    color: Colors.orange, size: 30),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    referral.parentPhone.toString() ==
+                                            null.toString()
+                                        ? "No information"
+                                        : referral.parentPhone.toString(),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ),
+                              ]),
+                            ],
+                          ),
+                        )),
                   ),
                 ]),
               )))
         ]));
   }
-
 
   Widget buildCardInfor(IconData icon, String infor) {
     return Container(
@@ -387,18 +405,17 @@ class ReferralDetail extends StatelessWidget {
               Container(
                 // padding: EdgeInsets.all(10),
                 child: Column(
-                    children: <Widget>[
-                      // Text(
-                      //   "  " + infor,
-                      //   style: TextStyle(
-                      //     fontSize: 20,
-                      //   ),
-                      //   overflow: TextOverflow.ellipsis,
-                      //   maxLines: 2,
-                      // ),
-
-                    ],
-                  ),
+                  children: <Widget>[
+                    // Text(
+                    //   "  " + infor,
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //   ),
+                    //   overflow: TextOverflow.ellipsis,
+                    //   maxLines: 2,
+                    // ),
+                  ],
+                ),
               ),
               const Divider(),
             ],
@@ -407,6 +424,7 @@ class ReferralDetail extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildText(String text) {
     return Container(
       margin: const EdgeInsets.only(
@@ -417,10 +435,24 @@ class ReferralDetail extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(Get.context!).textTheme.headline3!.copyWith(
-          color: ColorConstants.black,
-          fontSize: 20,
-        ),
+              color: ColorConstants.black,
+              fontSize: 20,
+            ),
       ),
+    );
+  }
+
+  Widget buildEditProfileButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        shape: StadiumBorder(),
+        primary: ColorConstants.primaryAppColor,
+        onPrimary: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+      ),
+      child: Text("Edit", style: TextStyle(fontSize: 15)),
+      onPressed: () {},
     );
   }
 }

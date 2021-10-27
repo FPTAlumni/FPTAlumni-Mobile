@@ -7,8 +7,10 @@ import 'package:uni_alumni/models/request/group_request.dart';
 import 'package:uni_alumni/models/request/news_request.dart';
 import 'package:uni_alumni/models/request/recruitment_get_request.dart';
 import 'package:uni_alumni/models/request/recruitment_post_request.dart';
+import 'package:uni_alumni/models/request/referral_post_request.dart';
 import 'package:uni_alumni/models/request/referral_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
+import 'package:uni_alumni/models/request/voucher_get_request.dart';
 import 'package:uni_alumni/shared/utils/header.dart';
 
 class ApiProvider extends BaseProvider {
@@ -104,4 +106,15 @@ class ApiProvider extends BaseProvider {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
+  Future<Response> createReferral(
+      String path, String token, ReferralPostRequest data) {
+    return post(path, data.toJson(), headers: HeaderApi(token).getHeaders());
+  }
+
+  //-----------Voucher------------
+  Future<Response> getVouchers(String path, String token, VoucherRequest params){
+    print(params.toString());
+    return get(path,headers: HeaderApi(token).getHeaders(), query: params.toJson());
+  }
+
 }
