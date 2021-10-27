@@ -20,19 +20,30 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       registrationEndDate:
           DateTime.parse(json['registration_end_date'] as String),
       inEvent: json['in_event'] as bool,
+      groupName: json['group_name'] as String?,
     );
 
-Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
-      'id': instance.id,
-      'event_name': instance.eventName,
-      'event_content': instance.eventContent,
-      'banner': instance.banner,
-      'location': instance.location,
-      'registration_start_date':
-          instance.registrationStartDate.toIso8601String(),
-      'registration_end_date': instance.registrationEndDate.toIso8601String(),
-      'start_date': instance.startDate.toIso8601String(),
-      'end_date': instance.endDate.toIso8601String(),
-      'group_id': instance.groupId,
-      'in_event': instance.inEvent,
-    };
+Map<String, dynamic> _$EventToJson(Event instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'event_name': instance.eventName,
+    'event_content': instance.eventContent,
+    'banner': instance.banner,
+    'location': instance.location,
+    'registration_start_date': instance.registrationStartDate.toIso8601String(),
+    'registration_end_date': instance.registrationEndDate.toIso8601String(),
+    'start_date': instance.startDate.toIso8601String(),
+    'end_date': instance.endDate.toIso8601String(),
+    'group_id': instance.groupId,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('group_name', instance.groupName);
+  val['in_event'] = instance.inEvent;
+  return val;
+}

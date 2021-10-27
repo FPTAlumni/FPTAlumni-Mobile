@@ -12,13 +12,12 @@ enum GroupTabs {
 
 class GroupController extends GetxController {
   var selectedFilterList = [].obs;
+
   final GroupRepository groupRepository;
+
   final userAuthentication = Get.find<AuthController>().userAuthentication;
 
   GroupController({required this.groupRepository});
-
-  var yourGroups = [].obs;
-  var discoverGroup = [].obs;
 
   @override
   void onInit() {

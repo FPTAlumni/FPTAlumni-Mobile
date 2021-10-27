@@ -5,6 +5,13 @@ part 'event.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class Event {
+  static const String notOpen = "Not Open";
+  static const String registrationOpen = "Registration Open";
+  static const String registered = "Registered";
+  static const String registrationEnd = "Registration Closed";
+  static const String starting = "Starting";
+  static const String ended = "Ended";
+
   @JsonKey(name: 'id')
   late int id;
 
@@ -35,6 +42,9 @@ class Event {
   @JsonKey(name: 'group_id')
   late int groupId;
 
+  @JsonKey(name: 'group_name')
+  String? groupName;
+
   @JsonKey(name: 'in_event')
   late bool inEvent;
 
@@ -53,6 +63,7 @@ class Event {
     required this.registrationStartDate,
     required this.registrationEndDate,
     required this.inEvent,
+    this.groupName,
   }) {
     getStatusString();
   }
@@ -100,22 +111,22 @@ class Event {
     EventStatusFrontEnd status = _getEventStatus(inEvent);
     switch (status) {
       case EventStatusFrontEnd.registerIsNotOpen:
-        eventStatus = "Not Open";
+        eventStatus = notOpen;
         break;
       case EventStatusFrontEnd.registering:
-        eventStatus = "Register";
+        eventStatus = registrationOpen;
         break;
       case EventStatusFrontEnd.registered:
-        eventStatus = "Registered";
+        eventStatus = registered;
         break;
       case EventStatusFrontEnd.registrationEnd:
-        eventStatus = "Registration end";
+        eventStatus = registrationEnd;
         break;
       case EventStatusFrontEnd.starting:
-        eventStatus = "Starting";
+        eventStatus = starting;
         break;
       case EventStatusFrontEnd.end:
-        eventStatus = "Closed";
+        eventStatus = ended;
         break;
     }
   }

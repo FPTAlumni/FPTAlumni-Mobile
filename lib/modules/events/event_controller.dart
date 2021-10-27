@@ -105,7 +105,6 @@ class EventController extends GetxController {
   }
 
   Future<void> refreshYourEvents() async {
-    isLoading.value = true;
     await getAttendedEvents();
   }
 

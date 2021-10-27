@@ -50,7 +50,7 @@ class Group {
     this.numberOfMembers,
     this.registrationDate,
   }) {
-    setStatus();
+    _setStatus();
   }
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
@@ -66,7 +66,7 @@ class Group {
     return this.id == model?.id;
   }
 
-  setStatus() {
+  _setStatus() {
     if (requestStatus == notRequest) {
       status = -1;
     } else if (requestStatus == pending) {
@@ -74,5 +74,15 @@ class Group {
     } else {
       status = 1;
     }
+  }
+
+  joinGroup() {
+    requestStatus = pending;
+    _setStatus();
+  }
+
+  cancelJoinGroup() {
+    requestStatus = notRequest;
+    _setStatus();
   }
 }

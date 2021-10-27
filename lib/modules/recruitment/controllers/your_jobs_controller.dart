@@ -8,6 +8,7 @@ import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/shared/data/enum/common_enum.dart';
 import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
 import 'package:uni_alumni/shared/widgets/date_time_picker_dialog.dart';
+import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 import '../recruitment_repository.dart';
 
@@ -90,7 +91,7 @@ class YourJobsController extends GetxController {
       }
       myJobs.refresh();
     } else {
-      _showErrorDialog();
+      ErrorDialog.showDialog();
     }
   }
 
@@ -116,21 +117,8 @@ class YourJobsController extends GetxController {
       myJobs[index] = updatedJob;
       myJobs.refresh();
     } else {
-      _showErrorDialog();
+      ErrorDialog.showDialog();
     }
-  }
-
-  _showErrorDialog() {
-    Get.defaultDialog(
-      title: 'Error!',
-      content: Text('Some errors occurred'),
-      cancel: TextButton(
-        onPressed: () {
-          Get.back();
-        },
-        child: Text('Cancel'),
-      ),
-    );
   }
 
   Future<bool?> _showConfirmDialog(

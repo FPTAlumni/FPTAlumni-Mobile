@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/models/request/group_request.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
+import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 import '../group_repository.dart';
 
@@ -69,5 +70,29 @@ class DiscoverGroupsController extends GetxController {
     _page = 1;
     error = null;
     await getDiscoverGroup();
+  }
+
+  toggleRequestJoinGroup(int groupId, {bool join = true}) async {
+    bool result = false;
+
+    if (join) {
+      result = await groupRepository.joinGroup(
+          userAuthentication!.appToken, groupId);
+    } else {
+      result = await groupRepository.cancelJoinRequest(
+          userAuthentication!.appToken, groupId);
+    }
+
+    if (result) {
+      int index = discoverGroups.indexWhere((group) => group.id == groupId);
+      if (join) {
+        (discoverGroups[index] as Group).joinGroup();
+      } else {
+        (discoverGroups[index] as Group).cancelJoinGroup();
+      }
+      discoverGroups.refresh();
+    } else {
+      ErrorDialog.showDialog();
+    }
   }
 }

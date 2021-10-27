@@ -7,8 +7,8 @@ class GroupRepository {
 
   GroupRepository({required this.apiProvider});
 
-  Future<Group?> getGroupById(String token, int id) async {
-    final response = await apiProvider.getGroupById('/groups/$id', token);
+  Future<Group?> getGroupById(String token, int groupId) async {
+    final response = await apiProvider.getGroupById('/groups/$groupId', token);
     if (response.isOk) {
       return Group.fromJson(response.body['data']);
     }
@@ -20,5 +20,22 @@ class GroupRepository {
       List responseList = response.body['data'];
       return responseList.map((group) => Group.fromJson(group)).toList();
     }
+  }
+
+  Future<bool> joinGroup(String token, int groupId) async {
+    final response = await apiProvider.join('/alumnus/groups/$groupId', token);
+    if (response.isOk) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> cancelJoinRequest(String token, int groupId) async {
+    final response =
+        await apiProvider.leave('/alumnus/groups/cancel/$groupId', token);
+    if (response.isOk) {
+      return true;
+    }
+    return false;
   }
 }

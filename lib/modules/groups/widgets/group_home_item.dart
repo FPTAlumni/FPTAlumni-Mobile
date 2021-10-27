@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
 import 'package:uni_alumni/modules/groups/screens/group_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 class GroupHomeItem extends StatelessWidget {
   final Group group;
 
-  const GroupHomeItem(this.group, {Key? key}) : super(key: key);
+  GroupHomeItem(this.group, {Key? key}) : super(key: key);
+
+  final discoverGroupController = Get.find<DiscoverGroupsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,14 @@ class GroupHomeItem extends StatelessWidget {
           child: InkWell(
             splashColor: Colors.grey[200],
             onTap: () {
-              Get.to(() => GroupDetailsScreen());
+              if (group.status == 1) {
+                Get.to(() => GroupDetailsScreen());
+              } else {
+                ErrorDialog.showDialog(
+                  title: 'Announcement',
+                  content: 'You have not joined this group yet!',
+                );
+              }
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -66,7 +77,9 @@ class GroupHomeItem extends StatelessWidget {
         return TextButton.icon(
           label: Text('Request'),
           icon: Icon(Icons.add_to_home_screen),
-          onPressed: () async {},
+          onPressed: () async {
+            discoverGroupController.toggleRequestJoinGroup(group.id!);
+          },
           style: ButtonStyle(
             foregroundColor:
                 MaterialStateProperty.all(ColorConstants.primaryAppColor),
@@ -82,7 +95,10 @@ class GroupHomeItem extends StatelessWidget {
         return TextButton.icon(
           label: Text('Cancel'),
           icon: Icon(Icons.close),
-          onPressed: null,
+          onPressed: () {
+            discoverGroupController.toggleRequestJoinGroup(group.id!,
+                join: false);
+          },
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all(ColorConstants.grey),
             shape: MaterialStateProperty.all(

@@ -82,6 +82,7 @@ class SignUpScreen extends GetView<AuthController> {
                         readOnly: true,
                         hint: 'dd/MM/yyyy',
                         onTapHandler: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           await pickDate(context);
                         },
                         validator: (value) {
@@ -99,6 +100,7 @@ class SignUpScreen extends GetView<AuthController> {
                             : controller.selectedUniversity.value,
                         items: controller.dropdownUniversities.toList().cast(),
                         onChanged: (value) {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           controller
                               .onChangeUniversity(int.parse(value.toString()));
                         },
@@ -118,6 +120,7 @@ class SignUpScreen extends GetView<AuthController> {
                               : controller.selectedClass.value,
                           items: controller.dropdownClasses.toList().cast(),
                           onChanged: (value) {
+                            FocusScope.of(context).requestFocus(FocusNode());
                             controller
                                 .onChangeClass(int.parse(value.toString()));
                           },
@@ -138,6 +141,7 @@ class SignUpScreen extends GetView<AuthController> {
                               : controller.selectedMajor.value,
                           items: controller.dropdownMajors.toList().cast(),
                           onChanged: (value) {
+                            FocusScope.of(context).requestFocus(FocusNode());
                             controller.onChangeMajor(value);
                           },
                           validator: (value) {

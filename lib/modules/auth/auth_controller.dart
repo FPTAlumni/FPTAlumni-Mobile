@@ -39,7 +39,7 @@ class AuthController extends GetxController {
   var dropdownMajors = [].obs;
 
   late GoogleSignIn _googleSignIn = GoogleSignIn();
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  late FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   var isSignIn = false.obs;
   UserCredential? userCredential;
 
