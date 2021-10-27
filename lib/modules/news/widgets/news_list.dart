@@ -8,28 +8,14 @@ import 'package:uni_alumni/shared/constants/colors.dart';
 class NewsList extends StatelessWidget {
   final controller = Get.put(
       NewsController(newsRepository: NewsRepository(apiProvider: Get.find())));
-  final ScrollController _scrollController = ScrollController();
-
   @override
   Widget build(BuildContext context) {
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        controller.getNewsOfCurrentAlumni().then((_) {
-          if (controller.error != null) {
-            _scrollController
-                .jumpTo(_scrollController.position.maxScrollExtent - 45);
-          }
-        });
-      }
-    });
-
     return Container(
       width: double.infinity,
       child: RefreshIndicator(
         onRefresh: () => controller.refresh(),
         child: Obx(() {
-          if (controller.news.length == 0 && controller.isLoading.value) {
+          if (controller.news.length == 0) {
             return Container(
               alignment: Alignment.center,
               child: Text(
@@ -43,8 +29,10 @@ class NewsList extends StatelessWidget {
           }
 
           return ListView.builder(
-            physics: BouncingScrollPhysics(),
-            controller: _scrollController,
+            physics: BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
+            controller: controller.scrollController,
             itemCount: controller.isLoading.value
                 ? controller.news.length + 1
                 : controller.news.length,

@@ -26,7 +26,7 @@ class RecruitmentList extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: onRefresh,
         child: Obx(() {
-          if (list.length == 0 && isLoading.value) {
+          if (list.length == 0) {
             return Container(
               alignment: Alignment.center,
               child: Text(
@@ -40,7 +40,9 @@ class RecruitmentList extends StatelessWidget {
           }
 
           return ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics: BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
             controller: scrollController,
             itemCount: isLoading.value ? list.length + 1 : list.length,
             itemBuilder: (ctx, i) {

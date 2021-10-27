@@ -31,12 +31,12 @@ class YourJobsController extends GetxController {
     super.onInit();
     getMyJobs();
     scrollController.addListener(() {
+      isLoading.value = true;
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         getMyJobs().then((_) {
           if (error != null) {
-            scrollController
-                .jumpTo(scrollController.position.maxScrollExtent - 45);
+            isLoading.value = false;
           }
         });
       }

@@ -10,12 +10,12 @@ class UpcomingEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _scrollController.addListener(() {
+      eventController.isLoading.value = true;
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         eventController.getEventsOfCurrentAlumni().then((_) {
           if (eventController.error != null) {
-            _scrollController
-                .jumpTo(_scrollController.position.maxScrollExtent - 45);
+            eventController.isLoading.value = false;
           }
         });
       }

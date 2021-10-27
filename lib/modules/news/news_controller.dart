@@ -11,6 +11,7 @@ class NewsController extends GetxController {
   NewsController({required this.newsRepository});
 
   final userAuthentication = Get.find<AuthController>().userAuthentication;
+  final ScrollController scrollController = ScrollController();
 
   var news = [].obs;
 
@@ -23,6 +24,17 @@ class NewsController extends GetxController {
   onInit() {
     super.onInit();
     getNewsOfCurrentAlumni();
+    scrollController.addListener(() {
+      isLoading.value = true;
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        getNewsOfCurrentAlumni().then((_) {
+          if (error != null) {
+            isLoading.value = false;
+          }
+        });
+      }
+    });
   }
 
   getNewsOfCurrentAlumni() async {
