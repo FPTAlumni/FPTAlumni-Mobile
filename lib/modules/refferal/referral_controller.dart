@@ -106,10 +106,10 @@ class ReferralController extends GetxController{
   }
   int getVoucherId(String relationShip){
     for(Voucher voucher in vouchers){
-      if(voucher.relationshipName == relationShip)
+      if(voucher.relationshipName == selectedVoucher.value)
         return voucher.id;
     }
-    return 6;
+    return 0;
   }
   //submit form
 
