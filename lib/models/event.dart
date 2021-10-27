@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/event_enum.dart';
 
 part 'event.g.dart';
@@ -51,6 +53,9 @@ class Event {
   @JsonKey(ignore: true)
   String? eventStatus = "";
 
+  @JsonKey(ignore: true)
+  Color statusColor = Color(0xFFEEEEEE);
+
   Event({
     required this.id,
     required this.eventContent,
@@ -65,7 +70,7 @@ class Event {
     required this.inEvent,
     this.groupName,
   }) {
-    getStatusString();
+    setStatus();
   }
 
   Event.empty() {
@@ -107,38 +112,44 @@ class Event {
     return EventStatusFrontEnd.end;
   }
 
-  void getStatusString() {
+  void setStatus() {
     EventStatusFrontEnd status = _getEventStatus(inEvent);
     switch (status) {
       case EventStatusFrontEnd.registerIsNotOpen:
         eventStatus = notOpen;
+        statusColor = Color(0xFFEEEEEE);
         break;
       case EventStatusFrontEnd.registering:
         eventStatus = registrationOpen;
+        statusColor = ColorConstants.primaryAppColor;
         break;
       case EventStatusFrontEnd.registered:
         eventStatus = registered;
+        statusColor = ColorConstants.primaryAppColor;
         break;
       case EventStatusFrontEnd.registrationEnd:
         eventStatus = registrationEnd;
+        statusColor = Color(0xFFEEEEEE);
         break;
       case EventStatusFrontEnd.starting:
         eventStatus = starting;
+        statusColor = Colors.green;
         break;
       case EventStatusFrontEnd.end:
         eventStatus = ended;
+        statusColor = Color(0xFFEEEEEE);
         break;
     }
   }
 
   joinEvent() {
     inEvent = true;
-    getStatusString();
+    setStatus();
   }
 
   leaveEvent() {
     inEvent = false;
-    getStatusString();
+    setStatus();
   }
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);

@@ -153,10 +153,13 @@ class EventCard extends StatelessWidget {
                               vertical: 8.0,
                             ),
                             decoration: BoxDecoration(
-                                color: Colors.grey[200],
+                                border: Border.all(color: event.statusColor),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0))),
-                            child: Text(event.eventStatus!),
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            child: Text(
+                              event.eventStatus!,
+                              style: TextStyle(color: event.statusColor),
+                            ),
                           ),
                         ),
                       ],

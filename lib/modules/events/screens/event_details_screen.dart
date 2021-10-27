@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/event.dart';
-import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
-import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 
 import '../event_controller.dart';
@@ -93,7 +91,7 @@ class EventDetailsScreen extends StatelessWidget {
                       controller.leaveEvent(event.id);
                       controller.event.value.inEvent = false;
                     }
-                    controller.event.value.getStatusString();
+                    controller.event.value.setStatus();
                     controller.event.refresh();
                   },
                   child: Container(
@@ -195,21 +193,30 @@ class EventDetailsScreen extends StatelessWidget {
                               // if (controller.event.value.eventStatus !=
                               //     'Register')
                               Obx(() {
-                                return Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0,
-                                      vertical: 8.0,
+                                if (controller.event.value.eventStatus !=
+                                    Event.registrationOpen) {
+                                  return Align(
+                                    alignment: Alignment.topRight,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0,
+                                        vertical: 8.0,
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: controller
+                                                  .event.value.statusColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0))),
+                                      child: Text(
+                                          controller.event.value.eventStatus!,
+                                          style: TextStyle(
+                                              color: controller
+                                                  .event.value.statusColor)),
                                     ),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0))),
-                                    child: Text(
-                                        controller.event.value.eventStatus!),
-                                  ),
-                                );
+                                  );
+                                }
+                                return const SizedBox();
                               }),
                               const SizedBox(height: 3),
                               Flexible(
