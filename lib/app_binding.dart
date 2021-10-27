@@ -2,13 +2,15 @@ import 'package:get/get.dart';
 import 'package:uni_alumni/api/api_provider.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/events/event_controller.dart';
-import 'package:uni_alumni/modules/groups/group_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
 import 'package:uni_alumni/modules/groups/group_repository.dart';
 import 'package:uni_alumni/modules/refferal/referral_repository.dart';
 import 'package:uni_alumni/modules/recruitment/controllers/recruitment_tab_controller.dart';
 import 'package:uni_alumni/modules/recruitment/recruitment_repository.dart';
 
 import 'modules/events/event_repository.dart';
+import 'modules/groups/controllers/your_groups_controller.dart';
 import 'modules/refferal/referral_controller.dart';
 
 class AppBinding extends Bindings {
@@ -32,6 +34,14 @@ class AppBinding extends Bindings {
     Get.lazyPut(
         () => ReferralController(
             referralRepository: ReferralRepository(apiProvider: Get.find())),
+        fenix: true);
+    Get.lazyPut(
+        () => YourGroupsController(
+            groupRepository: GroupRepository(apiProvider: Get.find())),
+        fenix: true);
+    Get.lazyPut(
+        () => DiscoverGroupsController(
+            groupRepository: GroupRepository(apiProvider: Get.find())),
         fenix: true);
   }
 }

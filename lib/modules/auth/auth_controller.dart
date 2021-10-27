@@ -103,7 +103,8 @@ class AuthController extends GetxController {
         isSignIn.value = true;
       } else {
         await universityController.loadUniversities();
-        Get.toNamed(Routes.signUp);
+        await Get.toNamed(Routes.signUp);
+        logout();
       }
     }
   }
@@ -141,6 +142,7 @@ class AuthController extends GetxController {
   }
 
   _loadDropdownUniversities(listUniversities) {
+    dropdownUniversities.value = [];
     //load listUniversities to dropdownUniversities
     print('load universities');
     listUniversities.forEach((university) {

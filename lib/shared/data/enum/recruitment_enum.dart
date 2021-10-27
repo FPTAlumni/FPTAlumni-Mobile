@@ -8,13 +8,6 @@ enum Experience {
   professional,
 }
 
-enum RecruitmentStatus {
-  @JsonValue("Active")
-  active,
-  @JsonValue("Inactive")
-  inActive,
-}
-
 enum RecruitmentType {
   @JsonValue("Fulltime")
   fullTime,
@@ -25,8 +18,8 @@ enum RecruitmentType {
 enum RecruitmentSortKey {
   @JsonValue("CreatedDate")
   createdDate,
-  @JsonValue("GroupName")
-  groupName,
+  @JsonValue("title")
+  title,
   @JsonValue("Status")
   status,
 }

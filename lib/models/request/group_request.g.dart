@@ -9,8 +9,8 @@ part of 'group_request.dart';
 GroupRequest _$GroupRequestFromJson(Map<String, dynamic> json) => GroupRequest(
       groupName: json['groupName'] as String?,
       recruitmentSortKey:
-          _$enumDecodeNullable(_$RecruitmentSortKeyEnumMap, json['sort-key']),
-      status: _$enumDecodeNullable(_$RecruitmentStatusEnumMap, json['status']),
+          _$enumDecodeNullable(_$GroupSortKeyEnumMap, json['sort-key']),
+      status: _$enumDecodeNullable(_$GroupStatusEnumMap, json['status']),
       page: json['page'] as String?,
       pageSize: json['size'] as String? ?? '10',
       sortOrder: _$enumDecodeNullable(_$SortOrderEnumMap, json['sort-order']) ??
@@ -41,9 +41,8 @@ Map<String, dynamic> _$GroupRequestToJson(GroupRequest instance) {
   writeNotNull('universityId', instance.universityId);
   writeNotNull('page', instance.page);
   writeNotNull('size', instance.pageSize);
-  writeNotNull('status', _$RecruitmentStatusEnumMap[instance.status]);
-  writeNotNull(
-      'sort-key', _$RecruitmentSortKeyEnumMap[instance.recruitmentSortKey]);
+  writeNotNull('status', _$GroupStatusEnumMap[instance.status]);
+  writeNotNull('sort-key', _$GroupSortKeyEnumMap[instance.recruitmentSortKey]);
   writeNotNull('sort-order', _$SortOrderEnumMap[instance.sortOrder]);
   return val;
 }
@@ -85,15 +84,15 @@ K? _$enumDecodeNullable<K, V>(
   return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
-const _$RecruitmentSortKeyEnumMap = {
-  RecruitmentSortKey.createdDate: 'CreatedDate',
-  RecruitmentSortKey.groupName: 'GroupName',
-  RecruitmentSortKey.status: 'Status',
+const _$GroupSortKeyEnumMap = {
+  GroupSortKey.createdDate: 'CreatedDate',
+  GroupSortKey.groupName: 'GroupName',
+  GroupSortKey.status: 'Status',
 };
 
-const _$RecruitmentStatusEnumMap = {
-  RecruitmentStatus.active: 'Active',
-  RecruitmentStatus.inActive: 'Inactive',
+const _$GroupStatusEnumMap = {
+  GroupStatus.active: 'Active',
+  GroupStatus.inActive: 'Inactive',
 };
 
 const _$SortOrderEnumMap = {

@@ -7,7 +7,7 @@ part of 'group.dart';
 // **************************************************************************
 
 Group _$GroupFromJson(Map<String, dynamic> json) => Group(
-      status: json['status'] as int?,
+      requestStatus: json['request_status'] as String?,
       createdDate: json['created_date'] == null
           ? null
           : DateTime.parse(json['created_date'] as String),
@@ -24,7 +24,6 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
       registrationDate: json['registered_date'] == null
           ? null
           : DateTime.parse(json['registered_date'] as String),
-      isJoined: json['joined'] as bool?,
     );
 
 Map<String, dynamic> _$GroupToJson(Group instance) {
@@ -41,8 +40,7 @@ Map<String, dynamic> _$GroupToJson(Group instance) {
   writeNotNull('group_name', instance.groupName);
   writeNotNull('registered_date', instance.registrationDate?.toIso8601String());
   writeNotNull('created_date', instance.createdDate?.toIso8601String());
-  writeNotNull('joined', instance.isJoined);
-  writeNotNull('status', instance.status);
+  writeNotNull('request_status', instance.requestStatus);
   writeNotNull('number_of_members', instance.numberOfMembers);
   writeNotNull('group_leader', instance.leader?.toJson());
   writeNotNull('university', instance.university?.toJson());

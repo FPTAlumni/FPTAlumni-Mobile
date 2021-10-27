@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/event.dart';
 import 'package:uni_alumni/models/group.dart';
-import 'package:uni_alumni/modules/groups/group_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 

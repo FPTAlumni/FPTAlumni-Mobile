@@ -1,5 +1,6 @@
 import 'package:uni_alumni/api/api_provider.dart';
 import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/models/request/group_request.dart';
 
 class GroupRepository {
   final ApiProvider apiProvider;
@@ -10,6 +11,14 @@ class GroupRepository {
     final response = await apiProvider.getGroupById('/groups/$id', token);
     if (response.isOk) {
       return Group.fromJson(response.body['data']);
+    }
+  }
+
+  Future<List<Group>?> getMyGroup(String token, GroupRequest params) async {
+    final response = await apiProvider.getGroups('/groups', token, params);
+    if (response.isOk) {
+      List responseList = response.body['data'];
+      return responseList.map((group) => Group.fromJson(group)).toList();
     }
   }
 }

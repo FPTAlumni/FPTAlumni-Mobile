@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:uni_alumni/modules/groups/group_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
 import 'package:uni_alumni/modules/groups/tabs/group_tab_controller.dart';
-import 'package:uni_alumni/modules/groups/widgets/groups_list.dart';
+import 'package:uni_alumni/modules/groups/widgets/discover_groups.dart';
+import 'package:uni_alumni/modules/groups/widgets/your_groups.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
-class GroupHome extends StatelessWidget {
+class GroupHomeScreen extends StatelessWidget {
   final GroupController controller = Get.find<GroupController>();
   final _groupTabs = Get.put(GroupTabController());
   @override
@@ -62,8 +63,8 @@ class GroupHome extends StatelessWidget {
         child: TabBarView(
           controller: _groupTabs.controller,
           children: [
-            GroupsList(),
-            GroupsList(),
+            YourGroups(),
+            DiscoverGroups(),
           ],
         ),
       ),
