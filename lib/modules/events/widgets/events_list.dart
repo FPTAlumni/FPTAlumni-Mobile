@@ -24,7 +24,7 @@ class EventsList extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: () => eventController.refreshUpcoming(),
         child: Obx(() {
-          if (list.length == 0 && isLoading.value) {
+          if (list.length == 0) {
             return Container(
               alignment: Alignment.center,
               child: Text(
@@ -40,7 +40,9 @@ class EventsList extends StatelessWidget {
           return Scrollbar(
             child: ListView.builder(
               key: key,
-              physics: BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
               controller: scrollController,
               itemCount: isLoading.value ? list.length + 1 : list.length,
               itemBuilder: (ctx, i) {

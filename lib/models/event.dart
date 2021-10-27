@@ -1,10 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/event_enum.dart';
 
 part 'event.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class Event {
+  static const String notOpen = "Not Open";
+  static const String registrationOpen = "Registration Open";
+  static const String registered = "Registered";
+  static const String registrationEnd = "Registration Closed";
+  static const String starting = "Starting";
+  static const String ended = "Ended";
+
   @JsonKey(name: 'id')
   late int id;
 
@@ -35,11 +44,17 @@ class Event {
   @JsonKey(name: 'group_id')
   late int groupId;
 
+  @JsonKey(name: 'group_name')
+  String? groupName;
+
   @JsonKey(name: 'in_event')
   late bool inEvent;
 
   @JsonKey(ignore: true)
   String? eventStatus = "";
+
+  @JsonKey(ignore: true)
+  Color statusColor = Color(0xFFEEEEEE);
 
   Event({
     required this.id,
@@ -53,8 +68,9 @@ class Event {
     required this.registrationStartDate,
     required this.registrationEndDate,
     required this.inEvent,
+    this.groupName,
   }) {
-    getStatusString();
+    setStatus();
   }
 
   Event.empty() {
@@ -96,38 +112,44 @@ class Event {
     return EventStatusFrontEnd.end;
   }
 
-  void getStatusString() {
+  void setStatus() {
     EventStatusFrontEnd status = _getEventStatus(inEvent);
     switch (status) {
       case EventStatusFrontEnd.registerIsNotOpen:
-        eventStatus = "Not Open";
+        eventStatus = notOpen;
+        statusColor = Color(0xFFEEEEEE);
         break;
       case EventStatusFrontEnd.registering:
-        eventStatus = "Register";
+        eventStatus = registrationOpen;
+        statusColor = ColorConstants.primaryAppColor;
         break;
       case EventStatusFrontEnd.registered:
-        eventStatus = "Registered";
+        eventStatus = registered;
+        statusColor = ColorConstants.primaryAppColor;
         break;
       case EventStatusFrontEnd.registrationEnd:
-        eventStatus = "Registration end";
+        eventStatus = registrationEnd;
+        statusColor = Color(0xFFEEEEEE);
         break;
       case EventStatusFrontEnd.starting:
-        eventStatus = "Starting";
+        eventStatus = starting;
+        statusColor = Colors.green;
         break;
       case EventStatusFrontEnd.end:
-        eventStatus = "Closed";
+        eventStatus = ended;
+        statusColor = Color(0xFFEEEEEE);
         break;
     }
   }
 
   joinEvent() {
     inEvent = true;
-    getStatusString();
+    setStatus();
   }
 
   leaveEvent() {
     inEvent = false;
-    getStatusString();
+    setStatus();
   }
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);

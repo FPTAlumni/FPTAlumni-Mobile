@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,7 @@ import 'package:uni_alumni/modules/majors/major_controller.dart';
 import 'package:uni_alumni/modules/universities/university_controller.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 class AuthController extends GetxController {
   AuthRepository authRepository = Get.find();
@@ -39,7 +42,7 @@ class AuthController extends GetxController {
   var dropdownMajors = [].obs;
 
   late GoogleSignIn _googleSignIn = GoogleSignIn();
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  late FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   var isSignIn = false.obs;
   UserCredential? userCredential;
 
@@ -83,16 +86,23 @@ class AuthController extends GetxController {
       String firebaseToken = await userCredential!.user!.getIdToken();
 
       print('call get app token');
-      userAuthentication = await authRepository
-          .getAppToken(AppTokenRequest(tokenId: firebaseToken));
-
-      CustomFullScreenDialog.cancelDialog();
+      try {
+        userAuthentication = await authRepository
+            .getAppToken(AppTokenRequest(tokenId: firebaseToken));
+      } on HttpException catch (e) {
+        print('error ne');
+        CustomFullScreenDialog.cancelDialog();
+        ErrorDialog.showDialog(content: e.message);
+        return;
+      }
 
       if (userAuthentication != null) {
         print(userAuthentication!.appToken);
 
         currentUser = await authRepository.getUserById(
             userAuthentication!.id, userAuthentication!.appToken);
+
+        CustomFullScreenDialog.cancelDialog();
 
         if (currentUser == null) return;
 
@@ -103,7 +113,8 @@ class AuthController extends GetxController {
         isSignIn.value = true;
       } else {
         await universityController.loadUniversities();
-        Get.toNamed(Routes.signUp);
+        await Get.toNamed(Routes.signUp);
+        logout();
       }
     }
   }
@@ -129,8 +140,12 @@ class AuthController extends GetxController {
 
     String tokenId = await _firebaseAuth.currentUser!.getIdToken();
     // print('call get app token');
-    userAuthentication =
-        await authRepository.getAppToken(AppTokenRequest(tokenId: tokenId));
+    try {
+      userAuthentication =
+          await authRepository.getAppToken(AppTokenRequest(tokenId: tokenId));
+    } on HttpException catch (e) {
+      ErrorDialog.showDialog(content: e.message);
+    }
     print(userAuthentication!.appToken);
     if (userAuthentication != null) {
       // print('Get user Id');
@@ -141,6 +156,7 @@ class AuthController extends GetxController {
   }
 
   _loadDropdownUniversities(listUniversities) {
+    dropdownUniversities.value = [];
     //load listUniversities to dropdownUniversities
     print('load universities');
     listUniversities.forEach((university) {

@@ -32,8 +32,8 @@ class EventCard extends StatelessWidget {
         margin: const EdgeInsets.only(
           top: 5.0,
           bottom: 5.0,
-          right: 25.0,
-          left: 25.0,
+          right: 20.0,
+          left: 20.0,
         ),
         child: Column(
           children: [
@@ -43,14 +43,14 @@ class EventCard extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Hero(
-                    tag: '${event.id}',
+                    tag: 'event-${event.id}',
                     child: Container(
                       margin: EdgeInsets.only(
                         right: 8,
                         left: 8,
                       ),
-                      width: 80,
-                      height: 80,
+                      width: 100,
+                      height: 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
                         image: DecorationImage(
@@ -121,25 +121,47 @@ class EventCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 5.0),
-                        if (event.eventStatus != 'Register' &&
-                            event.eventStatus != 'Registered')
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                right: 10.0,
+                        Container(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.group,
+                                size: 14,
+                                color: Colors.grey,
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0,
-                                vertical: 8.0,
+                              const SizedBox(width: 3),
+                              Text(
+                                event.groupName!,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  // fontStyle: FontStyle.italic,
+                                ),
                               ),
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              child: Text(event.eventStatus!),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 5.0),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                              right: 10.0,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0,
+                              vertical: 8.0,
+                            ),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: event.statusColor),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            child: Text(
+                              event.eventStatus!,
+                              style: TextStyle(color: event.statusColor),
                             ),
                           ),
+                        ),
                       ],
                     ),
                   ),
@@ -147,46 +169,46 @@ class EventCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            if (event.eventStatus == 'Register' ||
-                event.eventStatus == 'Registered')
-              GestureDetector(
-                onTap: () {
-                  if (event.eventStatus != 'Register' &&
-                      event.eventStatus != 'Registered') return null;
-
-                  if (!event.inEvent) {
-                    controller.joinEvent(event.id);
-                  } else {
-                    controller.leaveEvent(event.id);
-                  }
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10.0),
-                      bottomRight: Radius.circular(10.0),
-                    ),
-                    color: event.eventStatus == 'Register'
-                        ? ColorConstants.primaryAppColor
-                        : Colors.grey[400],
-                  ),
-                  padding: EdgeInsets.only(
-                    top: 8,
-                    bottom: 8,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    event.eventStatus == 'Registered'
-                        ? 'Unregister'
-                        : event.eventStatus!,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+            // if (event.eventStatus == 'Register' ||
+            //     event.eventStatus == 'Registered')
+            //   GestureDetector(
+            //     onTap: () {
+            //       if (event.eventStatus != 'Register' &&
+            //           event.eventStatus != 'Registered') return null;
+            //
+            //       if (!event.inEvent) {
+            //         controller.joinEvent(event.id);
+            //       } else {
+            //         controller.leaveEvent(event.id);
+            //       }
+            //     },
+            //     child: Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.only(
+            //           bottomLeft: Radius.circular(10.0),
+            //           bottomRight: Radius.circular(10.0),
+            //         ),
+            //         color: event.eventStatus == 'Register'
+            //             ? ColorConstants.primaryAppColor
+            //             : Colors.grey[400],
+            //       ),
+            //       padding: EdgeInsets.only(
+            //         top: 8,
+            //         bottom: 8,
+            //       ),
+            //       alignment: Alignment.center,
+            //       child: Text(
+            //         event.eventStatus == 'Registered'
+            //             ? 'Unregister'
+            //             : event.eventStatus!,
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
           ],
         ),
       ),

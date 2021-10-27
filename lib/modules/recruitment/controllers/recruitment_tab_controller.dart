@@ -29,12 +29,12 @@ class RecruitmentTabController extends GetxController {
     super.onInit();
     getJobs();
     scrollController.addListener(() {
+      isLoading.value = true;
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         getJobs().then((_) {
           if (error != null) {
-            scrollController
-                .jumpTo(scrollController.position.maxScrollExtent - 45);
+            isLoading.value = false;
           }
         });
       }
@@ -52,16 +52,22 @@ class RecruitmentTabController extends GetxController {
 
     List<Recruitment?>? _jobs = await recruitmentRepository.getJobs(
         userAuthentication!.appToken, params);
-    if (_jobs != null && _jobs.isNotEmpty) {
-      jobs.addAll(_jobs);
-      _page++;
-      isLoading.value = true;
-      error = null;
-      if (jobs.length < _pageSize) {
-        isLoading.value = false;
+    if (_jobs != null) {
+      _jobs =
+          _jobs.where((job) => job!.endDate!.isAfter(DateTime.now())).toList();
+      if (_jobs.isNotEmpty) {
+        jobs.addAll(_jobs);
+        _page++;
+        isLoading.value = true;
+        error = null;
+        if (jobs.length < _pageSize) {
+          isLoading.value = false;
+        }
+      } else {
+        error = 'There is no job';
       }
     } else {
-      error = 'There is no news';
+      error = 'There is no job';
     }
   }
 

@@ -6,6 +6,9 @@ part 'group.g.dart';
 
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Group {
+  static const String notRequest = 'Not Requested';
+  static const String pending = 'Pending';
+
   @JsonKey(name: "id")
   int? id;
 
@@ -21,11 +24,8 @@ class Group {
   @JsonKey(name: "created_date")
   DateTime? createdDate;
 
-  @JsonKey(name: "joined")
-  bool? isJoined;
-
-  @JsonKey(name: "status")
-  int? status;
+  @JsonKey(name: "request_status")
+  String? requestStatus;
 
   @JsonKey(name: "number_of_members")
   int? numberOfMembers;
@@ -36,17 +36,22 @@ class Group {
   @JsonKey(name: "university")
   University? university;
 
-  Group(
-      {this.status,
-      this.createdDate,
-      this.id,
-      this.university,
-      this.banner,
-      this.groupName,
-      this.leader,
-      this.numberOfMembers,
-      this.registrationDate,
-      this.isJoined});
+  @JsonKey(ignore: true)
+  int? status;
+
+  Group({
+    this.requestStatus,
+    this.createdDate,
+    this.id,
+    this.university,
+    this.banner,
+    this.groupName,
+    this.leader,
+    this.numberOfMembers,
+    this.registrationDate,
+  }) {
+    _setStatus();
+  }
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
 
@@ -59,5 +64,25 @@ class Group {
 
   bool isEqual(Group? model) {
     return this.id == model?.id;
+  }
+
+  _setStatus() {
+    if (requestStatus == notRequest) {
+      status = -1;
+    } else if (requestStatus == pending) {
+      status = 0;
+    } else {
+      status = 1;
+    }
+  }
+
+  joinGroup() {
+    requestStatus = pending;
+    _setStatus();
+  }
+
+  cancelJoinGroup() {
+    requestStatus = notRequest;
+    _setStatus();
   }
 }

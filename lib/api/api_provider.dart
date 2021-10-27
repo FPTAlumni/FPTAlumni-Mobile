@@ -44,11 +44,11 @@ class ApiProvider extends BaseProvider {
     return get(path, headers: HeaderApi(token).getHeaders());
   }
 
-  Future<Response> joinEvent(String path, String token) {
+  Future<Response> join(String path, String token) {
     return post(path, {}, headers: HeaderApi(token).getHeaders());
   }
 
-  Future<Response> leaveEvent(String path, String token) {
+  Future<Response> leave(String path, String token) {
     return delete(path, headers: HeaderApi(token).getHeaders());
   }
 
@@ -106,15 +106,17 @@ class ApiProvider extends BaseProvider {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
+
   Future<Response> createReferral(
       String path, String token, ReferralPostRequest data) {
     return post(path, data.toJson(), headers: HeaderApi(token).getHeaders());
   }
 
   //-----------Voucher------------
-  Future<Response> getVouchers(String path, String token, VoucherRequest params){
+  Future<Response> getVouchers(
+      String path, String token, VoucherRequest params) {
     print(params.toString());
-    return get(path,headers: HeaderApi(token).getHeaders(), query: params.toJson());
+    return get(path,
+        headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
-
 }

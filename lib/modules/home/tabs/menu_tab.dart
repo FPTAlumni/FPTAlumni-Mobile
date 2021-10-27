@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/alumni/screens/profile_screen.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
-import 'package:uni_alumni/modules/groups/group_controller.dart';
-import 'package:uni_alumni/modules/groups/screens/group_home.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
+import 'package:uni_alumni/modules/groups/screens/group_home_screen.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -123,7 +123,7 @@ class MenuTab extends StatelessWidget {
                           // Get.to(() => GroupHome());
                           Navigator.of(context)
                               .push(MaterialPageRoute(
-                                  builder: (ctx) => GroupHome()))
+                                  builder: (ctx) => GroupHomeScreen()))
                               .then((_) => Get.delete<GroupController>());
                         },
                       ),

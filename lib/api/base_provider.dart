@@ -6,6 +6,7 @@ class BaseProvider extends GetConnect {
   @override
   void onInit() {
     super.onInit();
+    allowAutoSignedCert = true;
     httpClient.baseUrl = ApiConstants.baseUrl;
     httpClient.defaultContentType = ApiConstants.contentType;
   }

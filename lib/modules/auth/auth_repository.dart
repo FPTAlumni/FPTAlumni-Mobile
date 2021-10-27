@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:uni_alumni/api/api_provider.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/registration_request.dart';
@@ -12,6 +14,7 @@ class AuthRepository {
   Future<AppTokenResponse?> getAppToken(AppTokenRequest data) async {
     final response = await apiProvider.getAppToken('/login', data);
     final responseStatusCode = response.statusCode;
+    print(response.statusCode);
     switch (responseStatusCode) {
       case 200:
         return AppTokenResponse(
@@ -20,6 +23,8 @@ class AuthRepository {
         );
       case 201:
         return null;
+      case 404:
+        throw HttpException('Cannot connect to server');
     }
   }
 

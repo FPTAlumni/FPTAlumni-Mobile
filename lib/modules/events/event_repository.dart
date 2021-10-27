@@ -21,8 +21,7 @@ class EventRepository {
 
   Future<bool> joinEvent(String token, int eventId) async {
     print(">>Join");
-    final response =
-        await apiProvider.joinEvent('/alumnus/event/$eventId', token);
+    final response = await apiProvider.join('/alumnus/event/$eventId', token);
     if (response.statusCode == 200) {
       return true;
     }
@@ -32,8 +31,7 @@ class EventRepository {
 
   Future<bool> leaveEvent(String token, int eventId) async {
     print(">>Leave");
-    final response =
-        await apiProvider.leaveEvent('/alumnus/event/$eventId', token);
+    final response = await apiProvider.leave('/alumnus/event/$eventId', token);
     if (response.statusCode == 204) {
       return true;
     }

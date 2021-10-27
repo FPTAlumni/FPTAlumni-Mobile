@@ -71,6 +71,9 @@ class EventController extends GetxController {
         events.addAll(_events);
         _page++;
         isLoading.value = true;
+        if (_events.length < _pageSize) {
+          isLoading.value = false;
+        }
       }
     } on Exception {
       error = 'There is no Event';
@@ -102,7 +105,6 @@ class EventController extends GetxController {
   }
 
   Future<void> refreshYourEvents() async {
-    isLoading.value = true;
     await getAttendedEvents();
   }
 

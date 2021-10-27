@@ -87,6 +87,6 @@ const _$SortOrderEnumMap = {
 
 const _$RecruitmentSortKeyEnumMap = {
   RecruitmentSortKey.createdDate: 'CreatedDate',
-  RecruitmentSortKey.groupName: 'GroupName',
+  RecruitmentSortKey.title: 'title',
   RecruitmentSortKey.status: 'Status',
 };

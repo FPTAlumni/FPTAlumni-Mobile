@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uni_alumni/shared/data/enum/common_enum.dart';
-import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
+import 'package:uni_alumni/shared/data/enum/group_enum.dart';
 
 part 'group_request.g.dart';
 
@@ -27,10 +27,10 @@ class GroupRequest {
   String? pageSize;
 
   @JsonKey(name: 'status')
-  RecruitmentStatus? status;
+  GroupStatus? status;
 
   @JsonKey(name: 'sort-key')
-  RecruitmentSortKey? recruitmentSortKey;
+  GroupSortKey? recruitmentSortKey;
 
   @JsonKey(name: 'sort-order', defaultValue: SortOrder.DESC)
   SortOrder? sortOrder;

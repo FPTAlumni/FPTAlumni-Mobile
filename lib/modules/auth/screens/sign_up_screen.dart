@@ -80,8 +80,9 @@ class SignUpScreen extends GetView<AuthController> {
                         labelText: 'Date of birth',
                         controller: controller.dobController,
                         readOnly: true,
-                        hint: 'MM/dd/yyyy',
+                        hint: 'dd/MM/yyyy',
                         onTapHandler: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           await pickDate(context);
                         },
                         validator: (value) {
@@ -99,6 +100,7 @@ class SignUpScreen extends GetView<AuthController> {
                             : controller.selectedUniversity.value,
                         items: controller.dropdownUniversities.toList().cast(),
                         onChanged: (value) {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           controller
                               .onChangeUniversity(int.parse(value.toString()));
                         },
@@ -118,6 +120,7 @@ class SignUpScreen extends GetView<AuthController> {
                               : controller.selectedClass.value,
                           items: controller.dropdownClasses.toList().cast(),
                           onChanged: (value) {
+                            FocusScope.of(context).requestFocus(FocusNode());
                             controller
                                 .onChangeClass(int.parse(value.toString()));
                           },
@@ -138,6 +141,7 @@ class SignUpScreen extends GetView<AuthController> {
                               : controller.selectedMajor.value,
                           items: controller.dropdownMajors.toList().cast(),
                           onChanged: (value) {
+                            FocusScope.of(context).requestFocus(FocusNode());
                             controller.onChangeMajor(value);
                           },
                           validator: (value) {
@@ -293,13 +297,24 @@ class SignUpScreen extends GetView<AuthController> {
   }
 
   Future pickDate(BuildContext context) async {
-    final initialDate = DateTime.now();
     final newDate = await showDatePicker(
-        context: context,
-        initialDate: initialDate,
-        firstDate: DateTime(DateTime.now().year - 50),
-        lastDate: DateTime.now());
+      context: Get.context!,
+      initialDate: DateTime.now(),
+      initialDatePickerMode: DatePickerMode.day,
+      firstDate: DateTime(1970),
+      lastDate: DateTime.now(),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      confirmText: 'Select',
+      builder: (ctx, child) => Theme(
+        data: ThemeData.light().copyWith(
+          colorScheme: ColorScheme.light().copyWith(
+            primary: ColorConstants.primaryAppColor,
+          ),
+        ),
+        child: child!,
+      ),
+    );
     if (newDate == null) return;
-    controller.dobController.text = DateFormat('MM/dd/yyyy').format(newDate);
+    controller.dobController.text = DateFormat('dd/MM/yyyy').format(newDate);
   }
 }
