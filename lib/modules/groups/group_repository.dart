@@ -14,7 +14,7 @@ class GroupRepository {
     }
   }
 
-  Future<List<Group>?> getMyGroup(String token, GroupRequest params) async {
+  Future<List<Group>?> getGroups(String token, GroupRequest params) async {
     final response = await apiProvider.getGroups('/groups', token, params);
     if (response.isOk) {
       List responseList = response.body['data'];

@@ -17,6 +17,7 @@ class MyNavigator extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings) {
         return GetPageRoute(
           page: () => widget,
+          routeName: '/$name',
         );
       },
     );

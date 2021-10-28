@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_details_controller.dart';
 import 'package:uni_alumni/modules/groups/screens/group_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/error_dialog.dart';
@@ -9,7 +10,7 @@ import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 class GroupHomeItem extends StatelessWidget {
   final Group group;
 
-  GroupHomeItem(this.group, {Key? key}) : super(key: key);
+  GroupHomeItem(this.group);
 
   final discoverGroupController = Get.find<DiscoverGroupsController>();
 
@@ -26,9 +27,16 @@ class GroupHomeItem extends StatelessWidget {
         child: Material(
           child: InkWell(
             splashColor: Colors.grey[200],
-            onTap: () {
+            onTap: () async {
               if (group.status == 1) {
-                Get.to(() => GroupDetailsScreen());
+                await Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => GroupDetailsScreen(
+                    group,
+                    'group-${group.id}',
+                  ),
+                ));
+
+                Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
               } else {
                 ErrorDialog.showDialog(
                   title: 'Announcement',
