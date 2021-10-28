@@ -29,6 +29,7 @@ Alumni _$AlumniFromJson(Map<String, dynamic> json) => Alumni(
       aboutMe: json['about_me'] as String?,
       address: json['address'] as String?,
       job: json['job'] as String?,
+      image: json['image'] as String?,
     );
 
 Map<String, dynamic> _$AlumniToJson(Alumni instance) {
@@ -48,6 +49,7 @@ Map<String, dynamic> _$AlumniToJson(Alumni instance) {
   writeNotNull('dob', instance.dob?.toIso8601String());
   writeNotNull('job', instance.job);
   writeNotNull('about_me', instance.aboutMe);
+  writeNotNull('image', instance.image);
   writeNotNull('created_date', instance.createdDate?.toIso8601String());
   writeNotNull('status', _$AlumniStatusEnumMap[instance.status]);
   writeNotNull('id', instance.id);

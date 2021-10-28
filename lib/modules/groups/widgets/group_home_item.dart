@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_details_controller.dart';
 import 'package:uni_alumni/modules/groups/screens/group_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/error_dialog.dart';
@@ -28,7 +29,19 @@ class GroupHomeItem extends StatelessWidget {
             splashColor: Colors.grey[200],
             onTap: () {
               if (group.status == 1) {
-                Get.to(() => GroupDetailsScreen());
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                      builder: (ctx) => GroupDetailsScreen(
+                        group.groupName ?? '',
+                        group.banner!,
+                        'group-${group.id}',
+                      ),
+                      settings: RouteSettings(
+                        arguments: group.id,
+                      ),
+                    ))
+                    .then((_) => Get.delete<GroupDetailsController>(
+                        tag: 'group-${group.id}'));
               } else {
                 ErrorDialog.showDialog(
                   title: 'Announcement',

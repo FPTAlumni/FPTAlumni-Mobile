@@ -15,6 +15,7 @@ class SubScreenAppBar extends StatelessWidget with PreferredSizeWidget {
         title,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
+        maxLines: 1,
         style: const TextStyle(color: Colors.black),
       ),
       iconTheme: const IconThemeData(

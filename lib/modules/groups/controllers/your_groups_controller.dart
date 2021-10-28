@@ -48,7 +48,7 @@ class YourGroupsController extends GetxController {
     );
 
     List<Group?>? _groups =
-        await groupRepository.getMyGroup(userAuthentication!.appToken, params);
+        await groupRepository.getGroups(userAuthentication!.appToken, params);
     if (_groups != null && _groups.isNotEmpty) {
       myGroups.addAll(_groups);
       _page++;

@@ -34,6 +34,9 @@ class Alumni {
   @JsonKey(name: 'about_me')
   String? aboutMe;
 
+  @JsonKey(name: 'image')
+  String? image;
+
   @JsonKey(name: 'created_date')
   DateTime? createdDate;
 
@@ -52,22 +55,22 @@ class Alumni {
   @JsonKey(name: 'company')
   Company? company;
 
-  Alumni({
-    this.id,
-    this.email,
-    this.phone,
-    this.fullName,
-    this.uid,
-    this.dob,
-    this.createdDate,
-    this.status,
-    this.major,
-    this.company,
-    this.clazz,
-    this.aboutMe,
-    this.address,
-    this.job,
-  });
+  Alumni(
+      {this.id,
+      this.email,
+      this.phone,
+      this.fullName,
+      this.uid,
+      this.dob,
+      this.createdDate,
+      this.status,
+      this.major,
+      this.company,
+      this.clazz,
+      this.aboutMe,
+      this.address,
+      this.job,
+      this.image});
 
   factory Alumni.fromJson(Map<String, dynamic> json) => _$AlumniFromJson(json);
 
