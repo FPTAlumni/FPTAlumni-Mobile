@@ -10,7 +10,7 @@ import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 class GroupHomeItem extends StatelessWidget {
   final Group group;
 
-  GroupHomeItem(this.group, {Key? key}) : super(key: key);
+  GroupHomeItem(this.group);
 
   final discoverGroupController = Get.find<DiscoverGroupsController>();
 
@@ -27,21 +27,16 @@ class GroupHomeItem extends StatelessWidget {
         child: Material(
           child: InkWell(
             splashColor: Colors.grey[200],
-            onTap: () {
+            onTap: () async {
               if (group.status == 1) {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(
-                      builder: (ctx) => GroupDetailsScreen(
-                        group.groupName ?? '',
-                        group.banner!,
-                        'group-${group.id}',
-                      ),
-                      settings: RouteSettings(
-                        arguments: group.id,
-                      ),
-                    ))
-                    .then((_) => Get.delete<GroupDetailsController>(
-                        tag: 'group-${group.id}'));
+                await Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => GroupDetailsScreen(
+                    group,
+                    'group-${group.id}',
+                  ),
+                ));
+
+                Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
               } else {
                 ErrorDialog.showDialog(
                   title: 'Announcement',

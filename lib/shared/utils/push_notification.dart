@@ -2,6 +2,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
+import 'package:uni_alumni/modules/home/main_screen.dart';
+import 'package:uni_alumni/modules/home/tabs/tabs.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class PushNotification {
@@ -13,7 +15,7 @@ class PushNotification {
   }
 
   Future initialize() async {
-    // requestPermission 
+    // requestPermission
     NotificationSettings settings = await _fcm.requestPermission(
         alert: true,
         announcement: false,
@@ -62,7 +64,7 @@ class PushNotification {
       titlePadding: const EdgeInsets.all(10),
       onConfirm: () {
         controller.switchTab(3);
-        Get.back();
+        Get.until((route) => route.isFirst);
       },
     );
   }

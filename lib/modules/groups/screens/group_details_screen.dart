@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_details_controller.dart';
 import 'package:uni_alumni/modules/groups/group_repository.dart';
 import 'package:uni_alumni/modules/groups/widgets/group_child_card.dart';
@@ -8,11 +9,9 @@ import 'package:uni_alumni/modules/groups/widgets/see_more.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class GroupDetailsScreen extends StatelessWidget {
-  final String groupName;
-  final String banner;
+  final Group group;
   final String tag;
-  GroupDetailsScreen(this.groupName, this.banner, this.tag, {Key? key})
-      : super(key: key) {
+  GroupDetailsScreen(this.group, this.tag) {
     Get.put(
       GroupDetailsController(
           groupRepository: GroupRepository(apiProvider: Get.find())),
@@ -20,10 +19,12 @@ class GroupDetailsScreen extends StatelessWidget {
     );
   }
 
+  GroupDetailsController get controller =>
+      Get.find<GroupDetailsController>(tag: tag);
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<GroupDetailsController>(tag: tag);
-    controller.groupId = ModalRoute.of(context)!.settings.arguments as int?;
+    controller.groupId = group.id;
 
     return Scaffold(
       backgroundColor: ColorConstants.lightScaffoldBackgroundColor,
@@ -40,7 +41,7 @@ class GroupDetailsScreen extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   child: Image.network(
-                    banner,
+                    group.banner!,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -48,7 +49,7 @@ class GroupDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(width: 5),
             Text(
-              groupName,
+              group.groupName!,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               maxLines: 1,

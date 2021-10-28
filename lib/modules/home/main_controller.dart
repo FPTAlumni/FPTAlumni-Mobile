@@ -43,7 +43,9 @@ class MainController extends GetxController {
     }
 
     if (currentTab.value == tab) {
-      _getKey(tab).currentState!.popUntil((route) => route.isFirst);
+      Navigator.popUntil(
+          _getKey(tab).currentState!.context, (route) => route.isFirst);
+      // _getKey(tab).currentState!.popUntil((route) => route.isFirst);
     }
 
     currentTab.value = tab;
@@ -68,25 +70,25 @@ class MainController extends GetxController {
     switch (tab) {
       case MainTabs.home:
         _pages[index] = MyNavigator(
-            navigatorKey: myKeys.home, name: 'Home', widget: HomeTab());
+            navigatorKey: myKeys.home, name: 'home', widget: HomeTab());
         break;
       case MainTabs.event:
         _pages[index] = MyNavigator(
-            navigatorKey: myKeys.events, name: 'Events', widget: EventTab());
+            navigatorKey: myKeys.events, name: 'events', widget: EventTab());
         break;
       case MainTabs.recruitment:
         _pages[index] = MyNavigator(
-            navigatorKey: myKeys.jobs, name: 'Jobs', widget: RecruitmentTab());
+            navigatorKey: myKeys.jobs, name: 'jobs', widget: RecruitmentTab());
         break;
       case MainTabs.referral:
         _pages[index] = MyNavigator(
             navigatorKey: myKeys.referral,
-            name: 'Referral',
+            name: 'referral',
             widget: ReferralTab());
         break;
       case MainTabs.profile:
         _pages[index] = MyNavigator(
-            navigatorKey: myKeys.profile, name: 'Profile', widget: MenuTab());
+            navigatorKey: myKeys.profile, name: 'profile', widget: MenuTab());
         break;
     }
   }
