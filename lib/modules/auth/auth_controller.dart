@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -109,7 +110,7 @@ class AuthController extends GetxController {
         //save universityId
         final prefs = await SharedPreferences.getInstance();
         prefs.setString('uId', googleAuth.idToken!);
-
+        await FirebaseMessaging.instance.subscribeToTopic('${currentUser!.uid}');
         isSignIn.value = true;
       } else {
         await universityController.loadUniversities();
@@ -120,6 +121,9 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
+    if(currentUser != null){
+      await FirebaseMessaging.instance.unsubscribeFromTopic('${currentUser!.uid}');
+    }
     await _googleSignIn.disconnect();
     await _firebaseAuth.signOut();
     final prefs = await SharedPreferences.getInstance();

@@ -4,6 +4,7 @@ import 'package:uni_alumni/modules/home/tabs/event_tab.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
 import 'package:uni_alumni/routes/my_keys.dart';
 import 'package:uni_alumni/routes/my_navigator.dart';
+import 'package:uni_alumni/shared/utils/push_notification.dart';
 
 class MainController extends GetxController {
   var currentTab = MainTabs.home.obs;
@@ -31,6 +32,7 @@ class MainController extends GetxController {
       SizedBox(),
       SizedBox(),
     ];
+    PushNotification()..initialize();
   }
 
   void switchTab(index) {
