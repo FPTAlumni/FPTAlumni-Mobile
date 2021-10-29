@@ -11,6 +11,7 @@ class SubScreenAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       elevation: 0.0,
       backgroundColor: Colors.white,
+      leadingWidth: 30,
       title: Text(
         title,
         overflow: TextOverflow.ellipsis,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_child_list_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_details_controller.dart';
 import 'package:uni_alumni/modules/groups/screens/group_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -9,13 +10,19 @@ import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 class GroupHomeItem extends StatelessWidget {
   final Group group;
+  final isGroupChildScreen;
 
-  GroupHomeItem(this.group);
+  GroupHomeItem(this.group, {this.isGroupChildScreen = false});
 
-  final discoverGroupController = Get.find<DiscoverGroupsController>();
+  final discoverController = Get.find<DiscoverGroupsController>();
+  GroupChildListController? groupChildController;
 
   @override
   Widget build(BuildContext context) {
+    if (isGroupChildScreen) {
+      groupChildController = Get.find<GroupChildListController>();
+    }
+
     return GestureDetector(
       child: Container(
         width: double.infinity,
@@ -69,7 +76,11 @@ class GroupHomeItem extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                trailing: _buildButton(group.status!),
+                trailing: _buildButton(
+                    group.status!,
+                    isGroupChildScreen
+                        ? groupChildController
+                        : discoverController),
               ),
             ),
           ),
@@ -79,14 +90,14 @@ class GroupHomeItem extends StatelessWidget {
     );
   }
 
-  _buildButton(int status) {
+  _buildButton(int status, controller) {
     switch (status) {
       case -1:
         return TextButton.icon(
           label: Text('Request'),
           icon: Icon(Icons.add_to_home_screen),
           onPressed: () async {
-            discoverGroupController.toggleRequestJoinGroup(group.id!);
+            controller.toggleRequestJoinGroup(group.id!);
           },
           style: ButtonStyle(
             foregroundColor:
@@ -104,8 +115,7 @@ class GroupHomeItem extends StatelessWidget {
           label: Text('Cancel'),
           icon: Icon(Icons.close),
           onPressed: () {
-            discoverGroupController.toggleRequestJoinGroup(group.id!,
-                join: false);
+            controller.toggleRequestJoinGroup(group.id!, join: false);
           },
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all(ColorConstants.grey),

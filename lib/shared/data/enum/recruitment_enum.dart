@@ -18,10 +18,21 @@ enum RecruitmentType {
 enum RecruitmentSortKey {
   @JsonValue("CreatedDate")
   createdDate,
-  @JsonValue("title")
+  @JsonValue("Title")
   title,
   @JsonValue("Status")
   status,
+}
+
+enum RecruitmentStatus {
+  @JsonValue("Rejected")
+  rejected,
+  @JsonValue("Active")
+  active,
+  @JsonValue("Pending")
+  pending,
+  @JsonValue(null)
+  none,
 }
 
 class MyRecruitmentStatus {

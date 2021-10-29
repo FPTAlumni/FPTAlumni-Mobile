@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uni_alumni/modules/recruitment/controllers/your_jobs_controller.dart';
-import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
+import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_child_list_controller.dart';
+import 'package:uni_alumni/modules/groups/group_repository.dart';
+import 'package:uni_alumni/modules/groups/widgets/groups_list.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
-class YourJobsScreen extends GetView<YourJobsController> {
+class GroupChildListScreen extends StatelessWidget {
+  final Group parentGroup;
+
+  GroupChildListScreen(this.parentGroup) {
+    Get.put(GroupChildListController(
+        groupRepository: GroupRepository(apiProvider: Get.find())));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<GroupChildListController>();
+    controller.parentGroup = parentGroup;
+
     return Scaffold(
       appBar: SubScreenAppBar(
-        title: 'Your jobs',
+        title: '${parentGroup.groupName}\'s groups child',
         actions: [
           Container(
             decoration: BoxDecoration(
@@ -23,7 +35,7 @@ class YourJobsScreen extends GetView<YourJobsController> {
             ),
             child: GestureDetector(
               onTap: () async {
-                controller.showJobFilter();
+                controller.showGroupFilter();
               },
               child: Container(
                 width: 25,
@@ -39,12 +51,12 @@ class YourJobsScreen extends GetView<YourJobsController> {
           ),
         ],
       ),
-      body: RecruitmentList(
-        list: controller.myJobs,
+      body: GroupsList(
+        list: controller.groupChild,
         scrollController: controller.scrollController,
         onRefresh: controller.refresh,
         isLoading: controller.isLoading,
-        isMyJobs: true,
+        isGroupChild: true,
       ),
     );
   }

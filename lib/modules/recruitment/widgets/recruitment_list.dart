@@ -26,15 +26,25 @@ class RecruitmentList extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: onRefresh,
         child: Obx(() {
-          if (list.length == 0) {
-            return Container(
-              alignment: Alignment.center,
-              child: Text(
-                'There is no jobs for you',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+          if (list.length == 0 && !isLoading.value) {
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'There is no job for you',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }

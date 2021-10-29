@@ -13,14 +13,14 @@ class GroupDetailsController extends GetxController {
 
   static const maxChildGroup = 3;
 
-  int? groupId;
+  Group? currentGroup;
 
   var groupChild = [].obs;
   var isGroupChildLoading = true.obs;
   int _groupPageSize = maxChildGroup + 1;
   int _page = 1;
 
-  Future<List<Group>?>? getGroupChild;
+  Future? getGroupChild;
 
   @override
   void onInit() {
@@ -33,12 +33,13 @@ class GroupDetailsController extends GetxController {
     getGroupChild = _getGroupChild();
   }
 
-  Future<List<Group>?>? _getGroupChild() async {
+  _getGroupChild() async {
+    //only load group child if this is the root parent
+    // if (currentGroup!.parentGroup != null) return;
     isGroupChildLoading.value = true;
     print('get group child');
     GroupRequest params = GroupRequest(
-      alumniId: _userAuthentication!.id.toString(),
-      parentGroupId: groupId.toString(),
+      parentGroupId: currentGroup!.id.toString(),
       pageSize: _groupPageSize.toString(),
       page: _page.toString(),
     );
@@ -48,7 +49,6 @@ class GroupDetailsController extends GetxController {
     if (_groups != null) {
       groupChild.value = _groups;
       isGroupChildLoading.value = false;
-      return [...groupChild];
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:uni_alumni/models/recruitment.dart';
 import 'package:uni_alumni/models/request/expand_end_date_request.dart';
 import 'package:uni_alumni/models/request/recruitment_get_request.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/common_enum.dart';
 import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
 import 'package:uni_alumni/shared/widgets/date_time_picker_dialog.dart';
@@ -26,6 +27,7 @@ class YourJobsController extends GetxController {
   int _page = 1;
   String? error;
   var isLoading = true.obs;
+  var _jobStatus = RecruitmentStatus.none.obs;
 
   @override
   void onInit() {
@@ -44,15 +46,21 @@ class YourJobsController extends GetxController {
     });
   }
 
-  getMyJobs() async {
-    print('get my jobs');
-    RecruitmentGetRequest params = RecruitmentGetRequest(
+  RecruitmentGetRequest _generateParam() {
+    return RecruitmentGetRequest(
       page: _page.toString(),
       pageSize: _pageSize.toString(),
       alumniId: userAuthentication!.id.toString(),
       sortKey: RecruitmentSortKey.status,
       sortOrder: SortOrder.ASC,
+      status: _jobStatus.value,
     );
+  }
+
+  getMyJobs() async {
+    print('get my jobs');
+    RecruitmentGetRequest params = _generateParam();
+    print(params.toJson());
 
     List<Recruitment?>? _jobs = await recruitmentRepository.getJobs(
         userAuthentication!.appToken, params);
@@ -65,12 +73,13 @@ class YourJobsController extends GetxController {
         isLoading.value = false;
       }
     } else {
+      isLoading.value = false;
       error = 'There is no jobs';
     }
   }
 
-  Future<void> refresh() async {
-    isLoading.value = false;
+  Future<void> refresh({bool loading = false}) async {
+    isLoading.value = loading;
     myJobs.value = [];
     _page = 1;
     error = null;
@@ -119,6 +128,82 @@ class YourJobsController extends GetxController {
     } else {
       ErrorDialog.showDialog();
     }
+  }
+
+  showJobFilter() {
+    RecruitmentStatus? oldResult = _jobStatus.value;
+    Get.defaultDialog(
+      barrierDismissible: false,
+      title: 'Job Filters',
+      actions: [
+        TextButton(
+          onPressed: () async {
+            _jobStatus.value = RecruitmentStatus.none;
+            Get.back();
+            await refresh(loading: true);
+          },
+          child: Text('Clear'),
+        ),
+        TextButton(
+          onPressed: () {
+            _jobStatus.value = oldResult;
+            Get.back();
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () async {
+            Get.back();
+            await refresh(loading: true);
+          },
+          child: Text(
+            'Choose',
+            style: TextStyle(color: ColorConstants.primaryAppColor),
+          ),
+        ),
+      ],
+      content: Obx(() {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text('Approved'),
+              leading: Radio(
+                activeColor: ColorConstants.primaryAppColor,
+                groupValue: _jobStatus.value,
+                onChanged: (RecruitmentStatus? value) {
+                  _jobStatus.value = value!;
+                },
+                value: RecruitmentStatus.active,
+              ),
+            ),
+            ListTile(
+              title: Text('Pending'),
+              leading: Radio(
+                activeColor: ColorConstants.primaryAppColor,
+                groupValue: _jobStatus.value,
+                onChanged: (RecruitmentStatus? value) {
+                  _jobStatus.value = value!;
+                },
+                value: RecruitmentStatus.pending,
+              ),
+            ),
+            ListTile(
+              title: Text('Rejected'),
+              leading: Radio(
+                activeColor: ColorConstants.primaryAppColor,
+                groupValue: _jobStatus.value,
+                onChanged: (RecruitmentStatus? value) {
+                  _jobStatus.value = value!;
+                },
+                value: RecruitmentStatus.rejected,
+              ),
+            ),
+          ],
+        );
+      }),
+    );
   }
 
   Future<bool?> _showConfirmDialog(

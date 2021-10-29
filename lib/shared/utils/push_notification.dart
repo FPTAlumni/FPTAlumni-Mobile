@@ -2,8 +2,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
-import 'package:uni_alumni/modules/home/main_screen.dart';
-import 'package:uni_alumni/modules/home/tabs/tabs.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class PushNotification {
