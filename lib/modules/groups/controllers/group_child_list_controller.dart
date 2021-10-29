@@ -87,12 +87,13 @@ class GroupChildListController extends GetxController {
         isLoading.value = false;
       }
     } else {
+      isLoading.value = false;
       error = 'There is no group child';
     }
   }
 
-  Future<void> refresh() async {
-    isLoading.value = false;
+  Future<void> refresh({bool loading = false}) async {
+    isLoading.value = loading;
     groupChild.value = [];
     _page = 1;
     error = null;
@@ -133,7 +134,7 @@ class GroupChildListController extends GetxController {
           onPressed: () async {
             _joined.value = 0;
             Get.back();
-            await refresh();
+            await refresh(loading: true);
           },
           child: Text('Clear'),
         ),
@@ -147,7 +148,7 @@ class GroupChildListController extends GetxController {
         TextButton(
           onPressed: () async {
             Get.back();
-            await refresh();
+            await refresh(loading: true);
           },
           child: Text(
             'Choose',
@@ -161,7 +162,7 @@ class GroupChildListController extends GetxController {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text('Joined group'),
+              title: Text('Your group'),
               leading: Radio(
                 activeColor: ColorConstants.primaryAppColor,
                 groupValue: _joined.value,
@@ -172,7 +173,7 @@ class GroupChildListController extends GetxController {
               ),
             ),
             ListTile(
-              title: Text('Not joined group'),
+              title: Text('Not join'),
               leading: Radio(
                 activeColor: ColorConstants.primaryAppColor,
                 groupValue: _joined.value,
