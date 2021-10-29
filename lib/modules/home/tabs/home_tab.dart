@@ -23,7 +23,7 @@ class HomeTab extends StatelessWidget {
               ),
             ),
             Text(
-              'ALUMNI',
+              'HOME',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: ColorConstants.primaryAppColor,
