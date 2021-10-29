@@ -20,6 +20,9 @@ class RecruitmentGetRequest {
   @JsonKey(name: 'page-size', defaultValue: '10')
   String? pageSize;
 
+  @JsonKey(name: 'status', defaultValue: RecruitmentStatus.none)
+  RecruitmentStatus? status;
+
   @JsonKey(name: 'sort-key', defaultValue: RecruitmentSortKey.createdDate)
   RecruitmentSortKey? sortKey;
 
@@ -35,6 +38,7 @@ class RecruitmentGetRequest {
     this.pageSize,
     this.page,
     this.sortKey,
+    this.status,
   });
 
   Map<String, dynamic> toJson() => _$RecruitmentGetRequestToJson(this);

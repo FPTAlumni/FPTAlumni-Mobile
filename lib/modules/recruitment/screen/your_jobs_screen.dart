@@ -2,13 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/recruitment/controllers/your_jobs_controller.dart';
 import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
 class YourJobsScreen extends GetView<YourJobsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SubScreenAppBar(title: 'Your jobs'),
+      appBar: SubScreenAppBar(
+        title: 'Your jobs',
+        actions: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: ColorConstants.lightPrimaryAppColor,
+            ),
+            padding: const EdgeInsets.all(8.0),
+            margin: const EdgeInsets.only(
+              right: 10,
+            ),
+            child: GestureDetector(
+              onTap: () async {
+                controller.showJobFilter();
+              },
+              child: Container(
+                width: 25,
+                child: AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Image.asset(
+                    'assets/images/filter.png',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: RecruitmentList(
         list: controller.myJobs,
         scrollController: controller.scrollController,

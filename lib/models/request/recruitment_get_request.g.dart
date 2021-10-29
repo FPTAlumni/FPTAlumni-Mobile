@@ -20,6 +20,9 @@ RecruitmentGetRequest _$RecruitmentGetRequestFromJson(
       sortKey:
           _$enumDecodeNullable(_$RecruitmentSortKeyEnumMap, json['sort-key']) ??
               RecruitmentSortKey.createdDate,
+      status:
+          _$enumDecodeNullable(_$RecruitmentStatusEnumMap, json['status']) ??
+              RecruitmentStatus.none,
     );
 
 Map<String, dynamic> _$RecruitmentGetRequestToJson(
@@ -38,6 +41,7 @@ Map<String, dynamic> _$RecruitmentGetRequestToJson(
   writeNotNull('groupId', instance.groupId);
   writeNotNull('page', instance.page);
   writeNotNull('page-size', instance.pageSize);
+  writeNotNull('status', _$RecruitmentStatusEnumMap[instance.status]);
   writeNotNull('sort-key', _$RecruitmentSortKeyEnumMap[instance.sortKey]);
   writeNotNull('sort-order', _$SortOrderEnumMap[instance.sortOrder]);
   return val;
@@ -87,6 +91,13 @@ const _$SortOrderEnumMap = {
 
 const _$RecruitmentSortKeyEnumMap = {
   RecruitmentSortKey.createdDate: 'CreatedDate',
-  RecruitmentSortKey.title: 'title',
+  RecruitmentSortKey.title: 'Title',
   RecruitmentSortKey.status: 'Status',
+};
+
+const _$RecruitmentStatusEnumMap = {
+  RecruitmentStatus.rejected: 'Rejected',
+  RecruitmentStatus.active: 'Active',
+  RecruitmentStatus.pending: 'Pending',
+  RecruitmentStatus.none: null,
 };
