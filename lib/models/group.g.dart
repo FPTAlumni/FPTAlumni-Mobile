@@ -24,6 +24,9 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
       registrationDate: json['registered_date'] == null
           ? null
           : DateTime.parse(json['registered_date'] as String),
+      parentGroup: json['parent_group'] == null
+          ? null
+          : Group.fromJson(json['parent_group'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$GroupToJson(Group instance) {
@@ -44,5 +47,6 @@ Map<String, dynamic> _$GroupToJson(Group instance) {
   writeNotNull('number_of_members', instance.numberOfMembers);
   writeNotNull('group_leader', instance.leader?.toJson());
   writeNotNull('university', instance.university?.toJson());
+  writeNotNull('parent_group', instance.parentGroup?.toJson());
   return val;
 }

@@ -24,7 +24,7 @@ class GroupDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.groupId = group.id;
+    controller.currentGroup = group;
 
     return Scaffold(
       backgroundColor: ColorConstants.lightScaffoldBackgroundColor,
@@ -66,38 +66,40 @@ class GroupDetailsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          FutureBuilder(
-              future: controller.getGroupChild,
-              builder: (ctx, groupResultSnapshot) {
-                return Obx(() {
-                  if (controller.groupChild.length == 0) {
-                    if (groupResultSnapshot.hasError) {
-                      return const SizedBox();
+          if (group.parentGroup == null)
+            FutureBuilder(
+                future: controller.getGroupChild,
+                builder: (ctx, groupResultSnapshot) {
+                  return Obx(() {
+                    if (controller.groupChild.length == 0) {
+                      if (groupResultSnapshot.hasError) {
+                        return const SizedBox();
+                      }
+
+                      if (controller.isGroupChildLoading.value) {
+                        return const GroupChildShimmer();
+                      } else {
+                        return const SizedBox();
+                      }
                     }
 
-                    if (controller.isGroupChildLoading.value) {
-                      return const GroupChildShimmer();
-                    } else {
-                      return const SizedBox();
-                    }
-                  }
+                    return Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.groupChild.length,
+                        itemBuilder: (ctx, i) {
+                          if (controller.groupChild.length >
+                                  GroupDetailsController.maxChildGroup &&
+                              i == controller.groupChild.length - 1) {
+                            return SeeMore(group);
+                          }
 
-                  return Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: controller.groupChild.length,
-                      itemBuilder: (ctx, i) {
-                        if (controller.groupChild.length > 3 &&
-                            i == controller.groupChild.length - 1) {
-                          return SeeMore();
-                        }
-
-                        return GroupChildCard(controller.groupChild[i]);
-                      },
-                    ),
-                  );
-                });
-              }),
+                          return GroupChildCard(controller.groupChild[i]);
+                        },
+                      ),
+                    );
+                  });
+                }),
           Expanded(
             flex: 5,
             child: ListView(

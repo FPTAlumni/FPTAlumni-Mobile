@@ -12,7 +12,7 @@ GroupRequest _$GroupRequestFromJson(Map<String, dynamic> json) => GroupRequest(
           _$enumDecodeNullable(_$GroupSortKeyEnumMap, json['sort-key']),
       status: _$enumDecodeNullable(_$GroupStatusEnumMap, json['status']),
       page: json['page'] as String?,
-      pageSize: json['size'] as String? ?? '10',
+      pageSize: json['page-size'] as String? ?? '10',
       sortOrder: _$enumDecodeNullable(_$SortOrderEnumMap, json['sort-order']) ??
           SortOrder.DESC,
       alumniId: json['alumniId'] as String?,
@@ -40,7 +40,7 @@ Map<String, dynamic> _$GroupRequestToJson(GroupRequest instance) {
   writeNotNull('majorId', instance.majorId);
   writeNotNull('universityId', instance.universityId);
   writeNotNull('page', instance.page);
-  writeNotNull('size', instance.pageSize);
+  writeNotNull('page-size', instance.pageSize);
   writeNotNull('status', _$GroupStatusEnumMap[instance.status]);
   writeNotNull('sort-key', _$GroupSortKeyEnumMap[instance.recruitmentSortKey]);
   writeNotNull('sort-order', _$SortOrderEnumMap[instance.sortOrder]);

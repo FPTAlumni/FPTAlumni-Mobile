@@ -17,7 +17,7 @@ class DiscoverGroupsController extends GetxController {
   var discoverGroups = [].obs;
   final ScrollController scrollController = ScrollController();
 
-  final _pageSize = 6;
+  final _pageSize = 8;
   int _page = 1;
   String? error;
   var isLoading = true.obs;

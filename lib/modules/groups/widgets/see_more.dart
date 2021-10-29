@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_child_list_controller.dart';
+import 'package:uni_alumni/modules/groups/screens/group_child_list_screen.dart';
 
 class SeeMore extends StatelessWidget {
-  const SeeMore({Key? key}) : super(key: key);
+  final Group group;
+  SeeMore(this.group, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,14 @@ class SeeMore extends StatelessWidget {
           ),
           InkWell(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            onTap: () {},
+            onTap: () async {
+              await Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => GroupChildListScreen(
+                  group,
+                ),
+              ));
+              Get.delete<GroupChildListController>();
+            },
             child: Align(
               alignment: Alignment.center,
               child: Text(

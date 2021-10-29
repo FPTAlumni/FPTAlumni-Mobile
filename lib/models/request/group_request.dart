@@ -23,7 +23,7 @@ class GroupRequest {
   @JsonKey(name: 'page')
   String? page;
 
-  @JsonKey(name: 'size', defaultValue: '10')
+  @JsonKey(name: 'page-size', defaultValue: '10')
   String? pageSize;
 
   @JsonKey(name: 'status')
