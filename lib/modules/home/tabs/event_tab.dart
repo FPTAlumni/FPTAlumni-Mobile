@@ -29,7 +29,7 @@ class EventTab extends StatelessWidget {
               ),
             ),
             Text(
-              'ALUMNI',
+              'EVENT',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: ColorConstants.primaryAppColor,

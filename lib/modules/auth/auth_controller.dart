@@ -110,7 +110,8 @@ class AuthController extends GetxController {
         //save universityId
         final prefs = await SharedPreferences.getInstance();
         prefs.setString('uId', googleAuth.idToken!);
-        await FirebaseMessaging.instance.subscribeToTopic('${currentUser!.uid}');
+        await FirebaseMessaging.instance
+            .subscribeToTopic('${currentUser!.uid}');
         isSignIn.value = true;
       } else {
         await universityController.loadUniversities();
@@ -121,14 +122,15 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    if(currentUser != null){
-      await FirebaseMessaging.instance.unsubscribeFromTopic('${currentUser!.uid}');
+    if (currentUser != null) {
+      await FirebaseMessaging.instance
+          .unsubscribeFromTopic('${currentUser!.uid}');
     }
-    await _googleSignIn.disconnect();
+    await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();
-    isSignIn.value = false;
+    // isSignIn.value = false;
   }
 
   Future<void> _autoSignIn() async {
