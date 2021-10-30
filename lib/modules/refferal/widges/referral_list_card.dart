@@ -42,7 +42,7 @@ class ReferralCard extends StatelessWidget {
           vertical: 5.0,
         ),
         padding: const EdgeInsets.symmetric(
-          vertical: 15.0,
+          vertical: 30.0,
           horizontal: 25.0,
         ),
         child: Row(
@@ -131,13 +131,16 @@ class ReferralCard extends StatelessWidget {
                         child: Wrap(
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(right: 5),
+                              margin: const EdgeInsets.only(right: 8),
                               child: Chip(
                                 backgroundColor:controller.changeColorStatus( referral.status),
                                 label: Text(
                                   controller.statusName(referral.status),
                                   // 'status',
                                   textScaleFactor: 3 / 4,
+                                  style: TextStyle(
+                                    fontSize: 20
+                                  ),
                                 ),
                               ),
                             ),

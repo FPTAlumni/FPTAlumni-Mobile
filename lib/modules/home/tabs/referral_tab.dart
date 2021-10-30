@@ -7,6 +7,7 @@ import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/refferal/screens/referral_moreinformation.dart';
 import 'package:uni_alumni/modules/refferal/screens/referral_registration.dart';
 import 'package:uni_alumni/modules/refferal/widges/referral_information_list.dart';
+import 'package:uni_alumni/modules/refferal/widges/reload_referral.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
@@ -47,7 +48,7 @@ class ReferralTab extends GetView<MainController> {
           height: double.infinity,
           child: Stack(
               children: [
-                new ReferralInformation(),
+                ReloadingReferral(),
                 Positioned(
                   bottom: 16,
                   right: 16,
