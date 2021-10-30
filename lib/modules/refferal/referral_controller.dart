@@ -8,6 +8,9 @@ import 'package:uni_alumni/models/request/referral_request.dart';
 import 'package:uni_alumni/models/request/voucher_get_request.dart';
 import 'package:uni_alumni/models/voucher.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
+import 'package:uni_alumni/modules/home/main_controller.dart';
+import 'package:uni_alumni/modules/home/main_screen.dart';
+import 'package:uni_alumni/modules/home/tabs/tabs.dart';
 import 'package:uni_alumni/modules/refferal/referral_repository.dart';
 import 'package:uni_alumni/modules/voucher/voucher_repository.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -19,6 +22,7 @@ class ReferralController extends GetxController{
   final VoucherRepository voucherRepository;
   final userAuthentication = Get.find<AuthController>().userAuthentication;
   final currentUser = Get.find<AuthController>().currentUser;
+  final  mainController = Get.find<MainController>();
 
 
   ReferralController({required this.referralRepository, required this.voucherRepository});
@@ -69,12 +73,14 @@ class ReferralController extends GetxController{
     }
   }
   //Refresh referral list
-  // Future<void> refreshReferralList() async
-  // {
-  //   isLoading.value = false;
-  //   vouchers.value = [];
-  //   await getReferralByAlumni();
-  // }
+  Future<void> refreshReferralList() async
+  {
+    isLoading.value = false;
+    referrals.value=[];
+    _page = 1;
+    error = null;
+    await getReferralByAlumni();
+  }
   //Load vouchers
   Future<void> getVouchers() async {// toJson just include String
     print('Load vouchers');
@@ -225,7 +231,5 @@ class ReferralController extends GetxController{
     super.onInit();
     getReferralByAlumni();
     getVouchers();
-
-
   }
 }

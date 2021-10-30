@@ -104,7 +104,7 @@ class ReferralRegistration extends GetView<ReferralController> {
                   label: 'Full Name',
                   hintText: 'Enter full name',
                   controller: controller.parentNameValue,
-                  textInputType: TextInputType.phone,
+                  textInputType: TextInputType.text,
                   textInputAction: TextInputAction.next,
                 ),
                 _buildTextFormField(

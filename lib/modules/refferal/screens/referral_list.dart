@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/refferal/widges/referral_information_list.dart';
+import 'package:uni_alumni/modules/refferal/widges/reload_referral.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 import '../referral_controller.dart';
@@ -27,7 +28,7 @@ class ReferralList extends StatelessWidget {
           height: double.infinity,
           child: Stack(
               children: [
-                ReferralInformation(),
+                ReloadingReferral(),
                 Positioned(
                   bottom: 16,
                   right: 16,
