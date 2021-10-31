@@ -3,6 +3,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/models/referral.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
@@ -14,9 +15,19 @@ class ReferralRegistration extends GetView<ReferralController> {
 
   @override
   Widget build(BuildContext context) {
+    if(controller.currentReferral != null){
+      controller.fullNameValue.text = controller.currentReferral?.fullName?? '';
+      controller.phoneValue.text = controller.currentReferral?.phone?? '';
+      controller.addressValue.text = controller.currentReferral?.address?? '';
+      controller.nominatorIdValue = controller.userAuthentication!.id;
+      controller.selectedVoucher.value = controller.currentReferral?.voucher?.relationshipName?? '';
+      controller.parentNameValue.text = controller.currentReferral?.parentName?? '';
+      controller.parentPhoneValue.text = controller.currentReferral?.parentPhone?? '';
+      controller.highSchoolNameValue.text = controller.currentReferral?.highSchoolName?? '';
+    }
     return Scaffold(
       backgroundColor: ColorConstants.lightScaffoldBackgroundColor,
-      appBar: SubScreenAppBar(title: 'New referral'),
+      appBar: SubScreenAppBar(title: 'Referral Form'),
       body: Container(
         child: Form(
           key: _formKey,
@@ -132,8 +143,7 @@ class ReferralRegistration extends GetView<ReferralController> {
                       Get.back();
                     },
                     child: Text(
-                        // controller.currentJob == null ? 'Create' : 'Update'),
-                        'Create'),
+                        controller.currentReferral == null ? 'Create' : 'Update'),
                     style: ElevatedButton.styleFrom(
                       elevation: 2.0,
                       primary: ColorConstants.primaryAppColor,

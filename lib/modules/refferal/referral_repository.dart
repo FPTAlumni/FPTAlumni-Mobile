@@ -34,4 +34,21 @@ class ReferralRepository {
     return false;
   }
 
+  Future<bool> deleteReferral(String appToken, int id) async {
+    final response = await apiProvider.deleteReferral('/Referral/$id', appToken);
+    if(response.statusCode == 200){
+      return true;
+    }
+    return false;
+  }
+
+  Future<Referral?> updateReferral(String appToken, ReferralPostRequest data) async {
+    final response = await apiProvider.updateReferral('/Referral', appToken, data);
+    print('>>Repository: ' + response.statusCode.toString());
+    if(response.statusCode == 200){
+      return Referral.fromJson(response.body['data']);
+    }
+    return null;
+  }
+
 }

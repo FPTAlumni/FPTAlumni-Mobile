@@ -6,7 +6,8 @@ part 'referral_post_request.g.dart';
 @JsonSerializable(includeIfNull: false)
 class ReferralPostRequest{
 
-
+  int? id;
+  int? status;
   @JsonKey(name:'full_name')
   String? fullName;
   @JsonKey(name: "phone")
@@ -25,7 +26,7 @@ class ReferralPostRequest{
   @JsonKey(name:'high_school_name')
   String? highSchoolName;
 
-  ReferralPostRequest({this.fullName, this.phone, this.address, this.nominatorId,
+  ReferralPostRequest({this.id, this.status, this.fullName, this.phone, this.address, this.nominatorId,
       this.voucherId, this.parentName, this.parentPhone, this.highSchoolName});
 
   Map<String, dynamic> toJson() => _$ReferralPostRequestToJson(this);

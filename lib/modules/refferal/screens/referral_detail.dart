@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/referral.dart';
+import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 import '../referral_controller.dart';
@@ -452,7 +453,10 @@ class ReferralDetail extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       ),
       child: Text("Edit", style: TextStyle(fontSize: 15)),
-      onPressed: () {},
+      onPressed: () {
+        controller.currentReferral = referral;
+        Get.toNamed(Routes.referralForm, arguments: referral);
+      },
     );
   }
 }
