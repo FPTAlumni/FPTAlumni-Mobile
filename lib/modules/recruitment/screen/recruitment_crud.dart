@@ -181,7 +181,7 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                         if (isError != null) {
                           return;
                         }
-                        Get.back();
+                        Get.back(result: controller.currentJob);
                       },
                       child: Text(
                           controller.currentJob == null ? 'Create' : 'Update'),

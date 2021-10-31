@@ -13,6 +13,8 @@ class MyJobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _job = Rx(job);
+
     return GestureDetector(
       onTap: () => Get.to(() => RecruitmentDetailsScreen(
             job,
@@ -75,7 +77,7 @@ class MyJobCard extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              BSJobActions.showBottomSheet(job);
+                              BSJobActions.showBottomSheet(_job);
                             },
                             child: Container(
                               child: Icon(Icons.more_horiz),
