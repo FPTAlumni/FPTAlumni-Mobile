@@ -14,170 +14,189 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstants.lightScaffoldBackgroundColor,
-      appBar: SubScreenAppBar(title: 'Create your job'),
-      body: Container(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildHeader('Job information'),
-                _buildTextFormField(
-                    label: 'Title*',
-                    hintText: 'Enter job title',
-                    controller: controller.titleController,
-                    textInputAction: TextInputAction.next,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter job title";
-                      }
-                      if (value.length > 100) {
-                        return "Title only contain 100 characters";
-                      }
-                      return null;
-                    }),
-                _buildTextFormField(
-                    label: 'Description*',
-                    hintText: 'Enter job description',
-                    controller: controller.descriptionController,
-                    textInputType: TextInputType.multiline,
-                    minLines: 5,
-                    textInputAction: TextInputAction.next,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter job description";
-                      }
-                      return null;
-                    }),
-                _buildTextFormField(
-                    label: 'Position*',
-                    hintText: 'Enter job position',
-                    controller: controller.positionController,
-                    textInputAction: TextInputAction.next,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter job position";
-                      }
-                      if (value.length > 70) {
-                        return "Position only contain 70 characters";
-                      }
-                      return null;
-                    }),
-                Obx(() {
-                  return _buildDropdownList(
-                    label: 'Job Experience*',
-                    hintText: 'Choose job experience',
-                    listItem: controller.dropdownExperience
-                        .toList()
-                        .cast<DropdownMenuItem<String>>(),
-                    value: controller.selectedExperience.value.isEmpty
-                        ? null
-                        : controller.selectedExperience.value,
-                    onChanged: (value) {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      controller.onChangeExp(value);
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return "Please choose job experience";
-                      }
-                      return null;
-                    },
-                  );
-                }),
-                Obx(() {
-                  return _buildDropdownList(
-                    label: 'Job Type*',
-                    hintText: 'Choose job type',
-                    listItem: controller.dropdownType
-                        .toList()
-                        .cast<DropdownMenuItem<int>>(),
-                    value: controller.selectedType.value < 0
-                        ? null
-                        : controller.selectedType.value,
-                    onChanged: (value) {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      controller.onChangeType(value);
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return "Please choose job type";
-                      }
-                      return null;
-                    },
-                  );
-                }),
-                _buildTextFormField(
-                    label: 'Job End Date*',
-                    hintText: 'dd/MM/yyyy',
-                    controller: controller.jobEndDateController,
-                    readOnly: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please choose date the job ends";
-                      }
-                      return null;
-                    },
-                    onTapHandler: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      if (controller.currentJob == null) {
-                        controller.showDatePicker();
-                      } else {
-                        controller.showDatePicker(
-                            date: controller.currentJob!.endDate);
-                      }
-                    }),
-                Obx(() => _buildGroupDropdown()),
-                _buildHeader(
-                  'Recruiter Information\r\n',
-                  note: '(If you do not fill these fields, '
-                      'we will use information in your profile)',
-                ),
-                _buildTextFormField(
-                  label: 'Phone',
-                  hintText: 'Enter your phone',
-                  controller: controller.phoneController,
-                  textInputType: TextInputType.phone,
-                  textInputAction: TextInputAction.next,
-                ),
-                _buildTextFormField(
-                  label: 'Email',
-                  hintText: 'Enter your email',
-                  controller: controller.emailController,
-                  textInputAction: TextInputAction.done,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: 20.0,
-                    left: 30.0,
-                    right: 30.0,
-                    bottom: 10.0,
+      appBar: SubScreenAppBar(
+        title: controller.currentJob == null
+            ? 'Create your job'
+            : 'Update your job',
+      ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Container(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildHeader('Job information'),
+                  _buildTextFormField(
+                      label: 'Title*',
+                      hintText: 'Enter job title',
+                      controller: controller.titleController,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter job title";
+                        }
+                        if (value.length > 100) {
+                          return "Title only contain 100 characters";
+                        }
+                        return null;
+                      }),
+                  _buildTextFormField(
+                      label: 'Description*',
+                      hintText: 'Enter job description',
+                      controller: controller.descriptionController,
+                      textInputType: TextInputType.multiline,
+                      minLines: 5,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter job description";
+                        }
+                        return null;
+                      }),
+                  _buildTextFormField(
+                      label: 'Position*',
+                      hintText: 'Enter job position',
+                      controller: controller.positionController,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter job position";
+                        }
+                        if (value.length > 70) {
+                          return "Position only contain 70 characters";
+                        }
+                        return null;
+                      }),
+                  Obx(() {
+                    return _buildDropdownList(
+                      label: 'Job Experience*',
+                      hintText: 'Choose job experience',
+                      listItem: controller.dropdownExperience
+                          .toList()
+                          .cast<DropdownMenuItem<String>>(),
+                      value: controller.selectedExperience.value.isEmpty
+                          ? null
+                          : controller.selectedExperience.value,
+                      onChanged: (value) {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        controller.onChangeExp(value);
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please choose job experience";
+                        }
+                        return null;
+                      },
+                    );
+                  }),
+                  Obx(() {
+                    return _buildDropdownList(
+                      label: 'Job Type*',
+                      hintText: 'Choose job type',
+                      listItem: controller.dropdownType
+                          .toList()
+                          .cast<DropdownMenuItem<int>>(),
+                      value: controller.selectedType.value < 0
+                          ? null
+                          : controller.selectedType.value,
+                      onChanged: (value) {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        controller.onChangeType(value);
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return "Please choose job type";
+                        }
+                        return null;
+                      },
+                    );
+                  }),
+                  _buildTextFormField(
+                      label: 'Job End Date*',
+                      hintText: 'dd/MM/yyyy',
+                      controller: controller.jobEndDateController,
+                      readOnly: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please choose date the job ends";
+                        }
+                        return null;
+                      },
+                      onTapHandler: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        if (controller.currentJob == null) {
+                          controller.showDatePicker();
+                        } else {
+                          controller.showDatePicker(
+                              date: controller.currentJob!.endDate);
+                        }
+                      }),
+                  Obx(() => _buildGroupDropdown()),
+                  _buildHeader(
+                    'Recruiter Information\r\n',
+                    note: '(If you do not fill these fields, '
+                        'we will use information in your profile)',
                   ),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      bool isValid = _formKey.currentState!.validate();
-                      if (!isValid) return;
-                      bool? isError = await controller.onSubmitForm();
-                      if (isError != null) {
-                        return;
-                      }
-                      Get.back();
-                    },
-                    child: Text(
-                        controller.currentJob == null ? 'Create' : 'Update'),
-                    style: ElevatedButton.styleFrom(
-                      elevation: 2.0,
-                      primary: ColorConstants.primaryAppColor,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 12,
+                  _buildTextFormField(
+                    label: 'Phone',
+                    hintText: 'Enter your phone',
+                    controller: controller.phoneController,
+                    textInputType: TextInputType.phone,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  _buildTextFormField(
+                    label: 'Email',
+                    hintText: 'Enter your email',
+                    controller: controller.emailController,
+                    textInputAction: TextInputAction.done,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(
+                      top: 20.0,
+                      left: 30.0,
+                      right: 30.0,
+                      bottom: 10.0,
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
+
+                        bool isValid = _formKey.currentState!.validate();
+                        if (!isValid) return;
+                        bool? isError = await controller.onSubmitForm();
+                        if (isError != null) {
+                          return;
+                        }
+                        Get.back(result: controller.currentJob);
+                      },
+                      child: Text(
+                          controller.currentJob == null ? 'Create' : 'Update'),
+                      style: ElevatedButton.styleFrom(
+                        elevation: 2.0,
+                        primary: ColorConstants.primaryAppColor,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

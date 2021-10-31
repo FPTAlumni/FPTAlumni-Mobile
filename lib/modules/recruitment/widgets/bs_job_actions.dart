@@ -8,7 +8,7 @@ import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
 
 class BSJobActions {
-  static showBottomSheet(Recruitment job, {bool isInDetails = false}) {
+  static showBottomSheet(var job, {bool isInDetails = false}) {
     final controller = Get.find<YourJobsController>();
 
     Get.bottomSheet(
@@ -24,13 +24,13 @@ class BSJobActions {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (job.statusString == MyRecruitmentStatus.ended) ...[
+            if (job.value.statusString == MyRecruitmentStatus.ended) ...[
               _buildListTile(
                 icon: Icons.timer,
                 title: 'Expand job end date',
                 onTapHandler: () {
                   closeBottomSheet();
-                  controller.expandEndDate(job.id!);
+                  controller.expandEndDate(job.value.id!);
                 },
               ),
               const Divider(
@@ -38,13 +38,18 @@ class BSJobActions {
                 color: Colors.black45,
               ),
             ],
-            if (job.statusString == MyRecruitmentStatus.pending) ...[
+            if (job.value.statusString == MyRecruitmentStatus.pending) ...[
               _buildListTile(
                 icon: Icons.edit,
                 title: 'Edit job',
-                onTapHandler: () {
+                onTapHandler: () async {
                   closeBottomSheet();
-                  Get.toNamed(Routes.recruitmentForm, arguments: job);
+                  Recruitment updatedJob = await Get.toNamed(
+                      Routes.recruitmentForm,
+                      arguments: job.value);
+
+                  job.value = updatedJob;
+                  job.refresh();
                 },
               ),
               const Divider(
@@ -52,13 +57,13 @@ class BSJobActions {
                 color: Colors.black45,
               ),
             ],
-            if (job.statusString == MyRecruitmentStatus.approved) ...[
+            if (job.value.statusString == MyRecruitmentStatus.approved) ...[
               _buildListTile(
                 icon: Icons.work_off,
                 title: 'Close job',
                 onTapHandler: () {
                   closeBottomSheet();
-                  controller.closeJob(job.id!);
+                  controller.closeJob(job.value.id!);
                 },
               ),
               const Divider(
@@ -71,7 +76,7 @@ class BSJobActions {
               title: 'Remove job',
               onTapHandler: () async {
                 closeBottomSheet();
-                await controller.deleteJob(job.id!);
+                await controller.deleteJob(job.value.id!);
                 if (isInDetails) {
                   Get.back();
                 }
