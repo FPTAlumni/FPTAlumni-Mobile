@@ -9,12 +9,11 @@ import 'package:uni_alumni/models/request/voucher_get_request.dart';
 import 'package:uni_alumni/models/voucher.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
-import 'package:uni_alumni/modules/home/main_screen.dart';
-import 'package:uni_alumni/modules/home/tabs/tabs.dart';
 import 'package:uni_alumni/modules/refferal/referral_repository.dart';
 import 'package:uni_alumni/modules/voucher/voucher_repository.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/common_enum.dart';
+import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 class ReferralController extends GetxController{
 
@@ -50,6 +49,7 @@ class ReferralController extends GetxController{
   var parentPhoneValue = TextEditingController();
   var highSchoolNameValue = TextEditingController();
 
+  Referral? currentReferral = Get.arguments;
 
   //Load Referrers
   Future<void> getReferralByAlumni()async {
@@ -126,8 +126,18 @@ class ReferralController extends GetxController{
     String parentPhone = parentPhoneValue.text.isEmpty ? "": parentPhoneValue.text;
     int voucherId = getVoucherId(voucherIdValue.text);
     print(">>voucher id: "  + voucherId.toString());
+    print(">>voucher id: "  + userAuthentication!.id.toString());
+    print(">>voucher id: "  + fullNameValue.text);
+    print(">>voucher id: "  + addressValue.text);
+    print(">>voucher id: "  + parentName);
+    print(">>voucher id: "  + parentPhone);
+    print(">>voucher id: "  + phoneValue.text);
+    print(">>current referral id: "  + currentReferral!.id.toString());
+    print(">>status: "  + currentReferral!.status.toString());
 
     ReferralPostRequest data = ReferralPostRequest(
+      id: currentReferral?.id,
+      status: currentReferral?.status,
       nominatorId: userAuthentication!.id,
       fullName: fullNameValue.text,
       address: addressValue.text,
@@ -138,7 +148,12 @@ class ReferralController extends GetxController{
       voucherId: voucherId
     );
 
-    return _createReferral(data);
+    if(currentReferral == null){
+      return _createReferral(data);
+    }else{
+      return _updateReferral(data);
+    }
+
   }
 
   Future<bool?> _createReferral(ReferralPostRequest data) async {
@@ -171,6 +186,58 @@ class ReferralController extends GetxController{
       return await _showErrorDialog();
     }
   }
+  Future<bool?> _updateReferral(ReferralPostRequest data) async {
+    Referral? updateReferral = await referralRepository.updateReferral(
+      userAuthentication!.appToken, data);
+    if(updateReferral != null){
+      int index = referrals.indexWhere((referral) => referral.id == updateReferral.id);
+      referrals[index] = updateReferral;
+      referrals.refresh();
+      return await Get.defaultDialog(
+        title: 'Announcement',
+        content: Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 5.0,
+          ),
+          child: Text('The referral has been created successfully.\r\n'
+              'Please wait for admin to approve it'),
+        ),
+        confirm: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: ColorConstants.primaryAppColor,
+            textStyle: TextStyle(color: Colors.white),
+          ),
+          onPressed: () {
+            Get.back();
+          },
+          child: Text(
+            'Close',
+          ),
+        ),
+      );
+    }else{
+      return await _showErrorDialog();
+    }
+  }
+
+  //delete
+  deleteReferral(int id) async {
+    bool? result =
+    await _showConfirmDialog(msg: 'Do you want to remove this referral? ');
+    if (result == null) return;
+
+    bool isSucceed =
+    await referralRepository.deleteReferral(userAuthentication!.appToken, id);
+    if (isSucceed) {
+      referrals.removeWhere((referral) => referral.id == id);
+      if (referrals.length < _pageSize) {
+        isLoading.value = false;
+      }
+      referrals.refresh();
+    } else {
+      ErrorDialog.showDialog();
+    }
+  }
 
   _showErrorDialog() async {
     return await Get.defaultDialog(
@@ -185,7 +252,24 @@ class ReferralController extends GetxController{
     );
   }
 
-
+  Future<bool?> _showConfirmDialog(
+      {String title = 'Confirmation', required String msg}) {
+    return Get.defaultDialog(
+      title: title,
+      content: Text(msg),
+      confirm: TextButton(
+          onPressed: () {
+            Get.back(result: true);
+          },
+          child: Text('Confirm')),
+      cancel: TextButton(
+        onPressed: () {
+          Get.back();
+        },
+        child: Text('Cancel'),
+      ),
+    );
+  }
 
   //Change color of status
   Color changeColorStatus(int status) {
@@ -232,4 +316,20 @@ class ReferralController extends GetxController{
     getReferralByAlumni();
     getVouchers();
   }
+
+  @override
+  void onReady() {
+    super.onReady();
+    print(">>Onready");
+      if(currentReferral != null){
+        fullNameValue.text = currentReferral?.fullName?? '';
+        phoneValue.text = currentReferral?.phone?? '';
+        addressValue.text = currentReferral?.address?? '';
+        nominatorIdValue = userAuthentication!.id;
+        selectedVoucher.value = currentReferral?.voucher?.relationshipName?? '';
+        parentNameValue.text = currentReferral?.parentName?? '';
+        parentPhoneValue.text = currentReferral?.parentPhone?? '';
+        highSchoolNameValue.text = currentReferral?.highSchoolName?? '';
+      }
+    }
 }

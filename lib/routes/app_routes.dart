@@ -7,4 +7,5 @@ abstract class Routes {
   static const signUp = '/sign-up';
   static const recruitmentForm = '/recruitment-form';
   static const yourRecruitment = '/my-recruitment';
+  static const referralForm = '/referral-form';
 }

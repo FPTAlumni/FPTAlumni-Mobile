@@ -8,6 +8,8 @@ part of 'referral_post_request.dart';
 
 ReferralPostRequest _$ReferralPostRequestFromJson(Map<String, dynamic> json) =>
     ReferralPostRequest(
+      id: json['id'] as int?,
+      status: json['status'] as int?,
       fullName: json['full_name'] as String?,
       phone: json['phone'] as String?,
       address: json['address'] as String?,
@@ -27,6 +29,8 @@ Map<String, dynamic> _$ReferralPostRequestToJson(ReferralPostRequest instance) {
     }
   }
 
+  writeNotNull('id', instance.id);
+  writeNotNull('status', instance.status);
   writeNotNull('full_name', instance.fullName);
   writeNotNull('phone', instance.phone);
   writeNotNull('address', instance.address);

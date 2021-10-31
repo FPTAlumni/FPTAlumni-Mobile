@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/referral.dart';
-import 'package:uni_alumni/modules/alumni/widgets/alumni_button_widget.dart';
 import 'package:uni_alumni/modules/refferal/screens/referral_detail.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 import '../referral_controller.dart';
+import 'referral_actions.dart';
 
 
 
@@ -74,16 +74,30 @@ class ReferralCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    referral.fullName,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        referral.fullName,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          ReferralActions.showBottomSheet(referral);
+                        },
+                        child: Container(
+                          child: Icon(Icons.more_horiz),
+                        ),
+                      ),
+                    ]
                   ),
+
                   const SizedBox(height: 2),
                   Row(
                     children: [
