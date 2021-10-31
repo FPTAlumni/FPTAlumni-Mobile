@@ -84,6 +84,8 @@ class Recruitment {
   factory Recruitment.fromJson(Map<String, dynamic> json) =>
       _$RecruitmentFromJson(json);
 
+  Map<String, dynamic> toJson() => _$RecruitmentToJson(this);
+
   String get typeString {
     if (this.type!.contains("Fulltime")) {
       return "Full-time";
