@@ -215,10 +215,10 @@ class GroupDetailsController extends GetxController {
       var yourGroups = Get.find<YourGroupsController>().myGroups;
       int index = yourGroups
           .indexWhere((group) => (group as Group).id == currentGroup!.id);
-      if (index < 0) return false;
-
-      yourGroups.removeAt(index);
-      yourGroups.refresh();
+      if (index > 0) {
+        yourGroups.removeAt(index);
+        yourGroups.refresh();
+      }
       return true;
     } else {
       ErrorDialog.showDialog();
