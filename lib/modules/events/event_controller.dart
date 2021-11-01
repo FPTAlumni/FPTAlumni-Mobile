@@ -117,6 +117,8 @@ class EventController extends GetxController {
         return (e as Event).id == eventId;
       });
 
+      if (index < 0) return;
+
       (events.elementAt(index) as Event).joinEvent();
       myEvents.insert(0, events.elementAt(index));
 
@@ -133,6 +135,8 @@ class EventController extends GetxController {
       int index = events.indexWhere((e) {
         return (e as Event).id == eventId;
       });
+
+      if (index < 0) return;
 
       (events.elementAt(index) as Event).leaveEvent();
       myEvents.removeWhere((e) => (e as Event).id == eventId);

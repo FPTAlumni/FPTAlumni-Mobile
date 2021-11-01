@@ -47,6 +47,9 @@ class Event {
   @JsonKey(name: 'group_name')
   String? groupName;
 
+  @JsonKey(name: 'created_date')
+  late DateTime createdDate;
+
   @JsonKey(name: 'in_event')
   late bool inEvent;
 
@@ -68,6 +71,7 @@ class Event {
     required this.registrationStartDate,
     required this.registrationEndDate,
     required this.inEvent,
+    required this.createdDate,
     this.groupName,
   }) {
     setStatus();
@@ -117,7 +121,7 @@ class Event {
     switch (status) {
       case EventStatusFrontEnd.registerIsNotOpen:
         eventStatus = notOpen;
-        statusColor = Color(0xFFEEEEEE);
+        statusColor = Colors.grey;
         break;
       case EventStatusFrontEnd.registering:
         eventStatus = registrationOpen;
@@ -129,7 +133,7 @@ class Event {
         break;
       case EventStatusFrontEnd.registrationEnd:
         eventStatus = registrationEnd;
-        statusColor = Color(0xFFEEEEEE);
+        statusColor = Colors.grey;
         break;
       case EventStatusFrontEnd.starting:
         eventStatus = starting;
@@ -137,7 +141,7 @@ class Event {
         break;
       case EventStatusFrontEnd.end:
         eventStatus = ended;
-        statusColor = Color(0xFFEEEEEE);
+        statusColor = Colors.grey;
         break;
     }
   }

@@ -61,9 +61,8 @@ class YourJobsController extends GetxController {
   getMyJobs() async {
     print('get my jobs');
     RecruitmentGetRequest params = _generateParam();
-    print(params.toJson());
 
-    List<Recruitment?>? _jobs = await recruitmentRepository.getJobs(
+    List<Recruitment>? _jobs = await recruitmentRepository.getJobs(
         userAuthentication!.appToken, params);
     if (_jobs != null && _jobs.isNotEmpty) {
       myJobs.addAll(_jobs);
@@ -124,6 +123,7 @@ class YourJobsController extends GetxController {
         userAuthentication!.appToken, data);
     if (updatedJob != null) {
       int index = myJobs.indexWhere((job) => job.id == id);
+      if (index < 0) return;
       myJobs[index] = updatedJob;
       myJobs.refresh();
     } else {
@@ -205,5 +205,11 @@ class YourJobsController extends GetxController {
         );
       }),
     );
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 }

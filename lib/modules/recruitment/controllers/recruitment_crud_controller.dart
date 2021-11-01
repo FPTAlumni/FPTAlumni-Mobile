@@ -145,6 +145,7 @@ class RecruitmentCrudController extends GetxController {
       final yourJobsController = Get.find<YourJobsController>();
       int index = yourJobsController.myJobs
           .indexWhere((job) => job.id == updatedJob.id);
+      if (index < 0) return null;
       currentJob = updatedJob;
       yourJobsController.myJobs[index] = updatedJob;
       yourJobsController.myJobs.refresh();

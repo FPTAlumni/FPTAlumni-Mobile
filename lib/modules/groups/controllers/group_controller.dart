@@ -24,9 +24,9 @@ class GroupController extends GetxController {
     super.onInit();
   }
 
-  Future<Group?> getGroupById(int id) async {
-    return await groupRepository.getGroupById(userAuthentication!.appToken, id);
-  }
+  // Future<Group?> getGroupById(int id) async {
+  //   return await groupRepository.getGroupById(userAuthentication!.appToken, id);
+  // }
 
   @override
   void onClose() {

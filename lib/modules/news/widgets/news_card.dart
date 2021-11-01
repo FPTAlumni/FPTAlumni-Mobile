@@ -95,7 +95,7 @@ class NewsCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (news.tags!.isNotEmpty)
+            if (news.tags != null)
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8.0,

@@ -32,8 +32,8 @@ class EventCard extends StatelessWidget {
         margin: const EdgeInsets.only(
           top: 5.0,
           bottom: 5.0,
-          right: 20.0,
-          left: 20.0,
+          // right: 20.0,
+          // left: 20.0,
         ),
         child: Column(
           children: [

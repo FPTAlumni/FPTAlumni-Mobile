@@ -24,6 +24,7 @@ class AppBinding extends Bindings {
     Get.put(EventRepository(apiProvider: Get.find()), permanent: true);
     Get.put(GroupRepository(apiProvider: Get.find()), permanent: true);
     Get.put(NewsRepository(apiProvider: Get.find()), permanent: true);
+    Get.put(RecruitmentRepository(apiProvider: Get.find()), permanent: true);
     Get.lazyPut(
         () => NewsController(newsRepository: Get.find<NewsRepository>()),
         fenix: true);
@@ -32,8 +33,7 @@ class AppBinding extends Bindings {
         fenix: true);
     Get.lazyPut(
         () => RecruitmentTabController(
-            recruitmentRepository:
-                RecruitmentRepository(apiProvider: Get.find())),
+            recruitmentRepository: Get.find<RecruitmentRepository>()),
         fenix: true);
     Get.lazyPut(
         () => GroupController(groupRepository: Get.find<GroupRepository>()),

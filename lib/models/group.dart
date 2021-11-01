@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uni_alumni/models/alumni.dart';
+import 'package:uni_alumni/models/news.dart';
+import 'package:uni_alumni/models/recruitment.dart';
 import 'package:uni_alumni/models/university.dart';
 import 'package:uni_alumni/modules/groups/widgets/group_child_card.dart';
 
@@ -41,6 +43,12 @@ class Group {
   @JsonKey(name: "parent_group")
   Group? parentGroup;
 
+  @JsonKey(name: "recruitments")
+  List<Recruitment>? jobs;
+
+  @JsonKey(name: "news")
+  List<News>? news;
+
   @JsonKey(ignore: true)
   int? status;
 
@@ -54,7 +62,9 @@ class Group {
       this.leader,
       this.numberOfMembers,
       this.registrationDate,
-      this.parentGroup}) {
+      this.parentGroup,
+      this.jobs,
+      this.news}) {
     _setStatus();
   }
 

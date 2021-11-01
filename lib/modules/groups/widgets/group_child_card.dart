@@ -25,16 +25,11 @@ class GroupChildCard extends StatelessWidget {
         left: 10.0,
       ),
       child: GestureDetector(
-        onTap: () {
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(
-          //       builder: (ctx) => GroupDetailsScreen('group-100'),
-          //       settings: RouteSettings(
-          //         arguments: 100,
-          //       ),
-          //     ))
-          //     .then(
-          //         (_) => Get.delete<GroupDetailsController>(tag: 'group-100'));
+        onTap: () async {
+          await Navigator.of(context).push(MaterialPageRoute(
+            builder: (ctx) => GroupDetailsScreen(group, 'group-${group.id}'),
+          ));
+          Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
         },
         child: Stack(
           children: [
