@@ -17,10 +17,7 @@ class AuthRepository {
     print(response.statusCode);
     switch (responseStatusCode) {
       case 200:
-        return AppTokenResponse(
-          appToken: response.body['custom_token'],
-          id: response.body['id'],
-        );
+        return AppTokenResponse.fromJson(response.body);
       case 201:
         return null;
       case 404:

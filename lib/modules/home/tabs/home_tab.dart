@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:uni_alumni/modules/news/news_controller.dart';
 import 'package:uni_alumni/modules/news/widgets/news_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -34,6 +36,34 @@ class HomeTab extends StatelessWidget {
             ),
           ],
         ),
+        actions: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: ColorConstants.lightPrimaryAppColor,
+            ),
+            padding: const EdgeInsets.all(8.0),
+            margin: const EdgeInsets.only(
+              right: 10,
+            ),
+            child: GestureDetector(
+              onTap: () {
+                final controller = Get.find<NewsController>();
+                controller.showFilter();
+              },
+              child: Container(
+                width: 25,
+                child: AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Image.asset(
+                    'assets/images/filter.png',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
         iconTheme: IconThemeData(
           color: Colors.black,
         ),

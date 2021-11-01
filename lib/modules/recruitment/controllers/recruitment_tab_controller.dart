@@ -8,8 +8,6 @@ import 'package:uni_alumni/shared/data/enum/common_enum.dart';
 import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
 
 class RecruitmentTabController extends GetxController {
-  var selectedFilterList = [].obs;
-
   final RecruitmentRepository recruitmentRepository;
 
   RecruitmentTabController({required this.recruitmentRepository});

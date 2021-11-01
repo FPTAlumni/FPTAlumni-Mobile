@@ -5,12 +5,12 @@ part 'tag.g.dart';
 @JsonSerializable(includeIfNull: false)
 class Tag {
   @JsonKey(name: "id")
-  int? id;
+  int id;
 
   @JsonKey(name: "tagname")
-  String? tagName;
+  String tagName;
 
-  Tag({this.id, this.tagName});
+  Tag({required this.id, required this.tagName});
 
   factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
 
