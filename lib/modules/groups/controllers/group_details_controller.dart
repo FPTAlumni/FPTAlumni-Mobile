@@ -2,7 +2,10 @@ import 'package:get/get.dart';
 import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/models/request/group_request.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/your_groups_controller.dart';
 import 'package:uni_alumni/modules/groups/group_repository.dart';
+import 'package:uni_alumni/shared/widgets/confirm_dialog.dart';
+import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 class GroupDetailsController extends GetxController {
   final GroupRepository groupRepository;
@@ -41,7 +44,7 @@ class GroupDetailsController extends GetxController {
     GroupRequest params = GroupRequest(
       parentGroupId: currentGroup!.id.toString(),
       pageSize: _groupPageSize.toString(),
-      page: _page.toString(),
+      // page: _page.toString(),
     );
 
     List<Group>? _groups =
@@ -49,6 +52,32 @@ class GroupDetailsController extends GetxController {
     if (_groups != null) {
       groupChild.value = _groups;
       isGroupChildLoading.value = false;
+    }
+  }
+
+  Future<bool> leaveGroup() async {
+    bool? isConfirmed =
+        await ConfirmDialog.showDialog(msg: 'Do you want to leave group?');
+
+    if (isConfirmed == null) {
+      return false;
+    }
+
+    bool result = await groupRepository.leaveGroup(
+        _userAuthentication!.appToken, currentGroup!.id!);
+    if (result) {
+      //delete this group from my group list
+      var yourGroups = Get.find<YourGroupsController>().myGroups;
+      int index = yourGroups
+          .indexWhere((group) => (group as Group).id == currentGroup!.id);
+      if (index < 0) return false;
+
+      yourGroups.removeAt(index);
+      yourGroups.refresh();
+      return true;
+    } else {
+      ErrorDialog.showDialog();
+      return false;
     }
   }
 }

@@ -35,21 +35,32 @@ class GroupHomeItem extends StatelessWidget {
           child: InkWell(
             splashColor: Colors.grey[200],
             onTap: () async {
-              if (group.status == 1) {
-                await Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => GroupDetailsScreen(
-                    group,
-                    'group-${group.id}',
-                  ),
-                ));
+              //banned
+              if (group.status == -2) {
+                ErrorDialog.showDialog(
+                  title: 'Announcement',
+                  content: 'You have been banned from this group!',
+                );
+                return;
+              }
 
-                Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
-              } else {
+              //not join group
+              if (group.status == -1 || group.status == 0) {
                 ErrorDialog.showDialog(
                   title: 'Announcement',
                   content: 'You have not joined this group yet!',
                 );
+                return;
               }
+
+              await Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => GroupDetailsScreen(
+                  group,
+                  'group-${group.id}',
+                ),
+              ));
+
+              Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -92,11 +103,28 @@ class GroupHomeItem extends StatelessWidget {
 
   _buildButton(int status, controller) {
     switch (status) {
+      case -2:
+        return TextButton.icon(
+          label: Text(Group.banned),
+          icon: Icon(Icons.cancel),
+          onPressed: () {
+            return null;
+          },
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(Colors.red),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                side: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+            ),
+          ),
+        );
       case -1:
         return TextButton.icon(
           label: Text('Request'),
           icon: Icon(Icons.add_to_home_screen),
-          onPressed: () async {
+          onPressed: () {
             controller.toggleRequestJoinGroup(group.id!);
           },
           style: ButtonStyle(

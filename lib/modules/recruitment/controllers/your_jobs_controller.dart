@@ -8,6 +8,7 @@ import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/common_enum.dart';
 import 'package:uni_alumni/shared/data/enum/recruitment_enum.dart';
+import 'package:uni_alumni/shared/widgets/confirm_dialog.dart';
 import 'package:uni_alumni/shared/widgets/date_time_picker_dialog.dart';
 import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
@@ -88,7 +89,7 @@ class YourJobsController extends GetxController {
 
   deleteJob(int id) async {
     bool? result =
-        await _showConfirmDialog(msg: 'Do you want to delete this job?');
+        await ConfirmDialog.showDialog(msg: 'Do you want to delete this job?');
     if (result == null) return;
 
     bool isSucceed =
@@ -112,7 +113,7 @@ class YourJobsController extends GetxController {
   }
 
   closeJob(int id) {
-    _showConfirmDialog(msg: 'Do you want to end this job?');
+    ConfirmDialog.showDialog(msg: 'Do you want to end this job?');
     changeEndDate(id, DateTime.now().toUtc());
   }
 
@@ -203,25 +204,6 @@ class YourJobsController extends GetxController {
           ],
         );
       }),
-    );
-  }
-
-  Future<bool?> _showConfirmDialog(
-      {String title = 'Confirmation', required String msg}) {
-    return Get.defaultDialog(
-      title: title,
-      content: Text(msg),
-      confirm: TextButton(
-          onPressed: () {
-            Get.back(result: true);
-          },
-          child: Text('Confirm')),
-      cancel: TextButton(
-        onPressed: () {
-          Get.back();
-        },
-        child: Text('Cancel'),
-      ),
     );
   }
 }

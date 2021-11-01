@@ -31,7 +31,8 @@ class EventRepository {
 
   Future<bool> leaveEvent(String token, int eventId) async {
     print(">>Leave");
-    final response = await apiProvider.leave('/alumnus/event/$eventId', token);
+    final response =
+        await apiProvider.deleteMethod('/alumnus/event/$eventId', token);
     if (response.statusCode == 204) {
       return true;
     }

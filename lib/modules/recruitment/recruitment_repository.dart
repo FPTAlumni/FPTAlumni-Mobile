@@ -39,7 +39,7 @@ class RecruitmentRepository {
   }
 
   Future<bool> deleteJob(String token, int id) async {
-    final response = await apiProvider.deleteJob('/recruitments/$id', token);
+    final response = await apiProvider.deleteMethod('/recruitments/$id', token);
     if (response.statusCode == 200) {
       return true;
     }

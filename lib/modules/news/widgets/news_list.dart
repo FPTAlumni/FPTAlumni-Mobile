@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/news/news_controller.dart';
-import 'package:uni_alumni/modules/news/news_repository.dart';
 import 'package:uni_alumni/modules/news/widgets/news_card.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class NewsList extends StatelessWidget {
-  final controller = Get.put(
-      NewsController(newsRepository: NewsRepository(apiProvider: Get.find())));
+  final controller = Get.find<NewsController>();
   @override
   Widget build(BuildContext context) {
     return Container(

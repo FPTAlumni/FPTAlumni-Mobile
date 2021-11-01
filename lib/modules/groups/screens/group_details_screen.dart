@@ -63,6 +63,22 @@ class GroupDetailsScreen extends StatelessWidget {
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
+        actions: [
+          GestureDetector(
+            onTap: () async {
+              bool isSuccess = await controller.leaveGroup();
+              if (!isSuccess) return;
+              print(isSuccess);
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(
+                right: 12.0,
+              ),
+              child: Icon(Icons.logout),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [

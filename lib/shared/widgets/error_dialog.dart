@@ -8,7 +8,12 @@ class ErrorDialog {
   }) {
     Get.defaultDialog(
       title: title,
-      content: Text(content),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+        ),
+        child: Text(content),
+      ),
       cancel: TextButton(
         onPressed: () {
           Get.back();

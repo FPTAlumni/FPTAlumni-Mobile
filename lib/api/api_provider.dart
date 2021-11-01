@@ -14,6 +14,10 @@ import 'package:uni_alumni/models/request/voucher_get_request.dart';
 import 'package:uni_alumni/shared/utils/header.dart';
 
 class ApiProvider extends BaseProvider {
+  Future<Response> deleteMethod(String path, String token) {
+    return delete(path, headers: HeaderApi(token).getHeaders());
+  }
+
   //------------University------------
   Future<Response> getUniversities(String path) {
     return get(path);
@@ -46,10 +50,6 @@ class ApiProvider extends BaseProvider {
 
   Future<Response> join(String path, String token) {
     return post(path, {}, headers: HeaderApi(token).getHeaders());
-  }
-
-  Future<Response> leave(String path, String token) {
-    return delete(path, headers: HeaderApi(token).getHeaders());
   }
 
   //------------Event------------
@@ -86,10 +86,6 @@ class ApiProvider extends BaseProvider {
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
 
-  Future<Response> deleteJob(String path, String token) {
-    return delete(path, headers: HeaderApi(token).getHeaders());
-  }
-
   Future<Response> changeEndDate(
       String path, String token, ExpandEndDateRequest data) {
     return patch(path, data.toJson(), headers: HeaderApi(token).getHeaders());
@@ -112,11 +108,12 @@ class ApiProvider extends BaseProvider {
     return post(path, data.toJson(), headers: HeaderApi(token).getHeaders());
   }
 
-  Future<Response> deleteReferral (String path, token) {
+  Future<Response> deleteReferral(String path, token) {
     return delete(path, headers: HeaderApi(token).getHeaders());
   }
 
-  Future<Response> updateReferral(String path, String token, ReferralPostRequest data){
+  Future<Response> updateReferral(
+      String path, String token, ReferralPostRequest data) {
     print('>>API: ' + data.id.toString());
     return put(path, data.toJson(), headers: HeaderApi(token).getHeaders());
   }
@@ -128,6 +125,4 @@ class ApiProvider extends BaseProvider {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
-
-
 }

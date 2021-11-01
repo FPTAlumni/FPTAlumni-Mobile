@@ -9,6 +9,7 @@ part 'group.g.dart';
 class Group {
   static const String notRequest = 'Not Requested';
   static const String pending = 'Pending';
+  static const String banned = 'Banned';
 
   @JsonKey(name: "id")
   int? id;
@@ -75,6 +76,8 @@ class Group {
       status = -1;
     } else if (requestStatus == pending) {
       status = 0;
+    } else if (requestStatus == banned) {
+      status = -2;
     } else {
       status = 1;
     }

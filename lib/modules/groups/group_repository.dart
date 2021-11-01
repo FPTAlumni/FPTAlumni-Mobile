@@ -31,8 +31,17 @@ class GroupRepository {
   }
 
   Future<bool> cancelJoinRequest(String token, int groupId) async {
+    final response = await apiProvider.deleteMethod(
+        '/alumnus/groups/cancel/$groupId', token);
+    if (response.isOk) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> leaveGroup(String token, int groupId) async {
     final response =
-        await apiProvider.leave('/alumnus/groups/cancel/$groupId', token);
+        await apiProvider.deleteMethod('/alumnus/groups/$groupId', token);
     if (response.isOk) {
       return true;
     }
