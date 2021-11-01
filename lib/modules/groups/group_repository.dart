@@ -1,6 +1,9 @@
 import 'package:uni_alumni/api/api_provider.dart';
+import 'package:uni_alumni/models/alumni.dart';
 import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/models/request/alumni_group_request.dart';
 import 'package:uni_alumni/models/request/group_request.dart';
+import 'package:uni_alumni/models/response/alumni_group_response.dart';
 
 class GroupRepository {
   final ApiProvider apiProvider;
@@ -46,5 +49,17 @@ class GroupRepository {
       return true;
     }
     return false;
+  }
+
+  Future<AlumniGroupResponse?> getAlumniInGroup(
+      String token, AlumniGroupRequest params) async {
+    final response = await apiProvider.getAlumniInGroup(
+        '/groups/${params.groupId}/alumni', token, params);
+    if (response.statusCode == 200) {
+      List responseList = response.body['data'];
+      if (responseList.isNotEmpty) {
+        return AlumniGroupResponse.fromJson(response.body['data'][0]);
+      }
+    }
   }
 }

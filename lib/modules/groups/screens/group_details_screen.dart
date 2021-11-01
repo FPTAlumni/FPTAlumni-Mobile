@@ -68,8 +68,8 @@ class GroupDetailsScreen extends StatelessWidget {
           GestureDetector(
             onTap: () async {
               bool isSuccess = await controller.leaveGroup();
-              if (!isSuccess) return;
               print(isSuccess);
+              if (!isSuccess) return;
               Navigator.of(context).pop();
             },
             child: Container(

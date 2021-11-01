@@ -35,7 +35,7 @@ class AuthRepository {
   }
 
   Future<Alumni?> getUserById(int id, String token) async {
-    final response = await apiProvider.getUserById('/alumnus/$id', token);
+    final response = await apiProvider.getMethod('/alumnus/$id', token);
     if (response.statusCode == 200) {
       return Alumni.fromJson(response.body['data']);
     }

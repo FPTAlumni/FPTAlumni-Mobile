@@ -1,5 +1,6 @@
 import 'package:get/get_connect/connect.dart';
 import 'package:uni_alumni/api/base_provider.dart';
+import 'package:uni_alumni/models/request/alumni_group_request.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
 import 'package:uni_alumni/models/request/expand_end_date_request.dart';
@@ -16,6 +17,10 @@ import 'package:uni_alumni/shared/utils/header.dart';
 class ApiProvider extends BaseProvider {
   Future<Response> deleteMethod(String path, String token) {
     return delete(path, headers: HeaderApi(token).getHeaders());
+  }
+
+  Future<Response> getMethod(String path, String token) {
+    return get(path, headers: HeaderApi(token).getHeaders());
   }
 
   //------------University------------
@@ -44,10 +49,6 @@ class ApiProvider extends BaseProvider {
   }
 
   //------------Alumni------------
-  Future<Response> getUserById(String path, String token) {
-    return get(path, headers: HeaderApi(token).getHeaders());
-  }
-
   Future<Response> join(String path, String token) {
     return post(path, {}, headers: HeaderApi(token).getHeaders());
   }
@@ -72,6 +73,12 @@ class ApiProvider extends BaseProvider {
   Future<Response> getGroups(String path, String token, GroupRequest? params) {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params?.toJson());
+  }
+
+  Future<Response> getAlumniInGroup(
+      String path, String token, AlumniGroupRequest params) {
+    return get(path,
+        headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
 
   //------------Recruitment------------
