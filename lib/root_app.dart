@@ -16,8 +16,7 @@ class RootApp extends GetView<AuthController> {
               builder: (ctx, authResultSnapshot) =>
                   authResultSnapshot.connectionState == ConnectionState.waiting
                       ? SplashScreen()
-                      : SignInScreen(),
-            );
+                      : SignInScreen());
     });
     // return MainScreen() ;
   }

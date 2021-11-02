@@ -27,8 +27,11 @@ class AuthRepository {
 
   Future<bool> register(RegistrationRequest data) async {
     final response = await apiProvider.register('/alumnus', data);
-    if (response.statusCode == 404) return false;
-    return true;
+    print(">>");
+    print(response.statusText);
+    print(response.statusCode);
+    if (response.isOk) return true;
+    return false;
   }
 
   Future<Alumni?> getUserById(int id, String token) async {
