@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+import 'package:uni_alumni/models/group.dart';
 import 'package:uni_alumni/models/request/alumni_group_request.dart';
 import 'package:uni_alumni/models/response/alumni_group_response.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
 import 'package:uni_alumni/modules/groups/group_repository.dart';
 import 'package:uni_alumni/modules/groups/controllers/your_groups_controller.dart';
+import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 enum GroupTabs {
   yourGroup,
@@ -30,20 +32,21 @@ class GroupController extends GetxController {
   //   return await groupRepository.getGroupById(userAuthentication!.appToken, id);
   // }
 
-  Future<bool> isInGroup(int groupId) async {
+  ///This function will check if this alumni in group or not
+  ///
+  /// Return null if this alumni is not in group
+  ///
+  /// Return [AlumniGroupResponse] if this alumni is in AlumniGroup table
+  Future<AlumniGroupResponse?> isInGroup(int groupId) async {
     AlumniGroupRequest params = AlumniGroupRequest(
       groupId: groupId.toString(),
       email: _currentUser!.email,
     );
 
-    AlumniGroupResponse? response = await groupRepository.getAlumniInGroup(
+    AlumniGroupResponse? alumni = await groupRepository.getAlumniInGroup(
         _userAuthentication!.appToken, params);
 
-    if (response != null) {
-      print(response.toJson());
-      return true;
-    }
-    return false;
+    return alumni;
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/models/response/alumni_group_response.dart';
 import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_child_list_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
@@ -38,40 +39,35 @@ class GroupHomeItem extends StatelessWidget {
             onTap: () async {
               //check if this Alumni in group
               final groupController = Get.find<GroupController>();
-              bool result = await groupController.isInGroup(group.id!);
 
-              if (result) {
-                // //banned
-                // if (group.status == -2) {
-                //   ErrorDialog.showDialog(
-                //     title: 'Announcement',
-                //     content: 'You have been banned from this group!',
-                //   );
-                //   return;
-                // }
-                //
-                // //not join group
-                // if (group.status == -1 || group.status == 0) {
-                //   ErrorDialog.showDialog(
-                //     title: 'Announcement',
-                //     content: 'You have not joined this group yet!',
-                //   );
-                //   return;
-                // }
+              AlumniGroupResponse? alumni =
+                  await groupController.isInGroup(group.id!);
 
-                await Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => GroupDetailsScreen(
-                    group,
-                    'group-${group.id}',
-                  ),
-                ));
-
-                Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
-              } else {
+              //not join group
+              if (alumni == null || alumni.status == Group.pending) {
                 ErrorDialog.showDialog(
-                    content: 'You were banned or you were '
-                        'not in this group');
+                    content: 'You have not joined in this '
+                        'group yet!');
+                return;
               }
+
+              //banned
+              if (alumni.status == Group.banned) {
+                ErrorDialog.showDialog(
+                  title: 'Announcement',
+                  content: 'You have been banned from this group!',
+                );
+                return;
+              }
+
+              await Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => GroupDetailsScreen(
+                  group,
+                  'group-${group.id}',
+                ),
+              ));
+
+              Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10.0),

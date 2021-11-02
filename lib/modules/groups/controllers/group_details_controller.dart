@@ -200,7 +200,37 @@ class GroupDetailsController extends GetxController {
     await getPosts();
   }
 
+  toggleRequestJoinGroup(int groupId, {bool join = true}) async {
+    bool result = false;
+
+    if (join) {
+      result = await groupRepository.joinGroup(
+          _userAuthentication!.appToken, groupId);
+    } else {
+      result = await groupRepository.cancelJoinRequest(
+          _userAuthentication!.appToken, groupId);
+    }
+
+    if (result) {
+      int index = groupChild.indexWhere((group) => group.id == groupId);
+      if (join) {
+        (groupChild[index] as Group).joinGroup();
+      } else {
+        (groupChild[index] as Group).cancelJoinGroup();
+      }
+      groupChild.refresh();
+    } else {
+      ErrorDialog.showDialog();
+    }
+  }
+
   Future<bool> leaveGroup() async {
+    if (currentGroup?.leader?.id == _userAuthentication?.id) {
+      ErrorDialog.showDialog(
+          content: 'Cannot leave since you are the leader of this group');
+      return false;
+    }
+
     bool? isConfirmed =
         await ConfirmDialog.showDialog(msg: 'Do you want to leave group?');
 

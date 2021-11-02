@@ -115,7 +115,7 @@ class GroupDetailsScreen extends StatelessWidget {
                             return SeeMore(group);
                           }
 
-                          return GroupChildCard(controller.groupChild[i]);
+                          return GroupChildCard(controller.groupChild[i], tag);
                         },
                       ),
                     ),

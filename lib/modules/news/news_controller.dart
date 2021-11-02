@@ -23,17 +23,7 @@ class NewsController extends GetxController {
   String? error;
   var isLoading = true.obs;
 
-  List<Tag> _tags = [
-    // Tag(id: 1, tagName: 'tag1'),
-    // Tag(id: 2, tagName: 'tag2'),
-    // Tag(id: 3, tagName: 'tag3'),
-    // Tag(id: 4, tagName: 'tag4'),
-    // Tag(id: 5, tagName: 'tag5'),
-    // Tag(id: 6, tagName: 'tag6'),
-    // Tag(id: 7, tagName: 'K14'),
-    // Tag(id: 8, tagName: 'Alumni'),
-    // Tag(id: 9, tagName: 'QuizNow'),
-  ];
+  List<Tag> _tags = [];
 
   Tag? _selectedTag;
 
@@ -52,6 +42,11 @@ class NewsController extends GetxController {
         });
       }
     });
+  }
+
+  @override
+  void onReady() async {
+    await _loadTagsList();
   }
 
   NewsRequest _generateParam() {
@@ -91,7 +86,6 @@ class NewsController extends GetxController {
   }
 
   showFilter() async {
-    await _loadTagsList();
     bool needRefresh = false;
     await _filterDialog.showDialog(
         context: Get.context!,
@@ -108,6 +102,7 @@ class NewsController extends GetxController {
       }
     }
     _selectedTag = _filter;
+
     if (needRefresh) {
       refresh();
     }

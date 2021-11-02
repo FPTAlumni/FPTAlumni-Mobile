@@ -12,6 +12,7 @@ class Group {
   static const String notRequest = 'Not Requested';
   static const String pending = 'Pending';
   static const String banned = 'Banned';
+  static const String active = 'Active';
 
   @JsonKey(name: "id")
   int? id;
