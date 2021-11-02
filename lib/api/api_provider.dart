@@ -1,6 +1,7 @@
 import 'package:get/get_connect/connect.dart';
 import 'package:uni_alumni/api/base_provider.dart';
 import 'package:uni_alumni/models/request/alumni_group_request.dart';
+import 'package:uni_alumni/models/request/alumni_request.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
 import 'package:uni_alumni/models/request/expand_end_date_request.dart';
@@ -51,6 +52,15 @@ class ApiProvider extends BaseProvider {
   //------------Alumni------------
   Future<Response> join(String path, String token) {
     return post(path, {}, headers: HeaderApi(token).getHeaders());
+  }
+  
+  Future<Response> leave(String path, String token) {
+    return delete(path, headers: HeaderApi(token).getHeaders());
+  }
+
+  Future<Response> updateAlumni(
+      String path, String token, AlumniRequest data) {
+    return put(path, data.toJson(), headers: HeaderApi(token).getHeaders());
   }
 
   //------------Event------------
