@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/modules/news/news_controller.dart';
-import 'package:uni_alumni/modules/news/news_repository.dart';
 import 'package:uni_alumni/modules/news/widgets/news_card.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class NewsList extends StatelessWidget {
-  final controller = Get.put(
-      NewsController(newsRepository: NewsRepository(apiProvider: Get.find())));
+  final controller = Get.find<NewsController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,14 +14,24 @@ class NewsList extends StatelessWidget {
         onRefresh: () => controller.refresh(),
         child: Obx(() {
           if (controller.news.length == 0) {
-            return Container(
-              alignment: Alignment.center,
-              child: Text(
-                'There is no news for you',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'There is no news for you',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }

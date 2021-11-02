@@ -27,6 +27,12 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
       parentGroup: json['parent_group'] == null
           ? null
           : Group.fromJson(json['parent_group'] as Map<String, dynamic>),
+      jobs: (json['recruitments'] as List<dynamic>?)
+          ?.map((e) => Recruitment.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      news: (json['news'] as List<dynamic>?)
+          ?.map((e) => News.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$GroupToJson(Group instance) {
@@ -48,5 +54,7 @@ Map<String, dynamic> _$GroupToJson(Group instance) {
   writeNotNull('group_leader', instance.leader?.toJson());
   writeNotNull('university', instance.university?.toJson());
   writeNotNull('parent_group', instance.parentGroup?.toJson());
+  writeNotNull('recruitments', instance.jobs?.map((e) => e.toJson()).toList());
+  writeNotNull('news', instance.news?.map((e) => e.toJson()).toList());
   return val;
 }

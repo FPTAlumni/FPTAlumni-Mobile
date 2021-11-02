@@ -12,6 +12,8 @@ import 'package:uni_alumni/modules/voucher/voucher_repository.dart';
 
 import 'modules/events/event_repository.dart';
 import 'modules/groups/controllers/your_groups_controller.dart';
+import 'modules/news/news_controller.dart';
+import 'modules/news/news_repository.dart';
 import 'modules/refferal/referral_controller.dart';
 
 class AppBinding extends Bindings {
@@ -19,31 +21,35 @@ class AppBinding extends Bindings {
   void dependencies() {
     Get.put(ApiProvider(), permanent: true);
     Get.put(AuthRepository(apiProvider: Get.find()), permanent: true);
+    Get.put(EventRepository(apiProvider: Get.find()), permanent: true);
+    Get.put(GroupRepository(apiProvider: Get.find()), permanent: true);
+    Get.put(NewsRepository(apiProvider: Get.find()), permanent: true);
+    Get.put(RecruitmentRepository(apiProvider: Get.find()), permanent: true);
     Get.lazyPut(
-        () => GroupController(
-            groupRepository: GroupRepository(apiProvider: Get.find())),
+        () => NewsController(newsRepository: Get.find<NewsRepository>()),
         fenix: true);
     Get.lazyPut(
-        () => EventController(
-            eventRepository: EventRepository(apiProvider: Get.find())),
+        () => EventController(eventRepository: Get.find<EventRepository>()),
         fenix: true);
     Get.lazyPut(
         () => RecruitmentTabController(
-            recruitmentRepository:
-                RecruitmentRepository(apiProvider: Get.find())),
+            recruitmentRepository: Get.find<RecruitmentRepository>()),
+        fenix: true);
+    Get.lazyPut(
+        () => GroupController(groupRepository: Get.find<GroupRepository>()),
+        fenix: true);
+    Get.lazyPut(
+        () =>
+            YourGroupsController(groupRepository: Get.find<GroupRepository>()),
+        fenix: true);
+    Get.lazyPut(
+        () => DiscoverGroupsController(
+            groupRepository: Get.find<GroupRepository>()),
         fenix: true);
     Get.lazyPut(
         () => ReferralController(
             referralRepository: ReferralRepository(apiProvider: Get.find()),
-            voucherRepository:VoucherRepository(apiProvider: Get.find())),
-        fenix: true);
-    Get.lazyPut(
-        () => YourGroupsController(
-            groupRepository: GroupRepository(apiProvider: Get.find())),
-        fenix: true);
-    Get.lazyPut(
-        () => DiscoverGroupsController(
-            groupRepository: GroupRepository(apiProvider: Get.find())),
+            voucherRepository: VoucherRepository(apiProvider: Get.find())),
         fenix: true);
   }
 }

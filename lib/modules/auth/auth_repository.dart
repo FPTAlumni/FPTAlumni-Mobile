@@ -17,10 +17,7 @@ class AuthRepository {
     print(response.statusCode);
     switch (responseStatusCode) {
       case 200:
-        return AppTokenResponse(
-          appToken: response.body['custom_token'],
-          id: response.body['id'],
-        );
+        return AppTokenResponse.fromJson(response.body);
       case 201:
         return null;
       case 404:
@@ -35,7 +32,7 @@ class AuthRepository {
   }
 
   Future<Alumni?> getUserById(int id, String token) async {
-    final response = await apiProvider.getUserById('/alumnus/$id', token);
+    final response = await apiProvider.getMethod('/alumnus/$id', token);
     if (response.statusCode == 200) {
       return Alumni.fromJson(response.body['data']);
     }

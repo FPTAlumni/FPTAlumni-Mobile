@@ -24,7 +24,7 @@ class GroupsList extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: Obx(() {
-        if (list.length == 0 && !isLoading.value) {
+        if (list.length == 0) {
           return SingleChildScrollView(
             physics: BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),

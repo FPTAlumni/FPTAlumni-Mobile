@@ -5,6 +5,7 @@ import 'package:uni_alumni/modules/groups/controllers/group_details_controller.d
 import 'package:uni_alumni/modules/groups/group_repository.dart';
 import 'package:uni_alumni/modules/groups/widgets/group_child_card.dart';
 import 'package:uni_alumni/modules/groups/widgets/group_child_shimmer.dart';
+import 'package:uni_alumni/modules/groups/widgets/group_posts_list.dart';
 import 'package:uni_alumni/modules/groups/widgets/see_more.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
@@ -63,27 +64,47 @@ class GroupDetailsScreen extends StatelessWidget {
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
+        actions: [
+          GestureDetector(
+            onTap: () async {
+              bool isSuccess = await controller.leaveGroup();
+              print(isSuccess);
+              if (!isSuccess) return;
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(
+                right: 12.0,
+              ),
+              child: Icon(Icons.logout),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
           if (group.parentGroup == null)
             FutureBuilder(
-                future: controller.getGroupChild,
-                builder: (ctx, groupResultSnapshot) {
-                  return Obx(() {
-                    if (controller.groupChild.length == 0) {
-                      if (groupResultSnapshot.hasError) {
-                        return const SizedBox();
-                      }
-
-                      if (controller.isGroupChildLoading.value) {
-                        return const GroupChildShimmer();
-                      } else {
-                        return const SizedBox();
-                      }
+              future: controller.getGroupChild,
+              builder: (ctx, groupResultSnapshot) {
+                return Obx(() {
+                  if (controller.groupChild.length == 0) {
+                    if (groupResultSnapshot.hasError) {
+                      return const SizedBox();
                     }
 
-                    return Expanded(
+                    if (controller.isGroupChildLoading.value) {
+                      return const GroupChildShimmer();
+                    } else {
+                      return const SizedBox();
+                    }
+                  }
+
+                  return Visibility(
+                    visible: controller.isVisibility.value,
+                    child: Container(
+                      color: Colors.white,
+                      height: controller.groupChildHeight,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: controller.groupChild.length,
@@ -94,21 +115,16 @@ class GroupDetailsScreen extends StatelessWidget {
                             return SeeMore(group);
                           }
 
-                          return GroupChildCard(controller.groupChild[i]);
+                          return GroupChildCard(controller.groupChild[i], tag);
                         },
                       ),
-                    );
-                  });
-                }),
-          Expanded(
-            flex: 5,
-            child: ListView(
-              children: [
-                Container(height: 100),
-                Container(height: 100),
-                Container(height: 100),
-              ],
+                    ),
+                  );
+                });
+              },
             ),
+          Expanded(
+            child: GroupPostsList(tag: tag),
           ),
         ],
       ),

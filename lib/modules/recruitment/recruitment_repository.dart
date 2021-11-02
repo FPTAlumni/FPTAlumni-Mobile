@@ -29,7 +29,7 @@ class RecruitmentRepository {
     return false;
   }
 
-  Future<List<Recruitment?>?> getJobs(
+  Future<List<Recruitment>?> getJobs(
       String token, RecruitmentGetRequest params) async {
     final response = await apiProvider.getJobs('/recruitments', token, params);
     if (response.statusCode == 200) {
@@ -39,7 +39,7 @@ class RecruitmentRepository {
   }
 
   Future<bool> deleteJob(String token, int id) async {
-    final response = await apiProvider.deleteJob('/recruitments/$id', token);
+    final response = await apiProvider.deleteMethod('/recruitments/$id', token);
     if (response.statusCode == 200) {
       return true;
     }

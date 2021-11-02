@@ -97,13 +97,13 @@ class AuthController extends GetxController {
         return;
       }
 
+      CustomFullScreenDialog.cancelDialog();
+
       if (userAuthentication != null) {
         print(userAuthentication!.appToken);
 
         currentUser = await authRepository.getUserById(
             userAuthentication!.id, userAuthentication!.appToken);
-
-        CustomFullScreenDialog.cancelDialog();
 
         if (currentUser == null) return;
 

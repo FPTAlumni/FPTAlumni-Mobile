@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/group.dart';
+import 'package:uni_alumni/models/response/alumni_group_response.dart';
 import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_child_list_controller.dart';
+import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_details_controller.dart';
 import 'package:uni_alumni/modules/groups/screens/group_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -35,21 +37,37 @@ class GroupHomeItem extends StatelessWidget {
           child: InkWell(
             splashColor: Colors.grey[200],
             onTap: () async {
-              if (group.status == 1) {
-                await Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => GroupDetailsScreen(
-                    group,
-                    'group-${group.id}',
-                  ),
-                ));
+              //check if this Alumni in group
+              final groupController = Get.find<GroupController>();
 
-                Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
-              } else {
+              AlumniGroupResponse? alumni =
+                  await groupController.isInGroup(group.id!);
+
+              //not join group
+              if (alumni == null || alumni.status == Group.pending) {
+                ErrorDialog.showDialog(
+                    content: 'You have not joined in this '
+                        'group yet!');
+                return;
+              }
+
+              //banned
+              if (alumni.status == Group.banned) {
                 ErrorDialog.showDialog(
                   title: 'Announcement',
-                  content: 'You have not joined this group yet!',
+                  content: 'You have been banned from this group!',
                 );
+                return;
               }
+
+              await Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => GroupDetailsScreen(
+                  group,
+                  'group-${group.id}',
+                ),
+              ));
+
+              Get.delete<GroupDetailsController>(tag: 'group-${group.id}');
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -92,11 +110,28 @@ class GroupHomeItem extends StatelessWidget {
 
   _buildButton(int status, controller) {
     switch (status) {
+      case -2:
+        return TextButton.icon(
+          label: Text(Group.banned),
+          icon: Icon(Icons.cancel),
+          onPressed: () {
+            return null;
+          },
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(Colors.red),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                side: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+            ),
+          ),
+        );
       case -1:
         return TextButton.icon(
           label: Text('Request'),
           icon: Icon(Icons.add_to_home_screen),
-          onPressed: () async {
+          onPressed: () {
             controller.toggleRequestJoinGroup(group.id!);
           },
           style: ButtonStyle(

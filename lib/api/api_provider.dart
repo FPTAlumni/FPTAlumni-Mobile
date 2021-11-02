@@ -1,5 +1,6 @@
 import 'package:get/get_connect/connect.dart';
 import 'package:uni_alumni/api/base_provider.dart';
+import 'package:uni_alumni/models/request/alumni_group_request.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
 import 'package:uni_alumni/models/request/expand_end_date_request.dart';
@@ -14,6 +15,14 @@ import 'package:uni_alumni/models/request/voucher_get_request.dart';
 import 'package:uni_alumni/shared/utils/header.dart';
 
 class ApiProvider extends BaseProvider {
+  Future<Response> deleteMethod(String path, String token) {
+    return delete(path, headers: HeaderApi(token).getHeaders());
+  }
+
+  Future<Response> getMethod(String path, String token) {
+    return get(path, headers: HeaderApi(token).getHeaders());
+  }
+
   //------------University------------
   Future<Response> getUniversities(String path) {
     return get(path);
@@ -40,16 +49,8 @@ class ApiProvider extends BaseProvider {
   }
 
   //------------Alumni------------
-  Future<Response> getUserById(String path, String token) {
-    return get(path, headers: HeaderApi(token).getHeaders());
-  }
-
   Future<Response> join(String path, String token) {
     return post(path, {}, headers: HeaderApi(token).getHeaders());
-  }
-
-  Future<Response> leave(String path, String token) {
-    return delete(path, headers: HeaderApi(token).getHeaders());
   }
 
   //------------Event------------
@@ -74,6 +75,12 @@ class ApiProvider extends BaseProvider {
         headers: HeaderApi(token).getHeaders(), query: params?.toJson());
   }
 
+  Future<Response> getAlumniInGroup(
+      String path, String token, AlumniGroupRequest params) {
+    return get(path,
+        headers: HeaderApi(token).getHeaders(), query: params.toJson());
+  }
+
   //------------Recruitment------------
   Future<Response> createJob(
       String path, String token, RecruitmentPostRequest data) {
@@ -84,10 +91,6 @@ class ApiProvider extends BaseProvider {
       String path, String token, RecruitmentGetRequest params) {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
-  }
-
-  Future<Response> deleteJob(String path, String token) {
-    return delete(path, headers: HeaderApi(token).getHeaders());
   }
 
   Future<Response> changeEndDate(
@@ -112,11 +115,12 @@ class ApiProvider extends BaseProvider {
     return post(path, data.toJson(), headers: HeaderApi(token).getHeaders());
   }
 
-  Future<Response> deleteReferral (String path, token) {
+  Future<Response> deleteReferral(String path, token) {
     return delete(path, headers: HeaderApi(token).getHeaders());
   }
 
-  Future<Response> updateReferral(String path, String token, ReferralPostRequest data){
+  Future<Response> updateReferral(
+      String path, String token, ReferralPostRequest data) {
     print('>>API: ' + data.id.toString());
     return put(path, data.toJson(), headers: HeaderApi(token).getHeaders());
   }
@@ -128,6 +132,4 @@ class ApiProvider extends BaseProvider {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
-
-
 }
