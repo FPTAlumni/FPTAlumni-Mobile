@@ -1,6 +1,7 @@
 import 'package:uni_alumni/api/api_provider.dart';
 import 'package:uni_alumni/models/news.dart';
 import 'package:uni_alumni/models/request/news_request.dart';
+import 'package:uni_alumni/models/tag.dart';
 
 class NewsRepository {
   ApiProvider apiProvider;
@@ -16,6 +17,14 @@ class NewsRepository {
 
     if (response.statusCode == 204) {
       throw Exception('There is no news');
+    }
+  }
+
+  Future<List<Tag>?> getTags(String token) async {
+    final response = await apiProvider.getMethod('/tags', token);
+    if (response.statusCode == 200) {
+      List responseList = response.body['data'];
+      return responseList.map((tag) => Tag.fromJson(tag)).toList();
     }
   }
 }

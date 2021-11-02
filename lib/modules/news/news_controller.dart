@@ -24,15 +24,15 @@ class NewsController extends GetxController {
   var isLoading = true.obs;
 
   List<Tag> _tags = [
-    Tag(id: 1, tagName: 'tag1'),
-    Tag(id: 2, tagName: 'tag2'),
-    Tag(id: 3, tagName: 'tag3'),
-    Tag(id: 4, tagName: 'tag4'),
-    Tag(id: 5, tagName: 'tag5'),
-    Tag(id: 6, tagName: 'tag6'),
-    Tag(id: 7, tagName: 'K14'),
-    Tag(id: 8, tagName: 'Alumni'),
-    Tag(id: 9, tagName: 'QuizNow'),
+    // Tag(id: 1, tagName: 'tag1'),
+    // Tag(id: 2, tagName: 'tag2'),
+    // Tag(id: 3, tagName: 'tag3'),
+    // Tag(id: 4, tagName: 'tag4'),
+    // Tag(id: 5, tagName: 'tag5'),
+    // Tag(id: 6, tagName: 'tag6'),
+    // Tag(id: 7, tagName: 'K14'),
+    // Tag(id: 8, tagName: 'Alumni'),
+    // Tag(id: 9, tagName: 'QuizNow'),
   ];
 
   Tag? _selectedTag;
@@ -82,7 +82,16 @@ class NewsController extends GetxController {
     }
   }
 
+  _loadTagsList() async {
+    List<Tag>? _tagsList =
+        await newsRepository.getTags(userAuthentication!.appToken);
+    if (_tagsList != null) {
+      _tags = _tagsList;
+    }
+  }
+
   showFilter() async {
+    await _loadTagsList();
     bool needRefresh = false;
     await _filterDialog.showDialog(
         context: Get.context!,

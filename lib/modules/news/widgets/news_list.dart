@@ -14,14 +14,24 @@ class NewsList extends StatelessWidget {
         onRefresh: () => controller.refresh(),
         child: Obx(() {
           if (controller.news.length == 0) {
-            return Container(
-              alignment: Alignment.center,
-              child: Text(
-                'There is no news for you',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'There is no news for you',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }
