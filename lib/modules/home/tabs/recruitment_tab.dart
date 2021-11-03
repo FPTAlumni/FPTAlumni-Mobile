@@ -31,7 +31,7 @@ class RecruitmentTab extends StatelessWidget {
               ),
             ),
             Text(
-              'JOB',
+              'JOBS BOARD',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: ColorConstants.primaryAppColor,

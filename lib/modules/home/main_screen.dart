@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/modules/home/controllers/home_controller.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/home/tabs/tabs.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class MainScreen extends StatelessWidget {
-  final MainController controller = Get.put(MainController());
+  final controller = Get.find<MainController>();
+  final homeController = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -34,10 +37,15 @@ class MainScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
+          homeController.isHome.value
+              ? BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                )
+              : BottomNavigationBarItem(
+                  icon: Icon(Icons.group),
+                  label: 'Groups',
+                ),
           BottomNavigationBarItem(
             icon: Icon(Icons.event),
             label: 'Events',

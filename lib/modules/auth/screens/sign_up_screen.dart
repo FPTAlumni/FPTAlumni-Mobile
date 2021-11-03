@@ -59,10 +59,14 @@ class SignUpScreen extends GetView<AuthController> {
                           if (value!.trim().isEmpty) {
                             return "Please enter your full name";
                           }
+
+                          if (value.length < 6) {
+                            return "Minimum character of full name is 6";
+                          }
                           return null;
                         },
                       ),
-                      SizedBox(height: size.height * 0.01),
+                      SizedBox(height: size.height * 0.015),
                       _buildTextFormField(
                         labelText: 'Phone number',
                         controller: controller.phoneController,
@@ -75,7 +79,7 @@ class SignUpScreen extends GetView<AuthController> {
                           return null;
                         },
                       ),
-                      SizedBox(height: size.height * 0.01),
+                      SizedBox(height: size.height * 0.015),
                       _buildTextFormField(
                         labelText: 'Date of birth',
                         controller: controller.dobController,
@@ -83,7 +87,7 @@ class SignUpScreen extends GetView<AuthController> {
                         hint: 'dd/MM/yyyy',
                         onTapHandler: () async {
                           FocusScope.of(context).requestFocus(FocusNode());
-                          await pickDate(context);
+                          await pickDate();
                         },
                         validator: (value) {
                           if (value!.trim().isEmpty) {
@@ -92,7 +96,7 @@ class SignUpScreen extends GetView<AuthController> {
                           return null;
                         },
                       ),
-                      SizedBox(height: size.height * 0.01),
+                      SizedBox(height: size.height * 0.015),
                       _buildDropDown(
                         hint: 'Choose your university',
                         label: 'University',
@@ -112,7 +116,7 @@ class SignUpScreen extends GetView<AuthController> {
                           return null;
                         },
                       ),
-                      SizedBox(height: size.height * 0.01),
+                      SizedBox(height: size.height * 0.015),
                       Obx(() {
                         return _buildDropDown(
                           hint: 'Choose your class',
@@ -134,7 +138,7 @@ class SignUpScreen extends GetView<AuthController> {
                           },
                         );
                       }),
-                      SizedBox(height: size.height * 0.01),
+                      SizedBox(height: size.height * 0.015),
                       Obx(() {
                         return _buildDropDown(
                           hint: 'Choose your major',
@@ -303,10 +307,14 @@ class SignUpScreen extends GetView<AuthController> {
     );
   }
 
-  Future pickDate(BuildContext context) async {
+  Future pickDate() async {
     final newDate = await showDatePicker(
       context: Get.context!,
-      initialDate: DateTime.now(),
+      initialDate: controller.dobController.text.isNotEmpty
+          ? DateFormat('dd/MM/yyyy')
+              .parse(controller.dobController.text)
+              .toLocal()
+          : DateTime.now(),
       initialDatePickerMode: DatePickerMode.day,
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),

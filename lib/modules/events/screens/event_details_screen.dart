@@ -27,18 +27,15 @@ class EventDetailsScreen extends StatelessWidget {
       child: Expanded(
         child: Stack(
           children: [
-            Hero(
-              tag: 'event-${event.id}',
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(event.banner),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25),
-                  ),
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(event.banner),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25),
                 ),
               ),
             ),
@@ -56,7 +53,7 @@ class EventDetailsScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                const SizedBox(width: 12),
+                // const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -70,7 +67,7 @@ class EventDetailsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      FormatUtils.toddMMyyyyHHmmaaa(event.registrationEndDate),
+                      FormatUtils.toddMMyyyyHHmm(event.registrationEndDate),
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 14,
@@ -80,56 +77,55 @@ class EventDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            if (isRegistering)
-              Obx(
-                () => GestureDetector(
-                  onTap: () {
-                    if (!controller.event.value.inEvent) {
-                      controller.joinEvent(event.id);
-                      controller.event.value.inEvent = true;
-                    } else {
-                      controller.leaveEvent(event.id);
-                      controller.event.value.inEvent = false;
-                    }
-                    controller.event.value.setStatus();
-                    controller.event.refresh();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: controller.event.value.eventStatus ==
-                                  Event.registrationOpen
-                              ? Colors.orange.shade300.withOpacity(0.5)
-                              : Colors.grey.shade300.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 5,
-                          offset: Offset(0, 0),
-                        ),
-                      ],
-                      color: controller.event.value.eventStatus ==
-                              Event.registrationOpen
-                          ? Colors.deepOrange
-                          : Colors.grey[400],
+            Obx(
+              () => GestureDetector(
+                onTap: () {
+                  if (!controller.event.value.inEvent) {
+                    controller.joinEvent(event.id);
+                    controller.event.value.inEvent = true;
+                  } else {
+                    controller.leaveEvent(event.id);
+                    controller.event.value.inEvent = false;
+                  }
+                  controller.event.value.setStatus();
+                  controller.event.refresh();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
                     ),
-                    child: Text(
-                      controller.event.value.eventStatus! ==
-                              Event.registrationOpen
-                          ? 'Register'
-                          : 'Unregister',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: controller.event.value.eventStatus ==
+                                Event.registrationOpen
+                            ? Colors.orange.shade300.withOpacity(0.5)
+                            : Colors.grey.shade300.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 5,
+                        offset: Offset(0, 0),
                       ),
+                    ],
+                    color: controller.event.value.eventStatus ==
+                            Event.registrationOpen
+                        ? Colors.deepOrange
+                        : Colors.grey[400],
+                  ),
+                  child: Text(
+                    controller.event.value.eventStatus! ==
+                            Event.registrationOpen
+                        ? 'Register'
+                        : 'Cancel',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),
@@ -178,7 +174,7 @@ class EventDetailsScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                      left: 20,
+                      left: 16,
                       right: 20,
                       top: 20,
                     ),
@@ -231,42 +227,48 @@ class EventDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: Colors.grey[600],
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    event.location,
-                                    style: TextStyle(
+                              Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
                                       color: Colors.grey[600],
-                                      fontSize: 14,
+                                      size: 20,
                                     ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                ],
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      event.location,
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.group,
-                                    color: Colors.grey[600],
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    event.groupName!,
-                                    style: TextStyle(
+                              Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.group,
                                       color: Colors.grey[600],
-                                      fontSize: 14,
+                                      size: 20,
                                     ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                ],
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      event.groupName!,
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -288,54 +290,49 @@ class EventDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 12.0),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey.withOpacity(0.7),
+                        Column(
+                          children: [
+                            // _buildTimeline(
+                            //   'Open Registration',
+                            //   dateBefore: event.registrationStartDate,
+                            //   dateAfter: event.registrationEndDate,
+                            //   isFirst: true,
+                            // ),
+                            // _buildTimeline(
+                            //   'Close Registration',
+                            //   dateBefore: event.registrationEndDate,
+                            //   dateAfter: event.startDate,
+                            // ),
+                            // _buildTimeline(
+                            //   'Event Start',
+                            //   dateBefore: event.startDate,
+                            //   dateAfter: event.endDate,
+                            // ),
+                            // _buildTimeline(
+                            //   'Event End',
+                            //   dateBefore: event.endDate,
+                            //   dateAfter: event.endDate,
+                            //   isLast: true,
+                            // ),
+                            _buildEventFeature(
+                              FormatUtils.toddMMyyyyHHmm(
+                                  event.registrationStartDate),
+                              "Registration Start",
                             ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            children: [
-                              _buildTimeline(
-                                'Open Registration',
-                                dateBefore: event.registrationStartDate,
-                                dateAfter: event.registrationEndDate,
-                                isFirst: true,
-                              ),
-                              _buildTimeline(
-                                'Close Registration',
-                                dateBefore: event.registrationEndDate,
-                                dateAfter: event.startDate,
-                              ),
-                              _buildTimeline(
-                                'Event Start',
-                                dateBefore: event.startDate,
-                                dateAfter: event.endDate,
-                              ),
-                              _buildTimeline(
-                                'Event End',
-                                dateBefore: event.endDate,
-                                dateAfter: event.endDate,
-                                isLast: true,
-                              ),
-                              // _buildEventFeature(
-                              //   FormatUtils.toddMMyyyyHHmmaaa(
-                              //       event.registrationStartDate),
-                              //   "Registration Start",
-                              // ),
-                              // _buildEventFeature(
-                              //   FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
-                              //   "Event Start",
-                              // ),
-                              // _buildEventFeature(
-                              //   FormatUtils.toddMMyyyyHHmmaaa(event.endDate),
-                              //   "Event End",
-                              // ),
-                            ],
-                          ),
+                            _buildEventFeature(
+                              FormatUtils.toddMMyyyyHHmm(
+                                  event.registrationEndDate),
+                              "Registration End",
+                            ),
+                            _buildEventFeature(
+                              FormatUtils.toddMMyyyyHHmm(event.startDate),
+                              "Event Start",
+                            ),
+                            _buildEventFeature(
+                              FormatUtils.toddMMyyyyHHmm(event.endDate),
+                              "Event End",
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -367,7 +364,7 @@ class EventDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          _registrationPlace,
+          if (isRegistering) _registrationPlace,
         ],
       ),
     );
@@ -437,7 +434,7 @@ class EventDetailsScreen extends StatelessWidget {
       alignment: TimelineAlign.manual,
       lineXY: 0.4,
       startChild: _buildChild(
-        FormatUtils.toddMMyyyyHHmm(dateBefore),
+        FormatUtils.toddMMyy(dateBefore),
         height: height,
         color: isActive ? ColorConstants.primaryAppColor : Colors.black,
       ),

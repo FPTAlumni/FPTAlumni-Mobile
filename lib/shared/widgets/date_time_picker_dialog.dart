@@ -7,7 +7,7 @@ class DateTimePickerDialog {
       {DateTime? selectedDate}) async {
     return await showDatePicker(
       context: Get.context!,
-      initialDate: selectedDate ?? DateTime.now(),
+      initialDate: selectedDate?.toLocal() ?? DateTime.now(),
       initialDatePickerMode: DatePickerMode.day,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365 * 5)),

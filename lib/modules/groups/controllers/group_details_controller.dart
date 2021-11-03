@@ -42,7 +42,7 @@ class GroupDetailsController extends GetxController {
   var posts = [].obs;
   Future? getGroupChild;
 
-  final groupChildHeight = 100.0;
+  final groupChildHeight = 110.0;
   ScrollController scrollController = ScrollController();
 
   var isVisibility = true.obs;

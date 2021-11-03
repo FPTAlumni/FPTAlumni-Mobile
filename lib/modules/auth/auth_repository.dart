@@ -30,6 +30,7 @@ class AuthRepository {
 
   Future<bool> register(RegistrationRequest data) async {
     final response = await apiProvider.register('/alumnus', data);
+    print(data.toJson());
     print(">>");
     print(response.statusText);
     print(response.statusCode);

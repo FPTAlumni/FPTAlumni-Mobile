@@ -44,12 +44,13 @@ class BSJobActions {
                 title: 'Edit job',
                 onTapHandler: () async {
                   closeBottomSheet();
-                  Recruitment updatedJob = await Get.toNamed(
-                      Routes.recruitmentForm,
+                  var updatedJob = await Get.toNamed(Routes.recruitmentForm,
                       arguments: job.value);
 
-                  job.value = updatedJob;
-                  job.refresh();
+                  if (updatedJob != null) {
+                    job.value = updatedJob;
+                    job.refresh();
+                  }
                 },
               ),
               const Divider(

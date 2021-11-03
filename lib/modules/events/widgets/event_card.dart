@@ -42,21 +42,18 @@ class EventCard extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 3,
-                  child: Hero(
-                    tag: 'event-${event.id}',
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        right: 8,
-                        left: 8,
-                      ),
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        image: DecorationImage(
-                          image: NetworkImage(event.banner),
-                          fit: BoxFit.cover,
-                        ),
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      right: 8,
+                      left: 8,
+                    ),
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      image: DecorationImage(
+                        image: NetworkImage(event.banner),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -89,7 +86,7 @@ class EventCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 3),
                               Text(
-                                FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
+                                FormatUtils.toddMMyyyyHHmm(event.startDate),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey,

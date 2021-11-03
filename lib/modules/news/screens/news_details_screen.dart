@@ -95,13 +95,10 @@ class NewsDetailsScreen extends StatelessWidget {
               const SizedBox(height: 10.0),
               AspectRatio(
                 aspectRatio: 3 / 2,
-                child: Hero(
-                  tag: 'news-${news.id}',
-                  child: Container(
-                    child: Image.network(
-                      news.banner!,
-                      fit: BoxFit.cover,
-                    ),
+                child: Container(
+                  child: Image.network(
+                    news.banner!,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
