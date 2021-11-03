@@ -75,34 +75,51 @@ class MenuTab extends StatelessWidget {
             const SizedBox(height: 24),
             buildName(context, authController.currentUser),
             const SizedBox(height: 24),
-            buildAbout(),
-            const SizedBox(height: 24),
+            buildAbout(context),
 
-            Column(
-              children: [
-                const Divider(),
-                Row(
-                  children: [
-                    buildCardInfor(
-                        Icons.phone, authController.currentUser?.phone ?? '')
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  children: [
-                    buildCardInfor(
-                        Icons.work, authController.currentUser?.job ?? ''),
-                  ],
-                ),
-                const Divider(),
-                Row(children: [
-                  buildCardInfor(
-                      Icons.map, authController.currentUser?.address ?? ''),
-                ]),
-                const Divider(),
-              ],
-            ),
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 18),
+            buildCardInfor(context, Icons.phone,
+                authController.currentUser?.phone ?? ''),
 
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 18),
+            buildCardInfor(context, Icons.work,
+                authController.currentUser?.job ?? ''),
+
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 18),
+            buildCardInfor(context, Icons.map,
+                authController.currentUser?.address ?? ''),
+
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 18),
+            // Column(
+            //   children: [
+            //     const Divider(),
+            //     Flexible(
+            //       child: buildCardInfor(context, Icons.phone,
+            //           authController.currentUser?.phone ?? '')
+            //     ),
+            //     const Divider(),
+            //     // Row(
+            //     //   children: [
+            //     //     buildCardInfor(context, Icons.work,
+            //     //         authController.currentUser?.job ?? ''),
+            //     //   ],
+            //     // ),
+            //     const Divider(),
+            //     // Row(children: [
+            //     //   buildCardInfor(context, Icons.map,
+            //     //       authController.currentUser?.address ?? ''),
+            //     // ]),
+            //     const Divider(),
+            //   ],
+            // ),
             Container(
               constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
               margin: EdgeInsets.all(10),
@@ -126,11 +143,11 @@ class MenuTab extends StatelessWidget {
                       Text(
                         "Groups",
                         style: Theme.of(context).textTheme.headline5!.copyWith(
-                          fontSize: 19,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins',
-                        ),
+                              fontSize: 19,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                            ),
                       ),
                     ]),
                     Icon(
@@ -143,7 +160,7 @@ class MenuTab extends StatelessWidget {
             ),
             Container(
               constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
-              margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5 ),
+              margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
               child: RaisedButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -163,14 +180,13 @@ class MenuTab extends StatelessWidget {
                       Text(
                         "Edit Profile",
                         style: Theme.of(context).textTheme.headline5!.copyWith(
-                          fontSize: 19,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins',
-                        ),
+                              fontSize: 19,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                            ),
                       ),
                     ]),
-
                     Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
@@ -192,7 +208,7 @@ class MenuTab extends StatelessWidget {
                   Get.offNamedUntil(Routes.root, (route) => false);
                 },
                 splashColor: ColorConstants.white,
-                color:Colors.white ,
+                color: Colors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 child: Row(
@@ -204,7 +220,7 @@ class MenuTab extends StatelessWidget {
                             fontSize: 20,
                             color: Color(0xffFBB97C),
                             fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                           ),
                     ),
                   ],
@@ -237,48 +253,40 @@ class MenuTab extends StatelessWidget {
 
   Widget buildName(BuildContext context, Alumni? user) => Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Flexible(
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Flexible(
               child: Text(
                 user?.fullName ?? '',
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(
-                  fontSize: 24,
-                  fontWeight:  FontWeight.bold,
-                  fontFamily: 'Poppins',
-                ),
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins',
+                    ),
               ),
             ),
           ]),
           const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Flexible(
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Flexible(
               child: Text(
                 user?.email ?? '',
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(
-                  fontSize: 15,
-                    color: Colors.grey,
-                  fontFamily: 'Poppins',
-                ),
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 15,
+                      color: Colors.grey,
+                      fontFamily: 'Poppins',
+                    ),
               ),
             ),
           ]),
           const SizedBox(height: 4),
         ],
       );
-  Widget buildAbout() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 48),
+  Widget buildAbout(BuildContext context) => Container(
+        padding: EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -291,49 +299,60 @@ class MenuTab extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Text(
-              authController.currentUser!.aboutMe!,
-              style: TextStyle(
-                fontSize: 16,
-                height: 1.4,
+
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Flexible(
+                child: Text(
+                  authController.currentUser!.aboutMe!,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                      ),
+                ),
               ),
-            ),
+            ]),
+            // Text(
+            //   authController.currentUser!.aboutMe!,
+            //   style: TextStyle(
+            //     fontSize: 16,
+            //     height: 1.4,
+            //   ),
+            // ),
           ],
         ),
       );
-  Widget buildCardInfor(IconData icon, String infor) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-        children: <Widget>[
-          Row(
+  Widget buildCardInfor(BuildContext context, IconData icon, String infor) {
+    return
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                icon,
-                color: ColorConstants.primaryAppColor,
-                size: 25.0,
-              ),
-              const SizedBox(height: 5),
-              Container(
-                // padding: EdgeInsets.all(10),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "  " + infor,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                  ],
+              Row(children: [
+                Icon(
+                  icon,
+                  color: ColorConstants.primaryAppColor,
+                  size: 25.0,
                 ),
-              ),
-              const Divider(),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    "  " + infor,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 18,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                ),
+              ]),
             ],
           ),
-        ],
-      ),
-    );
+        );
+
   }
 
   Widget buildAlumniCard(Widget widget) {
@@ -350,4 +369,3 @@ class MenuTab extends StatelessWidget {
     );
   }
 }
-
