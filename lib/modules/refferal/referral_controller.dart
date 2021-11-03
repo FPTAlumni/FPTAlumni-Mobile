@@ -125,15 +125,8 @@ class ReferralController extends GetxController{
     String  parentName = parentNameValue.text.isEmpty ? "" :  parentNameValue.text;
     String parentPhone = parentPhoneValue.text.isEmpty ? "": parentPhoneValue.text;
     int voucherId = getVoucherId(voucherIdValue.text);
-    print(">>voucher id: "  + voucherId.toString());
-    print(">>voucher id: "  + userAuthentication!.id.toString());
-    print(">>voucher id: "  + fullNameValue.text);
-    print(">>voucher id: "  + addressValue.text);
-    print(">>voucher id: "  + parentName);
-    print(">>voucher id: "  + parentPhone);
-    print(">>voucher id: "  + phoneValue.text);
-    print(">>current referral id: "  + currentReferral!.id.toString());
-    print(">>status: "  + currentReferral!.status.toString());
+
+
 
     ReferralPostRequest data = ReferralPostRequest(
       id: currentReferral?.id,

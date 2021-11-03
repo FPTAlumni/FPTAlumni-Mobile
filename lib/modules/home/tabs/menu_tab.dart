@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/models/alumni.dart';
+import 'package:uni_alumni/modules/alumni/screens/edit_profile_screen.dart';
 import 'package:uni_alumni/modules/alumni/screens/profile_screen.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
@@ -58,255 +60,283 @@ class MenuTab extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
-            InkWell(
-              onTap: () => selectProfile(context),
-              splashColor: ColorConstants.primaryAppColor,
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundImage: NetworkImage(url),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        const SizedBox(height: 5),
-                        Container(
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                " Hello, "
-                                "${authController.currentUser?.fullName ?? ''}",
-                                style: TextStyle(
-                                  fontSize: 25,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            SizedBox(
+              height: 10,
             ),
-            const Divider(),
-            Container(
-              width: 150,
-              height: 300,
-              margin: EdgeInsets.all(5),
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            Center(
+              child: Stack(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AlumniIndex("Events", ColorConstants.primaryAppColor,
-                          Icons.event),
-                      AlumniIndex(
-                          "Jobs", ColorConstants.primaryAppColor, Icons.work),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AlumniIndex("News", ColorConstants.primaryAppColor,
-                          Icons.wallpaper),
-                      AlumniIndex(
-                        "Groups",
-                        ColorConstants.primaryAppColor,
-                        Icons.group,
-                        onTapHandler: () {
-                          // Get.to(() => GroupHome());
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(
-                                  builder: (ctx) => GroupHomeScreen()))
-                              .then((_) => Get.delete<GroupController>());
-                        },
-                      ),
-                    ],
-                  ),
+                  buildImage(),
                 ],
               ),
             ),
-            const Divider(),
-            isLeader
-                ? Container(
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.group,
-                              color: ColorConstants.primaryAppColor,
-                              size: 25.0,
-                            ),
-                            const SizedBox(height: 5),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    " Manage Groups",
-                                    style: TextStyle(
-                                      fontSize: 23,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Divider(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                : const Divider(),
-            const Divider(),
-            isLeader
-                ? Container(
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.group_add,
-                              color: ColorConstants.primaryAppColor,
-                              size: 25.0,
-                            ),
-                            const SizedBox(height: 5),
-                            Container(
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    "  Manage Members",
-                                    style: TextStyle(
-                                      fontSize: 23,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Divider(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                : const Divider(),
-            const Divider(),
+            const SizedBox(height: 24),
+            buildName(context, authController.currentUser),
+            const SizedBox(height: 24),
+            buildAbout(context),
 
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 18),
+            buildCardInfor(context, Icons.phone,
+                authController.currentUser?.phone ?? ''),
 
-            GestureDetector(
-              onTap: () async {
-                AuthController authController = Get.find();
-                await authController.logout();
-                Get.offNamedUntil(Routes.root, (route) => false);
-              },
-              child: Container(
-                child: Column(
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 18),
+            buildCardInfor(context, Icons.work,
+                authController.currentUser?.job ?? ''),
+
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 18),
+            buildCardInfor(context, Icons.map,
+                authController.currentUser?.address ?? ''),
+
+            const SizedBox(height: 20),
+            const Divider(),
+            const SizedBox(height: 18),
+            Container(
+              constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
+              margin: EdgeInsets.all(10),
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (ctx) => GroupHomeScreen()))
+                      .then((_) => Get.delete<GroupController>());
+                },
+                splashColor: ColorConstants.white,
+                color: Color(0xffFBB97C),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_back_rounded,
-                          color: ColorConstants.primaryAppColor,
-                          size: 25.0,
-                        ),
-                        const SizedBox(height: 5),
-                        Container(
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                " Sign out",
-                                style: TextStyle(
-                                  fontSize: 25,
-                                ),
-                              ),
-                            ],
+                    Row(children: [
+                      Icon(Icons.group, size: 19, color: Colors.white),
+                      SizedBox(width: 5),
+                      Text(
+                        "Groups",
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              fontSize: 19,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                            ),
+                      ),
+                    ]),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
+              margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => EditProfilePage()),
+                  );
+                },
+                splashColor: ColorConstants.white,
+                color: Color(0xffFBB97C),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(children: [
+                      Icon(Icons.edit, size: 19, color: Colors.white),
+                      SizedBox(width: 5),
+                      Text(
+                        "Edit Profile",
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              fontSize: 19,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                            ),
+                      ),
+                    ]),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
+              margin: EdgeInsets.all(10),
+              child: RaisedButton(
+                onPressed: () async {
+                  AuthController authController = Get.find();
+                  await authController.logout();
+                  Get.offNamedUntil(Routes.root, (route) => false);
+                },
+                splashColor: ColorConstants.white,
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Sign out",
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                            fontSize: 20,
+                            color: Color(0xffFBB97C),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins',
                           ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
               ),
             ),
-            const Divider(),
           ],
         ),
       ),
     );
   }
-}
 
-ListTile _tile(String title, String subtitle) {
-  return ListTile(
-    title: Text(title,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-        )),
-    subtitle: Text(subtitle),
-  );
-}
-
-List<Widget> _buildHeader({required String title}) {
-  return [
-    Text(
-      title,
-      style: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
+  Widget buildImage() {
+    final image = NetworkImage(authController.currentUser?.image ?? url);
+    return ClipOval(
+      child: Material(
+        color: Colors.transparent,
+        child: Ink.image(
+          image: image,
+          fit: BoxFit.cover,
+          width: 128,
+          height: 128,
+          child: InkWell(
+            onTap: () {},
+          ),
+        ),
       ),
-    ),
-    Divider(
-      color: ColorConstants.primaryAppColor,
-      thickness: 2,
-    ),
-  ];
-}
+    );
+  }
 
-Widget _buildCard({
-  required String label,
-  required BuildContext ctx,
-  VoidCallback? onTapHandler,
-}) {
-  return Container(
-    width: 150,
-    height: 120,
-    margin: EdgeInsets.all(5),
-    child: Column(
-      children: <Widget>[
-        Container(
-          width: 150,
-          height: 90,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+  Widget buildName(BuildContext context, Alumni? user) => Column(
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Flexible(
+              child: Text(
+                user?.fullName ?? '',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins',
+                    ),
+              ),
             ),
-            margin: EdgeInsets.all(10),
-            elevation: 5,
-            // color: Color.fromRGBO(252, 216, 212, 1),
-            // color: Theme.of(ctx).accentColor,
-            child: Padding(
-              padding: EdgeInsets.all(20),
+          ]),
+          const SizedBox(height: 4),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Flexible(
+              child: Text(
+                user?.email ?? '',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 15,
+                      color: Colors.grey,
+                      fontFamily: 'Poppins',
+                    ),
+              ),
             ),
-          ),
+          ]),
+          const SizedBox(height: 4),
+        ],
+      );
+  Widget buildAbout(BuildContext context) => Container(
+        padding: EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'About me',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Flexible(
+                child: Text(
+                  authController.currentUser!.aboutMe!,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                      ),
+                ),
+              ),
+            ]),
+          ],
         ),
-        SizedBox(height: 2),
-        FittedBox(
-          child: Text(
-            label,
-            style: Theme.of(ctx).textTheme.headline6,
-            softWrap: true,
-            overflow: TextOverflow.fade,
+      );
+  Widget buildCardInfor(BuildContext context, IconData icon, String infor) {
+    return
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                Icon(
+                  icon,
+                  color: ColorConstants.primaryAppColor,
+                  size: 25.0,
+                ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    "  " + infor,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 18,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                ),
+              ]),
+            ],
           ),
-        ),
-      ],
-    ),
-  );
+        );
+
+  }
+
+  Widget buildAlumniCard(Widget widget) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10)),
+      margin: EdgeInsets.all(25),
+      padding: EdgeInsets.all(10),
+      height: 250,
+      width: 100,
+      child: widget,
+    );
+  }
 }
