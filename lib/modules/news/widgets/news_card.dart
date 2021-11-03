@@ -88,13 +88,10 @@ class NewsCard extends StatelessWidget {
             ),
             AspectRatio(
               aspectRatio: 3 / 1,
-              child: Hero(
-                tag: 'news-${news.id}',
-                child: Container(
-                  child: Image.network(
-                    news.banner!,
-                    fit: BoxFit.cover,
-                  ),
+              child: Container(
+                child: Image.network(
+                  news.banner!,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

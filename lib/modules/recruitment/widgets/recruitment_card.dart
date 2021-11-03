@@ -40,16 +40,13 @@ class RecruitmentCard extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
                   width: 100,
-                  child: Hero(
-                    tag: 'job-${job.id}',
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        child: Image.network(
-                          job.company!.imageUrl!,
-                          fit: BoxFit.contain,
-                        ),
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      child: Image.network(
+                        job.company!.imageUrl!,
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ),

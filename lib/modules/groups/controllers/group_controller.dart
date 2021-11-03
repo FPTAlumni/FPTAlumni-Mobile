@@ -6,7 +6,6 @@ import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
 import 'package:uni_alumni/modules/groups/group_repository.dart';
 import 'package:uni_alumni/modules/groups/controllers/your_groups_controller.dart';
-import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 enum GroupTabs {
   yourGroup,

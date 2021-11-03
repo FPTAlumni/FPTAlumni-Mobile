@@ -6,7 +6,7 @@ class ErrorDialog {
     String title = 'Error!',
     String content = 'Some errors occurred',
   }) {
-    Get.defaultDialog(
+    return Get.defaultDialog(
       title: title,
       content: Padding(
         padding: const EdgeInsets.symmetric(

@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uni_alumni/modules/news/news_controller.dart';
-import 'package:uni_alumni/modules/news/widgets/news_list.dart';
+import 'package:uni_alumni/modules/groups/screens/group_home_screen.dart';
+import 'package:uni_alumni/modules/home/controllers/home_controller.dart';
+import 'package:uni_alumni/modules/home/widgets/home_posts_list.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
 class HomeTab extends StatelessWidget {
+  HomeTab({Key? key}) : super(key: key);
+
+  final controller = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +29,16 @@ class HomeTab extends StatelessWidget {
                 width: 40,
               ),
             ),
-            Text(
-              'HOME',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: ColorConstants.primaryAppColor,
-                fontSize: 20,
-                fontFamily: 'Poppins',
-                letterSpacing: 3,
+            Obx(
+              () => Text(
+                controller.isHome.value ? 'HOME' : 'GROUPS',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: ColorConstants.primaryAppColor,
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  letterSpacing: 3,
+                ),
               ),
             ),
           ],
@@ -48,17 +55,25 @@ class HomeTab extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: () {
-                final controller = Get.find<NewsController>();
-                controller.showFilter();
+                controller.onHomeGroupToggle();
+                // final controller = Get.find<NewsController>();
+                // controller.showFilter();
               },
-              child: Container(
-                width: 25,
-                child: AspectRatio(
-                  aspectRatio: 1 / 1,
-                  child: Image.asset(
-                    'assets/images/filter.png',
+              child: Obx(
+                () => Container(
+                  width: 25,
+                  child: Icon(
+                    controller.isHome.value ? Icons.group : Icons.home,
                     color: Colors.white,
+                    size: 22,
                   ),
+                  // AspectRatio(
+                  //   aspectRatio: 1 / 1,
+                  //   child: Image.asset(
+                  //     'assets/images/filter.png',
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
                 ),
               ),
             ),
@@ -68,7 +83,8 @@ class HomeTab extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      body: NewsList(),
+      body: Obx(
+          () => controller.isHome.value ? HomePostsList() : GroupHomeScreen()),
     );
   }
 }

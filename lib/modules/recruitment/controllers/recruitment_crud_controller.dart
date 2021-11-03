@@ -28,7 +28,7 @@ class RecruitmentCrudController extends GetxController {
 
   var groups = [].obs;
   Group? selectedGroup;
-  DateTime? jobEndDate = DateTime.now();
+  DateTime? jobEndDate;
   var jobEndDateText = "".obs;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -73,8 +73,8 @@ class RecruitmentCrudController extends GetxController {
       positionController.text = currentJob?.position ?? '';
       jobEndDateController.text =
           FormatUtils.toddMMyyyy(currentJob!.endDate!.toLocal());
-      phoneController.text = currentJob?.alumni?.phone ?? '';
-      emailController.text = currentJob?.alumni?.email ?? '';
+      phoneController.text = currentJob?.phone ?? '';
+      emailController.text = currentJob?.email ?? '';
       selectedExperience.value = currentJob?.experienceLevel ?? '';
       selectedType.value = currentJob?.typeInt ?? -1;
       selectedGroup = currentJob?.group ?? null;
@@ -127,7 +127,7 @@ class RecruitmentCrudController extends GetxController {
       groupId: selectedGroup!.id,
       companyId: currentUser!.company!.id,
       type: selectedType.value,
-      endDate: currentJob == null ? jobEndDate!.toUtc() : currentJob!.endDate,
+      endDate: jobEndDate != null ? jobEndDate!.toUtc() : currentJob!.endDate,
       groupOriginId: selectedGroup!.id,
     );
 

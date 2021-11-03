@@ -103,6 +103,7 @@ class GroupDetailsScreen extends StatelessWidget {
                   return Visibility(
                     visible: controller.isVisibility.value,
                     child: Container(
+                      padding: const EdgeInsets.only(bottom: 10.0),
                       color: Colors.white,
                       height: controller.groupChildHeight,
                       child: ListView.builder(

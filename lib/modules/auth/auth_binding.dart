@@ -11,11 +11,18 @@ class AuthBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => AuthController());
-    Get.lazyPut(() => UniversityController(
-        universityRepository: UniversityRepository(apiProvider: Get.find())));
-    Get.lazyPut(() => ClazzController(
-        clazzRepository: ClazzRepository(apiProvider: Get.find())));
-    Get.lazyPut(() => MajorController(
-        majorRepository: MajorRepository(apiProvider: Get.find())));
+    Get.lazyPut(
+        () => UniversityController(
+            universityRepository:
+                UniversityRepository(apiProvider: Get.find())),
+        fenix: true);
+    Get.lazyPut(
+        () => ClazzController(
+            clazzRepository: ClazzRepository(apiProvider: Get.find())),
+        fenix: true);
+    Get.lazyPut(
+        () => MajorController(
+            majorRepository: MajorRepository(apiProvider: Get.find())),
+        fenix: true);
   }
 }

@@ -141,20 +141,17 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Center(
-                          child: Hero(
-                            tag: 'job-${job.id}',
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      NetworkImage(_job.value.company!.imageUrl!),
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                NetworkImage(_job.value.company!.imageUrl!),
+                                fit: BoxFit.fitWidth,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
                               ),
                             ),
                           ),

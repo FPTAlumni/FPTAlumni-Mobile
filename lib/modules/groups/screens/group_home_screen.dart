@@ -14,34 +14,34 @@ class GroupHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstants.lightScaffoldBackgroundColor,
-      appBar: SubScreenAppBar(
-        title: "Groups",
-        // actions: [
-        //   Container(
-        //     decoration: BoxDecoration(
-        //       shape: BoxShape.circle,
-        //       color: ColorConstants.lightPrimaryAppColor,
-        //     ),
-        //     padding: const EdgeInsets.all(8.0),
-        //     margin: const EdgeInsets.only(
-        //       right: 10,
-        //     ),
-        //     child: GestureDetector(
-        //       onTap: () async {},
-        //       child: Container(
-        //         width: 25,
-        //         child: AspectRatio(
-        //           aspectRatio: 1 / 1,
-        //           child: Image.asset(
-        //             'assets/images/filter.png',
-        //             color: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ],
-      ),
+      // appBar: SubScreenAppBar(
+      //   title: "Groups",
+      //   // actions: [
+      //   //   Container(
+      //   //     decoration: BoxDecoration(
+      //   //       shape: BoxShape.circle,
+      //   //       color: ColorConstants.lightPrimaryAppColor,
+      //   //     ),
+      //   //     padding: const EdgeInsets.all(8.0),
+      //   //     margin: const EdgeInsets.only(
+      //   //       right: 10,
+      //   //     ),
+      //   //     child: GestureDetector(
+      //   //       onTap: () async {},
+      //   //       child: Container(
+      //   //         width: 25,
+      //   //         child: AspectRatio(
+      //   //           aspectRatio: 1 / 1,
+      //   //           child: Image.asset(
+      //   //             'assets/images/filter.png',
+      //   //             color: Colors.white,
+      //   //           ),
+      //   //         ),
+      //   //       ),
+      //   //     ),
+      //   //   ),
+      //   // ],
+      // ),
       body: _buildBody(context),
     );
   }

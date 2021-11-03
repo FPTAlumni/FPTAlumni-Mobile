@@ -42,9 +42,9 @@ class RegistrationRequest {
     required this.classId,
     this.address,
     this.aboutMe,
-    this.companyId = 0,
+    this.companyId,
     this.job,
-    this.majorId = 0,
+    this.majorId,
   });
 
   Map<String, dynamic> toJson() => _$RegistrationRequestToJson(this);

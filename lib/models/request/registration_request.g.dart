@@ -15,9 +15,9 @@ RegistrationRequest _$RegistrationRequestFromJson(Map<String, dynamic> json) =>
       classId: json['class_id'] as int,
       address: json['address'] as String?,
       aboutMe: json['about_me'] as String?,
-      companyId: json['company_id'] as int? ?? 0,
+      companyId: json['company_id'] as int?,
       job: json['job'] as String?,
-      majorId: json['major_id'] as int? ?? 0,
+      majorId: json['major_id'] as int?,
     );
 
 Map<String, dynamic> _$RegistrationRequestToJson(RegistrationRequest instance) {

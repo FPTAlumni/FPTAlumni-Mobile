@@ -135,10 +135,13 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                       onTapHandler: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                         if (controller.currentJob == null) {
-                          controller.showDatePicker();
+                          controller.showDatePicker(
+                              date: controller.jobEndDate);
                         } else {
                           controller.showDatePicker(
-                              date: controller.currentJob!.endDate);
+                              date: controller.jobEndDate == null
+                                  ? controller.currentJob!.endDate
+                                  : controller.jobEndDate);
                         }
                       }),
                   Obx(() => _buildGroupDropdown()),
@@ -181,7 +184,12 @@ class RecruitmentCrud extends GetView<RecruitmentCrudController> {
                         if (isError != null) {
                           return;
                         }
-                        Get.back(result: controller.currentJob);
+
+                        if (controller.currentJob != null) {
+                          Get.back(result: controller.currentJob);
+                        } else {
+                          Get.back(result: true);
+                        }
                       },
                       child: Text(
                           controller.currentJob == null ? 'Create' : 'Update'),

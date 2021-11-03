@@ -24,9 +24,9 @@ import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 class AuthController extends GetxController {
   AuthRepository authRepository = Get.find();
-  UniversityController universityController = Get.find();
-  ClazzController clazzController = Get.find();
-  MajorController majorController = Get.find();
+  UniversityController? universityController;
+  ClazzController? clazzController;
+  MajorController? majorController;
 
   AppTokenResponse? userAuthentication;
   Alumni? currentUser;
@@ -58,10 +58,6 @@ class AuthController extends GetxController {
   @override
   onReady() async {
     super.onReady();
-
-    ever(universityController.universities, _loadDropdownUniversities);
-    ever(clazzController.clazzList, _loadDropdownClasses);
-    ever(majorController.majors, _loadDropdownMajors);
   }
 
   void signIn() async {
@@ -117,8 +113,20 @@ class AuthController extends GetxController {
             .subscribeToTopic('${currentUser!.uid}');
         isSignIn.value = true;
       } else {
-        await universityController.loadUniversities();
+        universityController = Get.find<UniversityController>();
+        clazzController = Get.find<ClazzController>();
+        majorController = Get.find<MajorController>();
+
+        ever(universityController!.universities, _loadDropdownUniversities);
+        ever(clazzController!.clazzList, _loadDropdownClasses);
+        ever(majorController!.majors, _loadDropdownMajors);
+
+        await universityController!.loadUniversities();
         await Get.toNamed(Routes.signUp);
+
+        Get.delete<UniversityController>();
+        Get.delete<ClazzController>();
+        Get.delete<MajorController>();
         logout();
       }
     }
@@ -208,12 +216,12 @@ class AuthController extends GetxController {
     selectedUniversity.value = value;
 
     //load listClasses by university id
-    final List<Clazz>? _listClasses = (universityController.universities
+    final List<Clazz>? _listClasses = (universityController!.universities
             .firstWhere((university) => university.id == value) as University)
         .classes;
     _listClasses == null
-        ? clazzController.clazzList.value = []
-        : clazzController.clazzList.value = _listClasses;
+        ? clazzController!.clazzList.value = []
+        : clazzController!.clazzList.value = _listClasses;
 
     //reset selected class value
     selectedClass.value = 0;
@@ -227,7 +235,7 @@ class AuthController extends GetxController {
     selectedClass.value = value;
 
     //load majors from db
-    majorController.getMajors(value);
+    majorController!.getMajors(value);
 
     //reset selected major value
     selectedMajor.value = 0;
@@ -245,7 +253,7 @@ class AuthController extends GetxController {
       uid: userCredential!.user!.uid,
       phone: phoneController.text,
       fullName: fullNameController.text,
-      dob: DateFormat('MM/dd/yyyy').parse(dobController.text),
+      dob: DateFormat('dd/MM/yyyy').parse(dobController.text),
       classId: selectedClass.value,
       majorId: selectedMajor.value,
     );
@@ -273,7 +281,9 @@ class AuthController extends GetxController {
       );
     } else {
       CustomFullScreenDialog.cancelDialog();
-      ErrorDialog.showDialog();
+      await ErrorDialog.showDialog();
+      logout();
+      Get.back();
     }
   }
 }
