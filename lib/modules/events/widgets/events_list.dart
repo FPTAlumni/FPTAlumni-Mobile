@@ -47,30 +47,28 @@ class EventsList extends StatelessWidget {
             );
           }
 
-          return Scrollbar(
-            child: ListView.builder(
-              key: key,
-              physics: BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics(),
-              ),
-              controller: scrollController,
-              itemCount: isLoading.value ? list.length + 1 : list.length,
-              itemBuilder: (ctx, i) {
-                if (i == list.length) {
-                  return Center(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: ColorConstants.primaryAppColor,
-                      ),
-                    ),
-                  );
-                }
-                return EventCard(list[i]);
-              },
+          return ListView.builder(
+            key: key,
+            physics: BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
             ),
+            controller: scrollController,
+            itemCount: isLoading.value ? list.length + 1 : list.length,
+            itemBuilder: (ctx, i) {
+              if (i == list.length) {
+                return Center(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 10.0),
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: ColorConstants.primaryAppColor,
+                    ),
+                  ),
+                );
+              }
+              return EventCard(list[i]);
+            },
           );
         }),
       ),

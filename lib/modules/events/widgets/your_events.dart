@@ -14,14 +14,35 @@ class YourEvents extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: () => eventController.refreshYourEvents(),
         child: Obx(() {
-          return Scrollbar(
-            child: ListView.builder(
-              key: PageStorageKey('yourEvents'),
-              itemCount: eventController.myEvents.length,
-              itemBuilder: (ctx, i) {
-                return EventCard(eventController.myEvents[i]);
-              },
-            ),
+          if (eventController.myEvents.length == 0) {
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'There is no event for you',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return ListView.builder(
+            key: PageStorageKey('yourEvents'),
+            itemCount: eventController.myEvents.length,
+            itemBuilder: (ctx, i) {
+              return EventCard(eventController.myEvents[i]);
+            },
           );
         }),
       ),

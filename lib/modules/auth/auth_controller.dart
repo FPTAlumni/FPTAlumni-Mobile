@@ -85,6 +85,7 @@ class AuthController extends GetxController {
 
       userCredential = await _firebaseAuth.signInWithCredential(credential);
       String firebaseToken = await userCredential!.user!.getIdToken();
+      print(firebaseToken);
 
       print('call get app token');
       try {
@@ -94,6 +95,9 @@ class AuthController extends GetxController {
         print('error ne');
         CustomFullScreenDialog.cancelDialog();
         ErrorDialog.showDialog(content: e.message);
+        if (e.message == AuthRepository.pendingErrorMsg) {
+          logout();
+        }
         return;
       }
 
@@ -151,6 +155,7 @@ class AuthController extends GetxController {
           await authRepository.getAppToken(AppTokenRequest(tokenId: tokenId));
     } on HttpException catch (e) {
       ErrorDialog.showDialog(content: e.message);
+      return;
     }
     print(userAuthentication!.appToken);
     if (userAuthentication != null) {

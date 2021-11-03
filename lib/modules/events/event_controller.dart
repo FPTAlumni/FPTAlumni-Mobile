@@ -37,8 +37,6 @@ class EventController extends GetxController {
 
   var banner = XFile('').obs;
 
-  EventRequest? params;
-
   final _pageSize = 6;
   int _page = 1;
   var isLoading = true.obs;
@@ -88,11 +86,16 @@ class EventController extends GetxController {
       pageSize: "100",
     );
 
-    List<Event>? _events =
-        await eventRepository.getEvents(userAuthentication!.appToken, params);
+    try {
+      List<Event>? _events =
+          await eventRepository.getEvents(userAuthentication!.appToken, params);
 
-    if (_events != null) {
-      myEvents.value = _events.where((event) => event.inEvent == true).toList();
+      if (_events != null) {
+        myEvents.value =
+            _events.where((event) => event.inEvent == true).toList();
+      }
+    } on Exception catch (e) {
+      print(e.toString());
     }
   }
 
