@@ -21,8 +21,30 @@ class GroupPostsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: controller.refresh,
-      child: Obx(
-        () => ListView.builder(
+      child: Obx(() {
+        if (controller.posts.length == 0) {
+          return SingleChildScrollView(
+            physics: BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'There is no posts for you',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return ListView.builder(
           controller: controller.scrollController,
           itemCount: controller.isLoading.value
               ? controller.posts.length + 1
@@ -51,8 +73,8 @@ class GroupPostsList extends StatelessWidget {
               return EventCard(controller.posts[i] as Event);
             }
           },
-        ),
-      ),
+        );
+      }),
     );
   }
 }

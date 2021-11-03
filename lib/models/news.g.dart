@@ -7,6 +7,7 @@ part of 'news.dart';
 // **************************************************************************
 
 News _$NewsFromJson(Map<String, dynamic> json) => News(
+      id: json['id'] as int,
       banner: json['banner'] as String?,
       createdDate: json['created_date'] == null
           ? null
@@ -23,7 +24,9 @@ News _$NewsFromJson(Map<String, dynamic> json) => News(
     );
 
 Map<String, dynamic> _$NewsToJson(News instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'id': instance.id,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {

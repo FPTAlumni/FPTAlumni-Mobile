@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 import 'package:uni_alumni/models/event.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
+import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
 
 import '../event_controller.dart';
@@ -11,9 +13,12 @@ class EventDetailsScreen extends StatelessWidget {
   final controller = Get.find<EventController>();
   final groupController = Get.find<GroupController>();
 
+  Event get event {
+    return controller.event.value;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Event event = controller.event.value;
     final isRegistering = event.eventStatus == Event.registrationOpen ||
         event.eventStatus == Event.registered;
 
@@ -51,10 +56,7 @@ class EventDetailsScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                // UserAvatar(),
-                SizedBox(
-                  width: 12,
-                ),
+                const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -66,9 +68,7 @@ class EventDetailsScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                      height: 4,
-                    ),
+                    const SizedBox(height: 4),
                     Text(
                       FormatUtils.toddMMyyyyHHmmaaa(event.registrationEndDate),
                       style: TextStyle(
@@ -275,21 +275,67 @@ class EventDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(16),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildEventFeature(
-                          FormatUtils.toddMMyyyyHHmmaaa(
-                              event.registrationStartDate),
-                          "Registration Start",
+                        Text(
+                          "Event Timeline",
+                          style: TextStyle(
+                            color: Colors.deepOrange,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
                         ),
-                        _buildEventFeature(
-                          FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
-                          "Event Start",
-                        ),
-                        _buildEventFeature(
-                          FormatUtils.toddMMyyyyHHmmaaa(event.endDate),
-                          "Event End",
+                        const SizedBox(height: 12.0),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey.withOpacity(0.7),
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            children: [
+                              _buildTimeline(
+                                'Open Registration',
+                                dateBefore: event.registrationStartDate,
+                                dateAfter: event.registrationEndDate,
+                                isFirst: true,
+                              ),
+                              _buildTimeline(
+                                'Close Registration',
+                                dateBefore: event.registrationEndDate,
+                                dateAfter: event.startDate,
+                              ),
+                              _buildTimeline(
+                                'Event Start',
+                                dateBefore: event.startDate,
+                                dateAfter: event.endDate,
+                              ),
+                              _buildTimeline(
+                                'Event End',
+                                dateBefore: event.endDate,
+                                dateAfter: event.endDate,
+                                isLast: true,
+                              ),
+                              // _buildEventFeature(
+                              //   FormatUtils.toddMMyyyyHHmmaaa(
+                              //       event.registrationStartDate),
+                              //   "Registration Start",
+                              // ),
+                              // _buildEventFeature(
+                              //   FormatUtils.toddMMyyyyHHmmaaa(event.startDate),
+                              //   "Event Start",
+                              // ),
+                              // _buildEventFeature(
+                              //   FormatUtils.toddMMyyyyHHmmaaa(event.endDate),
+                              //   "Event End",
+                              // ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -316,9 +362,7 @@ class EventDetailsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
@@ -366,6 +410,60 @@ class EventDetailsScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  _buildTimeline(String title,
+      {double height = 40,
+      bool isFirst = false,
+      bool isLast = false,
+      required DateTime dateBefore,
+      required DateTime dateAfter}) {
+    DateTime now = DateTime.now().toUtc();
+    bool isActive = (now.isAfter(dateBefore) && now.isBefore(dateAfter)) ||
+        (now.isAfter(dateAfter) && dateBefore.isAtSameMomentAs(dateAfter));
+    return TimelineTile(
+      isFirst: isFirst,
+      isLast: isLast,
+      indicatorStyle: IndicatorStyle(
+        width: 10,
+        color: ColorConstants.primaryAppColor,
+      ),
+      beforeLineStyle: LineStyle(
+        color: ColorConstants.lightPrimaryAppColor,
+        thickness: 2.0,
+      ),
+      alignment: TimelineAlign.manual,
+      lineXY: 0.4,
+      startChild: _buildChild(
+        FormatUtils.toddMMyyyyHHmm(dateBefore),
+        height: height,
+        color: isActive ? ColorConstants.primaryAppColor : Colors.black,
+      ),
+      endChild: _buildChild(
+        title,
+        isLeft: false,
+        color: isActive ? ColorConstants.primaryAppColor : Colors.black,
+      ),
+    );
+  }
+
+  _buildChild(String text,
+      {double height = 30, bool isLeft = true, Color color = Colors.black}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+      alignment: isLeft ? Alignment.centerRight : Alignment.centerLeft,
+      constraints: BoxConstraints(
+        minHeight: height,
+      ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 14,
+          color: color,
+        ),
       ),
     );
   }

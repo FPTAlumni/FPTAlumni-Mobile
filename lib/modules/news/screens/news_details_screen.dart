@@ -8,22 +8,6 @@ import 'package:uni_alumni/shared/widgets/my_chip.dart';
 import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
-  final String data = "<div>"
-      "<p>This is a <strong>paragraph</strong>.</p>"
-      "<h1>This is a title</h1>"
-      "<p>This is a <strong>paragraph</strong>.</p>"
-      "<p>This is a long, long, long very long paragraph to test overflow</p>"
-      "<p>I like <i>dogs</i></p>"
-      "<ul>"
-      "<li>List item 1</li>"
-      "<li>List item 2</li>"
-      "<li>List item 3</li>"
-      "</ul>"
-      "<img style='width: 200px' src='https://www.kindacode"
-      ".com/wp-content/uploads/2020/11/my-dog"
-      ".jpg'>"
-      "</div>";
-
   final News news;
 
   NewsDetailsScreen(this.news);
@@ -111,10 +95,13 @@ class NewsDetailsScreen extends StatelessWidget {
               const SizedBox(height: 10.0),
               AspectRatio(
                 aspectRatio: 3 / 2,
-                child: Container(
-                  child: Image.network(
-                    news.banner!,
-                    fit: BoxFit.cover,
+                child: Hero(
+                  tag: 'news-${news.id}',
+                  child: Container(
+                    child: Image.network(
+                      news.banner!,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

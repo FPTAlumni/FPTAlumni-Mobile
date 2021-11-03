@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uni_alumni/models/news.dart';
 import 'package:uni_alumni/modules/news/screens/news_details_screen.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
@@ -25,8 +26,7 @@ class NewsCard extends StatelessWidget {
       color: ColorConstants.white,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (ctx) => NewsDetailsScreen(news)));
+          Get.to(() => NewsDetailsScreen(news));
         },
         child: Column(
           children: [
@@ -88,10 +88,13 @@ class NewsCard extends StatelessWidget {
             ),
             AspectRatio(
               aspectRatio: 3 / 1,
-              child: Container(
-                child: Image.network(
-                  news.banner!,
-                  fit: BoxFit.cover,
+              child: Hero(
+                tag: 'news-${news.id}',
+                child: Container(
+                  child: Image.network(
+                    news.banner!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

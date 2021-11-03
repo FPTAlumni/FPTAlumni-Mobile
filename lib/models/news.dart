@@ -6,6 +6,9 @@ part 'news.g.dart';
 
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class News {
+  @JsonKey(name: "id")
+  int id;
+
   @JsonKey(name: "banner")
   String? banner;
 
@@ -28,7 +31,8 @@ class News {
   List<Tag>? tags;
 
   News(
-      {this.banner,
+      {required this.id,
+      this.banner,
       this.createdDate,
       this.status,
       this.group,

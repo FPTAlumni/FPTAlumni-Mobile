@@ -16,8 +16,6 @@ class AuthRepository {
   Future<AppTokenResponse?> getAppToken(AppTokenRequest data) async {
     final response = await apiProvider.getAppToken('/login', data);
     final responseStatusCode = response.statusCode;
-    print(response.statusCode);
-    print(response.body.toString());
     switch (responseStatusCode) {
       case 200:
         return AppTokenResponse.fromJson(response.body);
