@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
+import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/recruitment/controllers/recruitment_tab_controller.dart';
 import 'package:uni_alumni/modules/recruitment/widgets/recruitment_list.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/assets.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+import 'package:uni_alumni/shared/widgets/error_dialog.dart';
 
 class RecruitmentTab extends StatelessWidget {
   final RecruitmentTabController controller =
@@ -78,6 +80,15 @@ class RecruitmentTab extends StatelessWidget {
                     label: 'Create your job',
                     backgroundColor: ColorConstants.lightPrimaryAppColor,
                     onTap: () {
+                      final _currentUser =
+                          Get.find<AuthController>().currentUser;
+                      if (_currentUser?.company == null) {
+                        ErrorDialog.showDialog(
+                            content: 'Please update your company in your '
+                                'profile before creating the job');
+                        return;
+                      }
+
                       Get.toNamed(Routes.recruitmentForm);
                     },
                   ),

@@ -85,6 +85,7 @@ class AuthController extends GetxController {
 
       userCredential = await _firebaseAuth.signInWithCredential(credential);
       String firebaseToken = await userCredential!.user!.getIdToken();
+      print(firebaseToken);
 
       print('call get app token');
       try {
@@ -94,6 +95,9 @@ class AuthController extends GetxController {
         print('error ne');
         CustomFullScreenDialog.cancelDialog();
         ErrorDialog.showDialog(content: e.message);
+        if (e.message == AuthRepository.pendingErrorMsg) {
+          logout();
+        }
         return;
       }
 
@@ -108,7 +112,7 @@ class AuthController extends GetxController {
         if (currentUser == null) return;
 
         //save universityId
-        final prefs = await SharedPreferences.getInstance();
+        final prefs = Get.find<SharedPreferences>();
         prefs.setString('uId', googleAuth.idToken!);
         await FirebaseMessaging.instance
             .subscribeToTopic('${currentUser!.uid}');
@@ -128,19 +132,19 @@ class AuthController extends GetxController {
     }
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = Get.find<SharedPreferences>();
     prefs.clear();
     // isSignIn.value = false;
   }
 
-  Future<void> _autoSignIn() async {
+  Future _autoSignIn() async {
     print('Auto Sign In');
     //check firebase authentication
     final isFirebaseSignIn = _firebaseAuth.currentUser != null;
     if (!isFirebaseSignIn) return;
 
-    //check if university id exist
-    final prefs = await SharedPreferences.getInstance();
+    //check if uid exist
+    final prefs = Get.find<SharedPreferences>();
     final uId = prefs.getString('uId');
     if (uId == null) return;
 
@@ -151,6 +155,7 @@ class AuthController extends GetxController {
           await authRepository.getAppToken(AppTokenRequest(tokenId: tokenId));
     } on HttpException catch (e) {
       ErrorDialog.showDialog(content: e.message);
+      return;
     }
     print(userAuthentication!.appToken);
     if (userAuthentication != null) {
@@ -243,6 +248,7 @@ class AuthController extends GetxController {
       fullName: fullNameController.text,
       dob: DateFormat('MM/dd/yyyy').parse(dobController.text),
       classId: selectedClass.value,
+      majorId: selectedMajor.value,
     );
 
     //send registration request to server
@@ -266,6 +272,9 @@ class AuthController extends GetxController {
           logout();
         },
       );
+    } else {
+      CustomFullScreenDialog.cancelDialog();
+      ErrorDialog.showDialog();
     }
   }
 }

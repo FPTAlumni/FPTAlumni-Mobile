@@ -76,25 +76,21 @@ class MenuTab extends StatelessWidget {
             buildName(context, authController.currentUser),
             const SizedBox(height: 24),
             buildAbout(context),
-
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 18),
-            buildCardInfor(context, Icons.phone,
-                authController.currentUser?.phone ?? ''),
-
+            buildCardInfor(
+                context, Icons.phone, authController.currentUser?.phone ?? ''),
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 18),
-            buildCardInfor(context, Icons.work,
-                authController.currentUser?.job ?? ''),
-
+            buildCardInfor(
+                context, Icons.work, authController.currentUser?.job ?? ''),
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 18),
-            buildCardInfor(context, Icons.map,
-                authController.currentUser?.address ?? ''),
-
+            buildCardInfor(
+                context, Icons.map, authController.currentUser?.address ?? ''),
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 18),
@@ -277,11 +273,11 @@ class MenuTab extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               Flexible(
                 child: Text(
-                  authController.currentUser!.aboutMe!,
+                  authController.currentUser?.aboutMe ??
+                      'Hi there, welcome to my profile',
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -295,35 +291,33 @@ class MenuTab extends StatelessWidget {
         ),
       );
   Widget buildCardInfor(BuildContext context, IconData icon, String infor) {
-    return
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                Icon(
-                  icon,
-                  color: ColorConstants.primaryAppColor,
-                  size: 25.0,
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    "  " + infor,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            Icon(
+              icon,
+              color: ColorConstants.primaryAppColor,
+              size: 25.0,
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                "  " + infor,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       fontSize: 18,
                       fontFamily: 'Poppins',
                     ),
-                  ),
-                ),
-              ]),
-            ],
-          ),
-        );
-
+              ),
+            ),
+          ]),
+        ],
+      ),
+    );
   }
 
   Widget buildAlumniCard(Widget widget) {

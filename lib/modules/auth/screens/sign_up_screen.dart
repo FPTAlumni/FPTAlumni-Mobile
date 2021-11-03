@@ -95,6 +95,7 @@ class SignUpScreen extends GetView<AuthController> {
                       SizedBox(height: size.height * 0.01),
                       _buildDropDown(
                         hint: 'Choose your university',
+                        label: 'University',
                         value: controller.selectedUniversity.value == 0
                             ? null
                             : controller.selectedUniversity.value,
@@ -115,6 +116,7 @@ class SignUpScreen extends GetView<AuthController> {
                       Obx(() {
                         return _buildDropDown(
                           hint: 'Choose your class',
+                          label: 'Class',
                           value: controller.selectedClass.value == 0
                               ? null
                               : controller.selectedClass.value,
@@ -136,6 +138,7 @@ class SignUpScreen extends GetView<AuthController> {
                       Obx(() {
                         return _buildDropDown(
                           hint: 'Choose your major',
+                          label: 'Major',
                           value: controller.selectedMajor.value == 0
                               ? null
                               : controller.selectedMajor.value,
@@ -169,6 +172,8 @@ class SignUpScreen extends GetView<AuthController> {
                                 const EdgeInsets.all(0)),
                           ),
                           onPressed: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
+
                             if (signUpKey.currentState!.validate()) {
                               controller.onSubmitForm();
                             }
@@ -212,6 +217,7 @@ class SignUpScreen extends GetView<AuthController> {
     List<DropdownMenuItem<dynamic>>? items,
     ValueChanged<dynamic>? onChanged,
     String? Function(dynamic)? validator,
+    String? label,
   }) {
     return Container(
       alignment: Alignment.center,
@@ -219,6 +225,7 @@ class SignUpScreen extends GetView<AuthController> {
       child: DropdownButtonFormField<dynamic>(
         validator: validator,
         decoration: InputDecoration(
+          labelText: label,
           filled: true,
           fillColor: Colors.white,
           enabledBorder: OutlineInputBorder(
