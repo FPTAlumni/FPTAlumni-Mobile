@@ -68,7 +68,8 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                         ),
                         child: CircleAvatar(
                           radius: 25,
-                          backgroundImage: NetworkImage(
+                          backgroundImage: NetworkImage(_job
+                                  .value.alumni?.image ??
                               'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg'),
                           backgroundColor: Colors.transparent,
                         ),
@@ -140,17 +141,20 @@ class RecruitmentDetailsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Center(
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image:
-                                    NetworkImage(_job.value.company!.imageUrl!),
-                                fit: BoxFit.fitWidth,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+                          child: Hero(
+                            tag: 'job-${job.id}',
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image:
+                                      NetworkImage(_job.value.company!.imageUrl!),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
                               ),
                             ),
                           ),

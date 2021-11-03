@@ -50,6 +50,7 @@ class GroupDetailsController extends GetxController {
   bool _newsLoading = true;
   bool _eventLoading = true;
   bool _jobLoading = true;
+  bool _firstLoading = true;
 
   @override
   void onInit() {
@@ -72,9 +73,9 @@ class GroupDetailsController extends GetxController {
           .then((_) => isVisibility.value = false);
     }
 
+    isLoading.value = true;
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
-      isLoading.value = true;
       getPosts().then((_) {
         isLoading.value = false;
       });
@@ -85,7 +86,10 @@ class GroupDetailsController extends GetxController {
   void onReady() {
     super.onReady();
     getGroupChild = _getGroupChild();
-    getPosts();
+    if (_firstLoading) {
+      getPosts();
+      _firstLoading = false;
+    }
   }
 
   _getGroupChild() async {
@@ -114,8 +118,11 @@ class GroupDetailsController extends GetxController {
     List<Recruitment>? _jobsList;
     List<Event>? _eventList;
 
+    print(_page);
+
     //get news
     if (_newsLoading) {
+      print('get news');
       NewsRequest newsRequest = NewsRequest(
         groupId: currentGroup!.id.toString(),
         page: _page.toString(),
@@ -125,7 +132,7 @@ class GroupDetailsController extends GetxController {
       _newsList = await _newsRepository.getNews(
           _userAuthentication!.appToken, newsRequest);
 
-      if (_newsList != null) {
+      if (_newsList != null && _newsList.isNotEmpty) {
         _temp.addAll(_newsList);
       } else {
         _newsLoading = false;
@@ -134,6 +141,7 @@ class GroupDetailsController extends GetxController {
 
     //get jobs
     if (_jobLoading) {
+      print('get job');
       RecruitmentGetRequest jobRequest = RecruitmentGetRequest(
         groupId: currentGroup!.id.toString(),
         page: _page.toString(),
@@ -142,7 +150,7 @@ class GroupDetailsController extends GetxController {
 
       _jobsList = await _recruitmentRepository.getJobs(
           _userAuthentication!.appToken, jobRequest);
-      if (_jobsList != null) {
+      if (_jobsList != null && _jobsList.isNotEmpty) {
         _temp.addAll(_jobsList);
       } else {
         _jobLoading = false;
@@ -151,6 +159,7 @@ class GroupDetailsController extends GetxController {
 
     //get events
     if (_eventLoading) {
+      print('get event');
       EventRequest eventRequest = EventRequest(
         groupId: currentGroup!.id.toString(),
         page: _page.toString(),
@@ -170,15 +179,6 @@ class GroupDetailsController extends GetxController {
       }
     }
 
-    if (_newsLoading || _jobLoading || _eventLoading) {
-      _page++;
-      isLoading.value = true;
-    }
-
-    if (posts.length < _postsPageSize) {
-      isLoading.value = false;
-    }
-
     if (_temp.isNotEmpty) {
       _temp.sort((a, b) {
         DateTime aDate = (a is Event) ? a.registrationEndDate : a.createdDate;
@@ -187,6 +187,15 @@ class GroupDetailsController extends GetxController {
       });
 
       posts.addAll(_temp);
+    }
+
+    if (_newsLoading || _jobLoading || _eventLoading) {
+      _page++;
+      isLoading.value = true;
+    }
+
+    if (posts.length < _postsPageSize) {
+      isLoading.value = false;
     }
   }
 

@@ -85,7 +85,6 @@ class AuthController extends GetxController {
 
       userCredential = await _firebaseAuth.signInWithCredential(credential);
       String firebaseToken = await userCredential!.user!.getIdToken();
-      print(firebaseToken);
 
       print('call get app token');
       try {
