@@ -98,28 +98,6 @@ class MenuTab extends StatelessWidget {
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 18),
-            // Column(
-            //   children: [
-            //     const Divider(),
-            //     Flexible(
-            //       child: buildCardInfor(context, Icons.phone,
-            //           authController.currentUser?.phone ?? '')
-            //     ),
-            //     const Divider(),
-            //     // Row(
-            //     //   children: [
-            //     //     buildCardInfor(context, Icons.work,
-            //     //         authController.currentUser?.job ?? ''),
-            //     //   ],
-            //     // ),
-            //     const Divider(),
-            //     // Row(children: [
-            //     //   buildCardInfor(context, Icons.map,
-            //     //       authController.currentUser?.address ?? ''),
-            //     // ]),
-            //     const Divider(),
-            //   ],
-            // ),
             Container(
               constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
               margin: EdgeInsets.all(10),
@@ -313,13 +291,6 @@ class MenuTab extends StatelessWidget {
                 ),
               ),
             ]),
-            // Text(
-            //   authController.currentUser!.aboutMe!,
-            //   style: TextStyle(
-            //     fontSize: 16,
-            //     height: 1.4,
-            //   ),
-            // ),
           ],
         ),
       );
