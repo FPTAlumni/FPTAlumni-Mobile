@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 AppBar buildAppBar(BuildContext context){
 
-  final icon = CupertinoIcons.square_arrow_left;
+  final icon = CupertinoIcons.square_arrow_right;
 
   return AppBar(
     leading: BackButton(color: Colors.black),

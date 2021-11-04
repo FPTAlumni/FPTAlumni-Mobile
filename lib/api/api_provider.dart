@@ -3,6 +3,7 @@ import 'package:uni_alumni/api/base_provider.dart';
 import 'package:uni_alumni/models/request/alumni_group_request.dart';
 import 'package:uni_alumni/models/request/alumni_request.dart';
 import 'package:uni_alumni/models/request/app_token_request.dart';
+import 'package:uni_alumni/models/request/company_request.dart';
 import 'package:uni_alumni/models/request/event_request.dart';
 import 'package:uni_alumni/models/request/expand_end_date_request.dart';
 import 'package:uni_alumni/models/request/group_request.dart';
@@ -142,4 +143,9 @@ class ApiProvider extends BaseProvider {
     return get(path,
         headers: HeaderApi(token).getHeaders(), query: params.toJson());
   }
+  //-----------Company------------
+ Future<Response> getCompanies(String path, String token, CompanyRequest params){
+    return get(path, headers: HeaderApi(token).getHeaders(), query: params.toJson());
+ }
+
 }

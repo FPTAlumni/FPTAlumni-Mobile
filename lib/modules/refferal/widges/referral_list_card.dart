@@ -36,7 +36,6 @@ class ReferralCard extends StatelessWidget {
         Get.to (() => ReferralDetail(this.referral));
       },
       child: Container(
-        color: ColorConstants.white,
         width: 50,
         margin: const EdgeInsets.symmetric(
           vertical: 5.0,
@@ -44,6 +43,10 @@ class ReferralCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
           vertical: 30.0,
           horizontal: 25.0,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: ColorConstants.lightScaffoldBackgroundColor,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +116,7 @@ class ReferralCard extends StatelessWidget {
                       softWrap: false,
                       maxLines: 2,
                       style: TextStyle(
-                        fontSize: 15.0,
+                        fontSize: 18.0,
                         color: Colors.grey,
                       ),
                     ),
@@ -122,18 +125,38 @@ class ReferralCard extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        Icons.phone,
+                        Icons.access_alarms,
                         color: Colors.grey.shade800,
                         size: 19.0
                       ),
                       const SizedBox(width: 5),
                       Text(
-                      referral.phone,
+                      'Start year: 2021',
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 2,
                       style: TextStyle(
-                        fontSize: 15.0,
+                        fontSize: 18.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ]),
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.school,
+                        color: Colors.grey.shade800,
+                        size: 19.0
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                      referral.major.fullName??'No Information',
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 18.0,
                         color: Colors.grey,
                       ),
                     ),
@@ -173,10 +196,6 @@ class ReferralCard extends StatelessWidget {
       ),
     );
   }
-
-
-
-
 
   Widget CustomCancel() {
     return Container(

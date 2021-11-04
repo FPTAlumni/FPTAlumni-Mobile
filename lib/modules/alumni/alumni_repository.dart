@@ -7,7 +7,7 @@ class AlumniRepository{
 
   final ApiProvider apiProvider;
 
-  AlumniRepository(this.apiProvider);
+  AlumniRepository({required this.apiProvider});
 
   Future<Alumni?> updateAlumni(String appToken, AlumniRequest data) async {
     final response = await apiProvider.updateAlumni('/alumnus', appToken, data);

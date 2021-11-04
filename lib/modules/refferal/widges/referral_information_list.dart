@@ -48,7 +48,7 @@ class ReferralInformation extends StatelessWidget {
                       const SizedBox(height: 10);
                       return Center(
                         child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: EdgeInsets.symmetric(vertical: 15.0),
                           width: 20,
                           height: 20,
                           child: CircularProgressIndicator(
