@@ -288,7 +288,7 @@ class ProfileEditScreen extends GetView<AlumniController> {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(url);//lay link tu profile
+    final image = NetworkImage(user?.image??url);//lay link tu profile
     return ClipOval(
       child: Material(
         color: Colors.transparent,
