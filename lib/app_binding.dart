@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:uni_alumni/api/api_provider.dart';
+import 'package:uni_alumni/modules/alumni/alumni_repository.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
+import 'package:uni_alumni/modules/company/company_repository.dart';
 import 'package:uni_alumni/modules/events/event_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/discover_groups_controller.dart';
 import 'package:uni_alumni/modules/groups/controllers/group_controller.dart';
@@ -11,6 +13,7 @@ import 'package:uni_alumni/modules/recruitment/controllers/recruitment_tab_contr
 import 'package:uni_alumni/modules/recruitment/recruitment_repository.dart';
 import 'package:uni_alumni/modules/voucher/voucher_repository.dart';
 
+import 'modules/alumni/alumni_controller.dart';
 import 'modules/events/event_repository.dart';
 import 'modules/groups/controllers/your_groups_controller.dart';
 import 'modules/home/controllers/home_controller.dart';
@@ -55,5 +58,7 @@ class AppBinding extends Bindings {
             referralRepository: ReferralRepository(apiProvider: Get.find()),
             voucherRepository: VoucherRepository(apiProvider: Get.find())),
         fenix: true);
+    Get.lazyPut(() => AlumniController(alumniRepository: AlumniRepository(apiProvider: Get.find()),
+      companyRepository: CompanyRepository(apiProvider: Get.find()),));
   }
 }

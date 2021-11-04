@@ -24,7 +24,8 @@ class UploadImageHolderState extends State<UploadImageHolder> {
   XFile? banner;
   bool isError = false;
 
-  File getImage() {
+  File? getImage() {
+    if(banner == null) return null;
     return File(banner!.path);
   }
 

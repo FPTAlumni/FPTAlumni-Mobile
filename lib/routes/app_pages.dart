@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:uni_alumni/modules/alumni/alumni_binding.dart';
+import 'package:uni_alumni/modules/alumni/screens/profile_edit_screen.dart';
 import 'package:uni_alumni/modules/auth/auth_binding.dart';
 import 'package:uni_alumni/modules/auth/screens/sign_in_screen.dart';
 import 'package:uni_alumni/modules/auth/screens/sign_up_screen.dart';
@@ -51,6 +53,11 @@ class AppPages {
       name: Routes.referralForm,
       page: () => ReferralRegistration(),
       binding: ReferralBinding(),
+    ),
+    GetPage(
+      name: Routes.alumniEditForm,
+      page: () => ProfileEditScreen(),
+      binding: AlumniBinding(),
     ),
   ];
 }

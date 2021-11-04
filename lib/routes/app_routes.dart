@@ -8,4 +8,5 @@ abstract class Routes {
   static const recruitmentForm = '/recruitment-form';
   static const yourRecruitment = '/my-recruitment';
   static const referralForm = '/referral-form';
+  static const alumniEditForm = '/alumni-edit-form';
 }

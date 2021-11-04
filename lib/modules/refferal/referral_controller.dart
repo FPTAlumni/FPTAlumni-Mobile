@@ -126,8 +126,6 @@ class ReferralController extends GetxController{
     String parentPhone = parentPhoneValue.text.isEmpty ? "": parentPhoneValue.text;
     int voucherId = getVoucherId(voucherIdValue.text);
 
-
-
     ReferralPostRequest data = ReferralPostRequest(
       id: currentReferral?.id,
       status: currentReferral?.status,
