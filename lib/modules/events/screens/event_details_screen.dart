@@ -340,7 +340,7 @@ class EventDetailsScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      "More detail",
+                      "Details",
                       style: TextStyle(
                         color: Colors.deepOrange,
                         fontWeight: FontWeight.bold,

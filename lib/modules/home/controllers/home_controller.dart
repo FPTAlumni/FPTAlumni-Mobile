@@ -115,6 +115,7 @@ class HomeController extends GetxController {
     if (_eventLoading) {
       print('get event');
       EventRequest eventRequest = EventRequest(
+        alumniId: _userAuthentication!.id.toString(),
         page: _page.toString(),
         pageSize: _pageSize.toString(),
         sortOrder: SortOrder.DESC,
