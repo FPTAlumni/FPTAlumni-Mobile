@@ -59,6 +59,6 @@ class AppBinding extends Bindings {
             voucherRepository: VoucherRepository(apiProvider: Get.find())),
         fenix: true);
     Get.lazyPut(() => AlumniController(alumniRepository: AlumniRepository(apiProvider: Get.find()),
-      companyRepository: CompanyRepository(apiProvider: Get.find()),));
+      companyRepository: CompanyRepository(apiProvider: Get.find()),),fenix: true);
   }
 }
