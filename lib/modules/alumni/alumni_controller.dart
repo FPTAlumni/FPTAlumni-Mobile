@@ -27,7 +27,7 @@ class AlumniController extends GetxController{
   AuthRepository authRepository = Get.find();
   //company
   final userAuthentication = Get.find<AuthController>().userAuthentication;
-  final user = Get.find<AuthController>().currentUser;
+  final user = Get.find<AuthController>().currentUser.obs;
   AuthController authController = Get.find<AuthController>();
   String url =
       'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg';
@@ -36,7 +36,7 @@ class AlumniController extends GetxController{
   AlumniController({required this.alumniRepository, required this.companyRepository});
 
   // var dobValue = "".obs;
-  var selectedCompany = "".obs;
+  var selectedCompany = 0.obs;
   var companyList = [].obs;
   var dropdownCompany = [].obs;
   DateTime? selectedDoB = DateTime.now();
@@ -53,52 +53,34 @@ class AlumniController extends GetxController{
   var companyValue = TextEditingController();
   var aboutMeValue = TextEditingController();
   var imageValue = TextEditingController();
-  void setOldValueAlumni(){
-    fullNameValue.text = user?.fullName?? "No information";
-    phoneValue.text = user?.phone?? "No information";
-    addressValue.text = user?.address?? "No information";
-    jobValue.text = user?.job?? "No information";
-    selectedCompany.value = user?.company?.companyName?? "Other";
-    aboutMeValue.text = user?.aboutMe?? "No information";
 
+  void setOldValueAlumni(){
+    fullNameValue.text = user.value?.fullName?? '';
+    phoneValue.text = user.value?.phone?? '';
+    addressValue.text = user.value?.address?? '';
+    jobValue.text = user.value?.job?? '';
+    selectedCompany.value = user.value?.company?.id?? 0;
+    aboutMeValue.text = user.value?.aboutMe?? '';
   }
 
-// {
-// "id": 0,
-// "phone": "string",
-// "full_name": "string",
-// "address": "string",
-// "dob": "2021-11-01T21:29:15.435Z",
-// "job": "string",
-// "about_me": "string",
-// "company_id": 0, combo box
-// "major_id": 0, major ko sửa -> ko cần hiện -> can nhac
-// "class_id": 0, class ko sửa -> ko cần hiện -> Khoa
-// "image": "string"  chọn ảnh -> hoi
-// }
-  //Làm giao diện form (text, date, combobox <- load combobox)
-  //valid form
-  //
-
   Future<bool?> onSubmitAlumniForm() async {
-
-
-
-    String? imageUrl = user?.image;
-    int? companyId = getCompanyId(selectedCompany.value.toString());
-    int? majorId = user?.major?.id;
-    int? classId = user?.clazz?.id;
+    String? imageUrl = user.value?.image;
+    // int? companyId = getCompanyId(selectedCompany.value);
+    int? companyId = selectedCompany.value;
+    int? majorId = user.value?.major?.id;
+    int? classId = user.value?.clazz?.id;
 
     if(selectedImage != null){
       imageUrl = await uploadFile();
     }
+    print('Select company: ' + selectedCompany.toString());
 
     AlumniRequest data = AlumniRequest(
         id: userAuthentication?.id,
         phone: phoneValue.text,
         fullName: fullNameValue.text,
         address: addressValue.text,
-        dob: user?.dob,
+        dob: user.value?.dob,
         job: jobValue.text,
         aboutMe: aboutMeValue.text,
         companyId: companyId,
@@ -107,16 +89,38 @@ class AlumniController extends GetxController{
         image: imageUrl);
 
     var result = _updateAlumni(data);
-    return result;
+
+    //update profile
+
+
+     //update profile
+
+        user.value?.fullName = fullNameValue.text;
+
+        user.value?.aboutMe = aboutMeValue.text;
+
+        user.value?.company?.id = selectedCompany.value;
+
+        user.value?.job = jobValue.text;
+
+        user.value?.phone = phoneValue.text;
+        user.value?.address = addressValue.text;
+        user.value?.image = imageUrl;
+
+        user.refresh();
+
+        return result;
   }
+
+
+
+
+
 
   Future<bool?> _updateAlumni(AlumniRequest data) async {
     Alumni? updateAlumni  = await alumniRepository.updateAlumni(
         userAuthentication!.appToken, data);
-    if(updateAlumni != null){
-      // int index = referrals.indexWhere((referral) => referral.id == updateReferral.id);
-      // referrals[index] = updateReferral;
-      // referrals.refresh();
+ if(updateAlumni != null){
       return await Get.defaultDialog(
         title: 'Announcement',
         content: Container(
@@ -154,12 +158,13 @@ class AlumniController extends GetxController{
       if(_company != null){
         print('List company not null');
         error = null;
-        companyList.addAll(_company);
+        companyList.value = _company;
 
         for(Company company in companyList){
+          print('id com: ' + company.id.toString());
           dropdownCompany.add(DropdownMenuItem(
               child: Text(company.companyName?? 'Other'),
-              value: company.companyName,
+              value: company.id,
           ));
         }
       }
@@ -167,17 +172,19 @@ class AlumniController extends GetxController{
       print('No company was loaded');
     }
   }
-  int? getCompanyId(String companyName) {
-    for(Company  company in companyList){
-      if(company.companyName == selectedCompany.value){
-        return company.id;
-      }
-    }
-    print("Company name to update: " + companyName);
-    return 0 ;
-  }
-  onChangeCompany(Object? value){
-    selectedCompany.value = value.toString();
+  // int? getCompanyId(String companyName) {
+  //   for(Company  company in companyList){
+  //     if(company.companyName == selectedCompany.value){
+  //       return company.id;
+  //     }
+  //   }
+  //   print("Company name to update: " + companyName);
+  //   return 0 ;
+  // }
+  onChangeCompany(int value){
+    print('change company1: ' + value.toString());
+    selectedCompany.value = value;
+    print('change company2: ' + selectedCompany.value.toString());
   }
 
   Future<String?> uploadFile() async {
@@ -255,10 +262,5 @@ class AlumniController extends GetxController{
   Future<void> refreshUser() async {
     authController.currentUser = await authRepository.getUserById(
         userAuthentication!.id, userAuthentication!.appToken);
-  }
-
-  @override
-  void refreshGroup(Object id) {
-
   }
 }

@@ -93,29 +93,27 @@ class ProfileEditScreen extends GetView<AlumniController> {
                   },
                 ),
 
-                Obx(() {
-                  return _buildDropdownList(
+                _buildDropdownList(
                     label: 'Company',
                     hintText: 'Choose a company',
                     listItem: controller.dropdownCompany
                         .toList()
-                        .cast<DropdownMenuItem<String>>(),
-                    value: controller.selectedCompany.value.isEmpty
+                        .cast<DropdownMenuItem<int>>(),
+                    value: controller.selectedCompany.value == 0
                         ? null
                         : controller.selectedCompany.value,
                     onChanged: (value) {
-                      print("Value: " +value);
                       FocusScope.of(context).requestFocus(FocusNode());
                       controller.onChangeCompany(value);
                     },
                     validator: (value) {
                       if (value == null) {
-                        return "Please choose the relationship.";
+                        return "Please choose a Company.";
                       }
                       return null;
                     },
-                  );
-                }),
+                  ),
+
 
                 _buildTextFormField(
                     label: 'About you(Optional)',
