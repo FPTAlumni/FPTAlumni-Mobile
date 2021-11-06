@@ -102,10 +102,7 @@ class MenuTab extends StatelessWidget {
                     margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                          // MaterialPageRoute(builder: (context) => EditProfilePage()),
-                          MaterialPageRoute(builder: (context) => ProfileEditScreen()),
-                        );
+                        Get.to(() => ProfileEditScreen());
                       },
                       splashColor: ColorConstants.white,
                       color: Color(0xffFBB97C),

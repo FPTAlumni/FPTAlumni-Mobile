@@ -13,6 +13,8 @@ import 'package:uni_alumni/modules/alumni/alumni_repository.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/company/company_repository.dart';
+import 'package:uni_alumni/modules/home/tabs/menu_tab.dart';
+import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/common_enum.dart';
 import 'package:uni_alumni/shared/utils/format_utils.dart';
@@ -88,10 +90,10 @@ class AlumniController extends GetxController{
         classId: classId,
         image: imageUrl);
 
-    var result = _updateAlumni(data);
+
 
     //update profile
-
+    var result = _updateAlumni(data);
 
      //update profile
 
@@ -112,15 +114,11 @@ class AlumniController extends GetxController{
         return result;
   }
 
-
-
-
-
-
   Future<bool?> _updateAlumni(AlumniRequest data) async {
     Alumni? updateAlumni  = await alumniRepository.updateAlumni(
         userAuthentication!.appToken, data);
  if(updateAlumni != null){
+
       return await Get.defaultDialog(
         title: 'Announcement',
         content: Container(
@@ -135,7 +133,8 @@ class AlumniController extends GetxController{
             textStyle: TextStyle(color: Colors.white),
           ),
           onPressed: () {
-            Get.back();
+            print('Press close');
+            Get.back(result: true);
           },
           child: Text(
             'Close',

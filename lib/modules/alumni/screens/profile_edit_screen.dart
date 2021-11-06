@@ -6,7 +6,10 @@ import 'package:get/get.dart';
 import 'package:uni_alumni/modules/alumni/alumni_controller.dart';
 import 'package:uni_alumni/modules/alumni/widgets/appbar_widget.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
+import 'package:uni_alumni/modules/home/tabs/tabs.dart';
+import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
+import 'package:uni_alumni/shared/widgets/sub_screen_app_bar.dart';
 import 'package:uni_alumni/shared/widgets/upload_image_holder.dart';
 
 class ProfileEditScreen extends GetView<AlumniController> {
@@ -21,7 +24,7 @@ class ProfileEditScreen extends GetView<AlumniController> {
   Widget build(BuildContext context) {
     controller.setOldValueAlumni();
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: SubScreenAppBar(title: 'Edit Profile'),
       body: Container(
 
         child: Form(
@@ -142,10 +145,8 @@ class ProfileEditScreen extends GetView<AlumniController> {
                   child: RaisedButton(
                     onPressed: () async {
                       //upload image
-
                       bool isValid = _formKey.currentState!.validate();
                       // FocusScope.of(context).requestFocus(FocusNode());
-
                       if (!isValid) {
                         return;
                       }
@@ -157,11 +158,11 @@ class ProfileEditScreen extends GetView<AlumniController> {
                         controller.selectedImage = null;
                       }
 
-
                       bool? isSucceed = await controller.onSubmitAlumniForm();
                       if (isSucceed != null) {
                         Get.back();
                       }
+                      // Get.back();
                     },
                     splashColor: ColorConstants.white,
                     color: Color(0xffFBB97C),
