@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/referral.dart';
+import 'package:uni_alumni/modules/refferal/screens/referral_registration.dart';
 import 'package:uni_alumni/routes/app_pages.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 
@@ -20,10 +21,16 @@ class ReferralDetail extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
-            leading: BackButton(color: Colors.black),
+            leading: BackButton(color: Colors.black, onPressed: (){
+              print(Get.previousRoute);
+              // Get.toNamed('/main');
+              Get.back();
+
+            }),
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: Text("Referral", style: TextStyle(color: Colors.black))),
+            title: Text("Referral", style: TextStyle(color: Colors.black)),
+        ),
         body: Stack(fit: StackFit.expand, children: [
           Container(
             decoration: BoxDecoration(
@@ -455,7 +462,9 @@ class ReferralDetail extends StatelessWidget {
       child: Text("Edit", style: TextStyle(fontSize: 15)),
       onPressed: () {
         controller.currentReferral = referral;
-        Get.toNamed(Routes.referralForm, arguments: referral);
+        // Get.toNamed(Routes.referralForm, arguments: referral);
+        // Get.off(ReferralRegistration());
+        Navigator.popAndPushNamed(context, Routes.referralForm);
       },
     );
   }

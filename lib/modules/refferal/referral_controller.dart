@@ -10,6 +10,7 @@ import 'package:uni_alumni/models/voucher.dart';
 import 'package:uni_alumni/modules/auth/auth_controller.dart';
 import 'package:uni_alumni/modules/home/main_controller.dart';
 import 'package:uni_alumni/modules/refferal/referral_repository.dart';
+import 'package:uni_alumni/modules/refferal/screens/referral_detail.dart';
 import 'package:uni_alumni/modules/voucher/voucher_repository.dart';
 import 'package:uni_alumni/shared/constants/colors.dart';
 import 'package:uni_alumni/shared/data/enum/common_enum.dart';
