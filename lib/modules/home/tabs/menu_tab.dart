@@ -21,9 +21,9 @@ class MenuTab extends StatelessWidget {
   String url =
       'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg';
 
-  void selectProfile(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-  }
+  // void selectProfile(BuildContext context) {
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,123 +55,123 @@ class MenuTab extends StatelessWidget {
         ),
       ),
       body: Obx(
-          () => Container(
-              padding: const EdgeInsets.all(20.0),
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-                    child: Stack(
-                      children: [
-                        buildImage(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  buildName(context, alumniController.user.value),
-                  const SizedBox(height: 24),
-                  buildAbout(context),
-                  const SizedBox(height: 20),
-                  const Divider(),
-                  const SizedBox(height: 18),
-                  buildCardInfor(
-                      context, Icons.phone, alumniController.user.value?.phone ?? 'No Information'),
-                  const SizedBox(height: 20),
-                  const Divider(),
-                  const SizedBox(height: 18),
-                  buildCardInfor(
-                      context, Icons.work, alumniController.user.value?.job ?? 'No Information'),
-                  const SizedBox(height: 20),
-                  const Divider(),
-                  const SizedBox(height: 18),
-                  buildCardInfor(
-                      context, Icons.map, alumniController.user.value?.address ?? 'No Information'),
-                  const SizedBox(height: 20),
-                  const Divider(),
-                  const SizedBox(height: 18),
-                  buildCardInfor(
-                      context, Icons.school,alumniController.user.value?.major?.fullName?? 'No Information'),
-                  const SizedBox(height: 20),
-                  const Divider(),
-                  const SizedBox(height: 18),
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
-                    margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-                    child: RaisedButton(
-                      onPressed: () {
-                        Get.to(() => ProfileEditScreen());
-                      },
-                      splashColor: ColorConstants.white,
-                      color: Color(0xffFBB97C),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Row(children: [
-                            Icon(Icons.edit, size: 19, color: Colors.white),
-                            SizedBox(width: 5),
-                            Text(
-                              "Edit Profile",
-                              style: Theme.of(context).textTheme.headline5!.copyWith(
+        () => Container(
+          padding: const EdgeInsets.all(20.0),
+          child: ListView(
+            physics: BouncingScrollPhysics(),
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Stack(
+                  children: [
+                    buildImage(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              buildName(context, alumniController.user.value),
+              const SizedBox(height: 24),
+              buildAbout(context),
+              const SizedBox(height: 20),
+              const Divider(),
+              const SizedBox(height: 18),
+              buildCardInfor(context, Icons.phone,
+                  alumniController.user.value?.phone ?? 'No Information'),
+              const SizedBox(height: 20),
+              const Divider(),
+              const SizedBox(height: 18),
+              buildCardInfor(context, Icons.work,
+                  alumniController.user.value?.job ?? 'No Information'),
+              const SizedBox(height: 20),
+              const Divider(),
+              const SizedBox(height: 18),
+              buildCardInfor(context, Icons.map,
+                  alumniController.user.value?.address ?? 'No Information'),
+              const SizedBox(height: 20),
+              const Divider(),
+              const SizedBox(height: 18),
+              buildCardInfor(
+                  context,
+                  Icons.school,
+                  alumniController.user.value?.major?.fullName ??
+                      'No Information'),
+              const SizedBox(height: 20),
+              const Divider(),
+              const SizedBox(height: 18),
+              Container(
+                constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
+                margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                child: RaisedButton(
+                  onPressed: () {
+                    Get.to(() => ProfileEditScreen());
+                  },
+                  splashColor: ColorConstants.white,
+                  color: Color(0xffFBB97C),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(children: [
+                        Icon(Icons.edit, size: 19, color: Colors.white),
+                        SizedBox(width: 5),
+                        Text(
+                          "Edit Profile",
+                          style:
+                              Theme.of(context).textTheme.headline5!.copyWith(
                                     fontSize: 19,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Poppins',
                                   ),
-                            ),
-                          ]),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
+                        ),
+                      ]),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      )
+                    ],
                   ),
-
-
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
-                    margin: EdgeInsets.all(10),
-                    child: RaisedButton(
-                      onPressed: () async {
-                        AuthController authController = Get.find();
-                        await authController.logout();
-                        Get.offNamedUntil(Routes.root, (route) => false);
-                      },
-                      splashColor: ColorConstants.white,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "Sign out",
-                            style: Theme.of(context).textTheme.headline5!.copyWith(
-                                  fontSize: 20,
-                                  color: Color(0xffFBB97C),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Poppins',
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
+                margin: EdgeInsets.all(10),
+                child: RaisedButton(
+                  onPressed: () async {
+                    AuthController authController = Get.find();
+                    await authController.logout();
+                    Get.offNamedUntil(Routes.root, (route) => false);
+                  },
+                  splashColor: ColorConstants.white,
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Sign out",
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              fontSize: 20,
+                              color: Color(0xffFBB97C),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-
-
     );
   }
 
@@ -197,17 +197,16 @@ class MenuTab extends StatelessWidget {
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Flexible(
-              child:Text(
-                  user?.fullName ?? '',
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
-                      ),
-                ),
-
+              child: Text(
+                user?.fullName ?? '',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins',
+                    ),
+              ),
             ),
           ]),
           const SizedBox(height: 4),
@@ -245,7 +244,7 @@ class MenuTab extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               Flexible(
                 child: Text(
-                  authController.currentUser?.aboutMe??
+                  authController.currentUser?.aboutMe ??
                       'Hi there, welcome to my profile',
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,

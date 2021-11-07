@@ -10,7 +10,7 @@ import 'package:uni_alumni/shared/constants/colors.dart';
 
 import 'edit_profile_screen.dart';
 
-class Profile extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
   final String url =
       'https://i.pinimg.com/originals/48/a9/8a/48a98a3200a2fd9f857890aed4413357.jpg';
   final authController = Get.find<AuthController>();
