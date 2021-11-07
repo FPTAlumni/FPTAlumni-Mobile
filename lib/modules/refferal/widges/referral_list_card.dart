@@ -86,8 +86,9 @@ class ReferralCard extends StatelessWidget {
                         softWrap: false,
                         maxLines: 2,
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 17.0,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       GestureDetector(
@@ -116,8 +117,9 @@ class ReferralCard extends StatelessWidget {
                       softWrap: false,
                       maxLines: 2,
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 17.0,
                         color: Colors.grey,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                   ]),
@@ -136,8 +138,9 @@ class ReferralCard extends StatelessWidget {
                       softWrap: false,
                       maxLines: 2,
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 17.0,
                         color: Colors.grey,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                   ]),
@@ -156,8 +159,9 @@ class ReferralCard extends StatelessWidget {
                       softWrap: false,
                       maxLines: 2,
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 17.0,
                         color: Colors.grey,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                   ]),

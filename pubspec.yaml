@@ -48,6 +48,7 @@ dependencies:
   font_awesome_flutter: ^9.2.0
   timeline_tile: ^2.0.0
   firebase_storage: ^10.0.6
+  clipboard: ^0.1.3
 
 dependency_overrides:
   flutter_colorpicker: ^0.6.0
