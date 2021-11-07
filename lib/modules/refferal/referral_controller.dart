@@ -302,6 +302,13 @@ class ReferralController extends GetxController{
     selectedVoucher.value = value.toString();
   }
 
+  bool isAvailableVoucher(int status){
+    if(statusName(status) == 'Rejected' || statusName(status) == 'Inactive'){
+      return false;
+    }
+    return true;
+  }
+
   @override
   void onInit() {
     super.onInit();

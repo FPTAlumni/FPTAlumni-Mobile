@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:uni_alumni/models/referral.dart';
 import 'package:uni_alumni/modules/refferal/screens/referral_registration.dart';
@@ -80,14 +82,6 @@ class ReferralDetail extends StatelessWidget {
                             ),
                             child: Column(children: [
                               SizedBox(height: 45),
-                              // Text(
-                              //   referral.fullName,
-                              //   style: TextStyle(
-                              //       color:  Color.fromRGBO(39, 105, 171, 1),
-                              //       fontFamily: 'Nunito',
-                              //       fontSize: 30
-                              //   ),
-                              // ),
                               Flexible(
                                 child: Text(
                                   referral.fullName,
@@ -99,98 +93,59 @@ class ReferralDetail extends StatelessWidget {
                                       ?.copyWith(
                                         fontSize: 27,
                                         color: Color.fromRGBO(39, 105, 171, 1),
-                                        fontFamily: 'Nunito',
+                                        fontFamily: 'Poppins',
                                       ),
                                 ),
                               ),
+                              SizedBox(height: 20),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Column(children: [
-                                      Text(
-                                        'Voucher',
-                                        style: TextStyle(
-                                          color: Colors.orange,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 21,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        (referral.voucher.discountValue * 100)
-                                                .toString() +
-                                            " %",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Nunito',
-                                          fontSize: 21,
-                                        ),
-                                      ),
                                     ]),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 30),
-                                      child: Container(
-                                          height: 40,
-                                          width: 5,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            color: Colors.black,
-                                          )),
-                                    ),
-                                    Column(children: [
+                                    Row(children: [
                                       Text(
-                                        'Status',
+                                        'Status:',
                                         style: TextStyle(
                                             color: Colors.orange,
-                                            fontFamily: 'Nunito',
-                                            fontSize: 21,
+                                            fontFamily: 'Poppins',
+                                            fontSize: 25,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text(
-                                        controller.statusName(referral.status),
-                                        style: TextStyle(
-                                            color: controller.changeColorStatus(
-                                                referral.status),
-                                            fontFamily: 'Nunito',
-                                            fontSize: 21,
-                                            fontWeight: FontWeight.bold),
+                                      SizedBox(width: 15),
+                                      Container(
+                                        padding: const EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: controller.changeColorStatus(
+                                                referral.status
+                                            )),
+                                            borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          controller.statusName(referral.status),
+                                          style: TextStyle(
+                                              color: controller.changeColorStatus(
+                                                  referral.status
+                                              ),
+                                              fontFamily: 'Poppins',
+                                              fontSize: 21,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ]),
                                   ]),
+                              SizedBox(height: 15),
                               referral.status == 3
                                   ? buildEditProfileButton(context)
                                   : Text('Information can not edit',
                                       style: TextStyle(
                                           color: Colors.grey,
-                                          fontStyle: FontStyle.italic)),
+                                          fontStyle: FontStyle.italic,
+                                        fontSize: 20,
+                                      )),
                             ]),
                           ),
                         ),
-                        // Positioned(
-                        //   top: 0,
-                        //   left: 0,
-                        //   right: 0,
-                        //   child: Center(
-                        //     child: Container(
-                        //         width: innerWidth * 5,
-                        //         height: innerHeight * 0.5,
-                        //           child:CircleAvatar(
-                        //             radius: 50,
-                        //             child: ClipOval(
-                        //               child: Image.asset(
-                        //                 'assets/images/ava.jpg',
-                        //                 height: 150,
-                        //                 width: 150,
-                        //                 fit: BoxFit.cover,
-                        //               ),
-                        //             ),
-                        //           ),
-                        //
-                        //     ),
-                        //   ),
-                        // ),
                       ]);
                     }),
                   ),
@@ -214,7 +169,7 @@ class ReferralDetail extends StatelessWidget {
                                   style: TextStyle(
                                       color: Color.fromRGBO(39, 105, 171, 1),
                                       fontSize: 25,
-                                      fontFamily: 'Nunito',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold)),
                               Divider(
                                 thickness: 2.5,
@@ -323,7 +278,7 @@ class ReferralDetail extends StatelessWidget {
                                   style: TextStyle(
                                       color: Color.fromRGBO(39, 105, 171, 1),
                                       fontSize: 25,
-                                      fontFamily: 'Nunito',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold)),
                               Divider(
                                 thickness: 2.5,
@@ -392,6 +347,117 @@ class ReferralDetail extends StatelessWidget {
                           ),
                         )),
                   ),
+                  SizedBox(height: 25),
+                  SingleChildScrollView(
+                    child: Container(
+                        height: height * 0.3,
+                        width: width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text('Voucher',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(39, 105, 171, 1),
+                                      fontSize: 25,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold)),
+                              Divider(
+                                thickness: 2.5,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              //Parent
+                              Row(children: [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                ImageIcon(
+                                    AssetImage("assets/images/voucher.png"),
+                                    color: Colors.orange,
+                                    size: 30,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    referral.parentName.toString() ==
+                                        null.toString()
+                                        ? "No Information"
+                                        : (referral.voucher.discountValue * 100)
+                                      .toString() +
+                                      " %",
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Icon(FontAwesomeIcons.gift,
+                                        color: Colors.orange, size: 30),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        referral.voucherCode.toString() ==
+                                            null.toString() || !controller.isAvailableVoucher(referral.status)
+                                            ? "Voucher was unavailable"
+                                            : referral.voucherCode.toString(),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    controller.isAvailableVoucher(referral.status)
+                                    ?
+                                    IconButton(
+                                      icon: Icon(Icons.content_copy),
+                                      onPressed: (){
+                                        Clipboard.setData(new ClipboardData(text: referral.voucherCode.toString())).then((_){
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(content: Text('Copied to your clipboard !')));
+                                        });
+                                      },
+                                    )
+                                    : Text(""),
+
+                                  ]),
+                            ],
+                          ),
+                        )),
+                  ),
+
                 ]),
               )))
         ]));
