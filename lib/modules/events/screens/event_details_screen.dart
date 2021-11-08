@@ -12,6 +12,9 @@ import '../event_controller.dart';
 class EventDetailsScreen extends StatelessWidget {
   final controller = Get.find<EventController>();
   final groupController = Get.find<GroupController>();
+  var list;
+
+  EventDetailsScreen({var this.list});
 
   Event get event {
     return controller.event.value;
@@ -81,10 +84,10 @@ class EventDetailsScreen extends StatelessWidget {
               () => GestureDetector(
                 onTap: () {
                   if (!controller.event.value.inEvent) {
-                    controller.joinEvent(event.id);
+                    controller.joinEvent(event.id, list: list);
                     controller.event.value.inEvent = true;
                   } else {
-                    controller.leaveEvent(event.id);
+                    controller.leaveEvent(event.id, list: list);
                     controller.event.value.inEvent = false;
                   }
                   controller.event.value.setStatus();

@@ -111,7 +111,7 @@ class EventController extends GetxController {
     await getAttendedEvents();
   }
 
-  joinEvent(int eventId) async {
+  joinEvent(int eventId, {var list}) async {
     bool result =
         await eventRepository.joinEvent(userAuthentication!.appToken, eventId);
 
@@ -127,10 +127,23 @@ class EventController extends GetxController {
 
       events.refresh();
       myEvents.refresh();
+
+      if (list != null) {
+        index = list.indexWhere((e) {
+          if (e is Event) {
+            return e.id == eventId;
+          }
+          return false;
+        });
+
+        if (index < 0) return;
+        (list.elementAt(index) as Event).joinEvent();
+        list.refresh();
+      }
     }
   }
 
-  leaveEvent(int eventId) async {
+  leaveEvent(int eventId, {var list}) async {
     bool result =
         await eventRepository.leaveEvent(userAuthentication!.appToken, eventId);
 
@@ -146,6 +159,21 @@ class EventController extends GetxController {
 
       events.refresh();
       myEvents.refresh();
+
+      if (list != null) {
+        index = list.indexWhere((e) {
+          if (e is Event) {
+            return e.id == eventId;
+          }
+          return false;
+        });
+
+        print('index $index');
+
+        if (index < 0) return;
+        (list.elementAt(index) as Event).leaveEvent();
+        list.refresh();
+      }
     }
   }
 

@@ -67,7 +67,8 @@ class HomePostsList extends StatelessWidget {
             } else if (_controller.posts[i] is Recruitment) {
               return RecruitmentCard(job: _controller.posts[i]);
             } else {
-              return EventCard(_controller.posts[i] as Event);
+              return EventCard(_controller.posts[i] as Event,
+                  list: _controller.posts);
             }
           },
         );
