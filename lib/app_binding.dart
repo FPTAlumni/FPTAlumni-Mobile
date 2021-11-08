@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:uni_alumni/api/api_provider.dart';
 import 'package:uni_alumni/modules/alumni/alumni_repository.dart';
+import 'package:uni_alumni/modules/alumni/profile_edit_controller.dart';
 import 'package:uni_alumni/modules/auth/auth_repository.dart';
 import 'package:uni_alumni/modules/company/company_repository.dart';
 import 'package:uni_alumni/modules/events/event_controller.dart';
@@ -58,7 +59,17 @@ class AppBinding extends Bindings {
             referralRepository: ReferralRepository(apiProvider: Get.find()),
             voucherRepository: VoucherRepository(apiProvider: Get.find())),
         fenix: true);
-    Get.lazyPut(() => AlumniController(alumniRepository: AlumniRepository(apiProvider: Get.find()),
-      companyRepository: CompanyRepository(apiProvider: Get.find()),),fenix: true);
+    Get.lazyPut(
+        () => AlumniController(
+              alumniRepository: AlumniRepository(apiProvider: Get.find()),
+              companyRepository: CompanyRepository(apiProvider: Get.find()),
+            ),
+        fenix: true);
+    Get.lazyPut(
+        () => ProfileEditController(
+              alumniRepository: AlumniRepository(apiProvider: Get.find()),
+              companyRepository: CompanyRepository(apiProvider: Get.find()),
+            ),
+        fenix: true);
   }
 }
