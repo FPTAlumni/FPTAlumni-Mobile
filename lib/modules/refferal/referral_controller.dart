@@ -151,6 +151,7 @@ class ReferralController extends GetxController{
   Future<bool?> _createReferral(ReferralPostRequest data) async {
     bool result = await referralRepository.createReferral(
         userAuthentication!.appToken, data);
+    currentReferral = null;
     if (result) {
       return await Get.defaultDialog(
         title: 'Announcement',
