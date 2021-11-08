@@ -10,15 +10,16 @@ class EventCard extends StatelessWidget {
   final controller = Get.find<EventController>();
 
   final Event event;
+  var list;
 
-  EventCard(this.event);
+  EventCard(this.event, {var this.list});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
         controller.event.value = event;
-        await Get.to(() => EventDetailsScreen());
+        await Get.to(() => EventDetailsScreen(list: list));
         controller.event = Event.empty().obs;
       },
       child: Container(
